@@ -1,0 +1,2293 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SRv6 uSID IS-IS Lab — Quisted Topology on CML 2.10</title>
+  <style>
+    :root {
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #d8d8d8;
+      --code-bg: #f4f4f4;
+      --cli-bg: #0a0a0a;
+      --cli-text: #f5f5f5;
+      --cli-prompt: #5ec4ff;
+      --cli-cmd: #5ec4ff;
+      --cli-colhead: #5ec4ff;
+      --cli-banner: #33dd33;
+      --cli-up: #33dd33;
+      --cli-summary: #ffb347;
+      --cli-ts: #e8e8e8;
+      --cli-sep: #4a9fd4;
+      --accent: #0073aa;
+      --accent-dark: #005177;
+      --callout-bg: #f0f6fa;
+      --callout-border: #0073aa;
+      --pass: #1a7f37;
+      --fail: #cf222e;
+      --pe-left: #add8e6;
+      --pe-left-table: #add8e6;
+      --p-core: #c8c0d0;
+      --pe-right: #d4b8e8;
+      --pe-right-table: #d4b8e8;
+      --table-head: #eef3f7;
+      --table-stripe: #f5f5f5;
+      --addr-low: #3d85c6;
+      --addr-high: #7b2d8e;
+      --addr-own: #a020a0;
+      --section-bg: #f9f5fc;
+      --section-border: #d8c8e8;
+      --section-accent: var(--addr-high);
+      --subsection-bg: #f5f0fa;
+      --max-width: 860px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text);
+      background: #fff;
+    }
+    .site-header {
+      background: #23282d;
+      color: #fff;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 4px solid var(--accent);
+    }
+    .site-header h1 {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .site-header .meta {
+      margin: 0.5rem 0 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.9rem;
+      color: #b0b8c0;
+    }
+    .site-header a { color: #7ec8ff; }
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+    h2 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding: 0.6rem 1rem;
+      background: var(--section-bg);
+      border: 1px solid var(--section-border);
+      border-left: 5px solid var(--section-accent);
+      border-radius: 4px;
+      color: var(--section-accent);
+    }
+    h2:first-of-type { margin-top: 0; }
+    h3 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 1.75rem 0 0.75rem;
+      color: var(--text);
+    }
+    h3.section-sub {
+      padding: 0.45rem 0.85rem;
+      background: var(--subsection-bg);
+      border-left: 4px solid var(--section-accent);
+      border-radius: 3px;
+      color: var(--section-accent);
+    }
+    h4 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 1.25rem 0 0.5rem;
+      color: var(--text);
+    }
+    p { margin: 0 0 1rem; }
+    a { color: var(--accent); }
+    ul, ol { margin: 0 0 1rem; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+    .toc {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0;
+      margin: 1rem 0 1.25rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.9rem;
+      overflow: hidden;
+    }
+    .toc details { margin: 0; }
+    .toc summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 1.1rem;
+      background: #f3f3f3;
+      border-bottom: 1px solid transparent;
+      user-select: none;
+    }
+    .toc details[open] summary {
+      border-bottom-color: var(--border);
+    }
+    .toc summary:hover .toc-title { color: var(--accent); }
+    .toc summary::-webkit-details-marker { display: none; }
+    .toc .toc-title { flex: 1; }
+    .toc .toc-toggle-icon {
+      flex: 0 0 auto;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+      width: 30px;
+      height: 26px;
+      padding: 5px 7px;
+      border: 1px solid #c8c8c8;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+    }
+    .toc .toc-toggle-icon span {
+      display: block;
+      height: 2px;
+      background: #666;
+      border-radius: 1px;
+    }
+    .toc details[open] .toc-toggle-icon span:nth-child(2) { opacity: 0.45; }
+    .toc ol {
+      margin: 0;
+      padding: 0.85rem 1.1rem 1rem 2.25rem;
+    }
+    .side-by-side-hint {
+      background: var(--section-bg);
+      border: 1px solid var(--section-border);
+      border-left: 5px solid var(--section-accent);
+      border-radius: 6px;
+      padding: 0.85rem 1.1rem;
+      margin: 0 0 1.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+    .side-by-side-hint > strong:first-child {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--section-accent);
+      margin-bottom: 0.35rem;
+    }
+    .toc strong { display: block; margin-bottom: 0.5rem; }
+    .toc a { text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+    .callout {
+      background: var(--callout-bg);
+      border-left: 4px solid var(--section-accent);
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.95rem;
+    }
+    .callout > strong:first-child {
+      display: block;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--section-accent);
+      margin-bottom: 0.25rem;
+    }
+    .callout strong { color: var(--section-accent); }
+    .download-box {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: #f7f7f7;
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0 1.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    .download-box .lab-icon {
+      flex: 0 0 52px;
+      width: 52px;
+      height: 52px;
+      font-size: 2rem;
+      line-height: 52px;
+      text-align: center;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .download-box .download-body { flex: 1; }
+    .download-box .download-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin: 0 0 0.35rem;
+      color: #333;
+    }
+    .download-box ol {
+      margin: 0.5rem 0 0;
+      padding-left: 1.25rem;
+    }
+    .download-box li { margin-bottom: 0.25rem; }
+    .role-pe-left { color: #3d85c6; font-weight: 600; }
+    .role-p-core { color: #4a4558; font-weight: 600; }
+    .role-pe-right { color: #7b2d8e; font-weight: 600; }
+    .lab-setup-intro {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+    .lab-setup-list {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1rem;
+      line-height: 1.65;
+      list-style-type: disc;
+      padding-left: 1.5rem;
+    }
+    .lab-setup-list li { margin-bottom: 0.45rem; }
+    .logical-view-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1rem;
+      margin: 1.25rem 0 0.75rem;
+    }
+    .logical-view-label em { font-style: italic; font-weight: 700; }
+    .topo-frame {
+      border: 1px solid #bbb;
+      border-radius: 10px;
+      padding: 1.25rem 0.5rem;
+      margin: 0 0 1.5rem;
+      background: #fff;
+      text-align: center;
+      overflow-x: auto;
+    }
+    .topo-frame svg { max-width: 100%; height: auto; }
+    .iface-wiring-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1rem;
+      margin: 0.5rem 0 0.75rem;
+    }
+    .iface-wiring-label em { font-style: italic; font-weight: 700; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 1.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th {
+      background: var(--table-head);
+      color: var(--text);
+      font-weight: 700;
+    }
+    tbody tr:nth-child(even) td { background: var(--table-stripe); }
+    table.device-table tbody tr.row-p td { background: #fff; }
+    table.device-table tbody tr.row-p:nth-child(even) td { background: var(--table-stripe); }
+    table.device-table tbody tr.row-pe-left td { background: var(--pe-left-table); }
+    table.device-table tbody tr.row-pe-right td { background: var(--pe-right-table); }
+    .addr-low { color: var(--addr-low); font-weight: 600; }
+    .addr-high { color: var(--addr-high); font-weight: 600; }
+    .addr-own { color: var(--addr-own); font-weight: 600; }
+    .addr-formula {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.95rem;
+    }
+    .addr-example {
+      font-weight: 700;
+      font-style: italic;
+      font-family: inherit;
+    }
+    code, .cmd {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+    }
+    pre {
+      margin: 0;
+      padding: 1rem 1.1rem;
+      padding-top: 2.25rem;
+      overflow-x: auto;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+    .code-wrap {
+      position: relative;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 0.45rem;
+      right: 0.45rem;
+      z-index: 1;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 1;
+      padding: 0.35rem 0.55rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #e6e6e6;
+      cursor: pointer;
+    }
+    .code-wrap:has(pre.config) .copy-btn,
+    .code-wrap:has(pre.topo) .copy-btn {
+      border-color: var(--border);
+      background: #fff;
+      color: var(--muted);
+    }
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+    .code-wrap:has(pre.config) .copy-btn:hover,
+    .code-wrap:has(pre.topo) .copy-btn:hover {
+      background: var(--callout-bg);
+      color: var(--accent-dark);
+    }
+    .copy-btn.copied {
+      background: var(--pass);
+      border-color: var(--pass);
+      color: #fff;
+    }
+    pre.config {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      color: #222;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    pre.cli {
+      background: var(--cli-bg);
+      color: var(--cli-text);
+      font-family: Consolas, "Courier New", monospace;
+      border: none;
+      border-radius: 6px;
+    }
+    pre.cli .cli-prompt,
+    pre.cli .cli-cmd,
+    pre.cli .cli-colhead { color: var(--cli-colhead); }
+    pre.cli .cli-banner { color: var(--cli-banner); font-weight: 600; }
+    pre.cli .cli-up,
+    pre.cli .cli-ok { color: var(--cli-up); }
+    pre.cli .cli-summary { color: var(--cli-summary); font-weight: 600; }
+    pre.cli .cli-ts { color: var(--cli-ts); }
+    pre.cli .cli-sep { color: var(--cli-sep); }
+    pre.topo {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      font-family: Consolas, "Courier New", monospace;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .verify-block { margin: 1.25rem 0 2rem; }
+    .pass-fail {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+    }
+    .pass { color: var(--pass); }
+    .fail { color: var(--fail); }
+    .firmware-zone-list {
+      margin: 0.75rem 0 1rem;
+      padding-left: 1.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+    .firmware-zone-list li { margin-bottom: 0.35rem; }
+    .footnote {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .out-of-scope {
+      background: #fff8e6;
+      border: 1px solid #e6c200;
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    @media (max-width: 700px) {
+      body { font-size: 16px; }
+      table { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>SRv6 uSID IS-IS Lab</h1>
+  <p class="meta">
+    Adapted from
+    <a href="https://www.quisted.net/index.php/2024/11/11/mpls-segment-routing-mpls-sr-lab/">Quisted&rsquo;s MPLS Segment Routing lab</a>
+    &middot; Live-validated on CML 2.10
+  </p>
+</header>
+
+<div class="wrap">
+
+<nav class="toc" aria-label="Table of contents">
+  <details>
+    <summary>
+      <span class="toc-title">Table of Contents</span>
+      <span class="toc-toggle-icon" aria-hidden="true" title="Click to expand or collapse">
+        <span></span><span></span><span></span>
+      </span>
+    </summary>
+    <ol>
+      <li><a href="#what-is">What is SRv6 uSID?</a></li>
+      <li><a href="#quisted-method">Quisted&rsquo;s method &mdash; how we teach, not what</a></li>
+      <li><a href="#what-changed">What changed from the original MPLS-SR lab</a></li>
+      <li><a href="#lab-download">Lab download &amp; import</a></li>
+      <li><a href="#lab-setup">SRv6 Lab Setup (Baseline)</a></li>
+      <li><a href="#lab-configs">Lab configs (snippets)</a></li>
+      <li><a href="#lab-procedure">Lab procedure &mdash; configure and verify</a></li>
+      <li><a href="#lab-verification">Lab verification &mdash; proof run (Steps 1&ndash;6)</a></li>
+      <li><a href="#proof-run">Step 5 &mdash; Proof run (before CLI &rarr; arm debug &rarr; ping)</a></li>
+      <li><a href="#srv6-path-walk">Step 5 &sect;4 &mdash; Walk the path (SRv6 show commands)</a></li>
+      <li><a href="#usid-forwarding">Step 5 reference &mdash; loopback vs uSID</a></li>
+      <li><a href="#srte-usid-advanced">Optional: SR-TE uSID policy</a></li>
+      <li><a href="#p1-fib">P1 MPLS FIB &harr; SRv6 verification</a></li>
+      <li><a href="#side-by-side">Side-by-side: Quisted MPLS vs this lab</a></li>
+      <li><a href="#gotchas">Troubleshooting / gotchas</a></li>
+      <li><a href="#appendix-a">Appendix A &mdash; Automation</a></li>
+      <li><a href="#appendix-b">Appendix B &mdash; CML canvas layout</a></li>
+      <li><a href="#appendix-c">Appendix C &mdash; Future: L3VPN (out of scope)</a></li>
+      <li><a href="#appendix-d">Appendix D &mdash; Full router configs</a></li>
+    </ol>
+  </details>
+</nav>
+
+<div class="side-by-side-hint">
+  <strong>Side-by-side workflow:</strong> Keep Quisted&rsquo;s MPLS-SR post open on the left for topology and teaching flow.
+  Use this page on the right for CML import, configs, and SRv6/IS-IS verification.
+  When Quisted runs an MPLS command, jump to <a href="#p1-fib">P1 MPLS FIB &harr; SRv6 verification</a> or
+  <a href="#side-by-side">Side-by-side command table</a> for the equivalent.
+  <strong>Copy buttons</strong> on every config and CLI block &mdash; click <em>Copy</em>, paste into your router or terminal.
+  <strong>Scroll both pages together</strong> &mdash; purple section bars mark the same teaching stages (setup &rarr; configs &rarr; verification &rarr; proof run).
+</div>
+
+<!-- ===== WHAT IS ===== -->
+<h2 id="what-is">What is SRv6 uSID?</h2>
+
+<h3>What is Segment Routing (SR)?</h3>
+<p>
+  In short, <strong>Segment Routing</strong> is a modern approach to steering traffic through a network using an
+  ordered list of <strong>segments</strong> instead of per-flow signaling state on every hop. Each segment is a
+  simple forwarding instruction &mdash; typically &ldquo;forward to this node&rdquo; (node segment) or
+  &ldquo;forward to this neighbor&rdquo; (adjacency segment). Link-state IGPs (IS-IS, OSPFv2, OSPFv3) advertise
+  these segments in their topology database. The ingress router imposes the segment list; transit routers execute
+  one segment at a time without maintaining RSVP-TE tunnels or LDP bindings for each path.
+</p>
+<p>
+  That model simplifies traffic engineering, improves scale, and keeps the control plane familiar: you still run
+  an IGP, but you replace auxiliary label-distribution protocols with SIDs advertised by the IGP itself.
+</p>
+
+<h3>SR-MPLS (what Quisted&rsquo;s lab teaches)</h3>
+<p>
+  In <strong>SR-MPLS</strong> (MPLS Segment Routing), segments are encoded as <strong>MPLS labels</strong> from the
+  Segment Routing Global Block (SRGB). Each loopback gets a <strong>prefix-SID index</strong> (P1=1, P2=2, &hellip;)
+  that maps to a label (e.g. index 2 &rarr; label 16002). Quisted&rsquo;s post walks through migrating a traditional
+  MPLS network &mdash; OSPF area 0 plus LDP &mdash; to <strong>MPLS-SR</strong> using OSPF prefix-SIDs, first on
+  IOS-XR and IOS-XE, then adding a <strong>Segment Routing Mapping Server (SRMS)</strong> so legacy <strong>IOSv</strong>
+  PE routers can participate even though they do not speak MPLS-SR themselves.
+</p>
+
+<h3>What is SRv6?</h3>
+<p>
+  <strong>Segment Routing over IPv6 (SRv6)</strong> applies the same segment-list idea to the
+  <strong>IPv6 data plane</strong>. Instead of pushing MPLS labels, the ingress router encodes segments in the
+  IPv6 destination address (and, when needed, SRv6 extension headers). Each router advertises an IPv6
+  <strong>locator</strong> (in this lab, a <code>/48</code>). Individual <strong>SIDs</strong> are IPv6 addresses
+  or sub-blocks within that locator; the router performs an IPv6 FIB lookup and executes an SRv6
+  <strong>behavior</strong> (End, End.X, uN, uA, and others) rather than a label swap.
+</p>
+
+<h3>Why SRv6 instead of SR-MPLS?</h3>
+<p>
+  Both implement the <em>same</em> Segment Routing control-plane idea; the difference is the
+  <strong>data plane</strong>. SR-MPLS carries segments as <strong>MPLS labels</strong>; SRv6 carries them as
+  <strong>IPv6 addresses</strong> (SIDs) with defined forwarding behaviors. Neither needs LDP or RSVP-TE for
+  basic segment forwarding &mdash; the IGP advertises the segments in both cases.
+</p>
+
+<table>
+  <thead>
+    <tr><th></th><th>SR-MPLS</th><th>SRv6</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Forwarding lookup</strong></td><td>MPLS label swap / push / pop</td><td>IPv6 destination lookup + SRv6 behavior (End, End.X, uN, uA, &hellip;)</td></tr>
+    <tr><td><strong>Segment identity</strong></td><td>Label from SRGB + prefix-SID index</td><td>IPv6 address or sub-block inside a locator</td></tr>
+    <tr><td><strong>Underlay required</strong></td><td>MPLS enabled on every interface in the path</td><td>IPv6-only IGP (this lab)</td></tr>
+    <tr><td><strong>Typical IGP extensions</strong></td><td>OSPF/OSPFv3 or IS-IS prefix-SID sub-TLVs</td><td>IS-IS or OSPFv3 SRv6 locator + SID advertisements</td></tr>
+    <tr><td><strong>Service examples</strong></td><td>L3VPN over MPLS, TE via label stacks</td><td>L3VPN via End.DT46, EVPN, traffic engineering in IPv6 header</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>Coming from VXLAN?</strong>
+  <p style="margin:0.5rem 0 0"><strong>If you know VXLAN:</strong> MPLS labels are <strong>tag-like</strong> &mdash; compact forwarding identifiers that can be pushed, swapped, popped, and stacked hop-by-hop. <strong>SRv6 is different:</strong> a segment is an <strong>IPv6 destination</strong> in the node&rsquo;s locator block (e.g. uN <code>fcbb:bb00:7::</code>). That is closer to <strong>VTEP forwarding</strong> &mdash; you steer by setting <strong>destination IP = remote endpoint</strong> (the node&rsquo;s SID), not by swapping a label.</p>
+  <ul style="margin:0.5rem 0 0">
+    <li><strong>Loopback</strong> (<code>fc00:0:7::1</code>) &mdash; the host prefix you ping; the destination you&rsquo;re trying to reach.</li>
+    <li><strong>uN / locator SID</strong> &mdash; transport target: &ldquo;deliver SRv6 processing to this node&rdquo; (VTEP-like: new outer IP dst aimed at the endpoint).</li>
+    <li><strong>VNI</strong> &mdash; not in this lab; in EVPN-SRv6 it maps to a <strong>service SID</strong> (e.g. End.DT2), not a loopback.</li>
+  </ul>
+</div>
+
+<p>Operators choose <strong>SRv6</strong> in general when they want:</p>
+<ul>
+  <li><strong>One forwarding paradigm</strong> &mdash; services and underlay both expressed as IPv6 SIDs, not a parallel MPLS control and data plane on top of IP.</li>
+  <li><strong>No MPLS label logistics</strong> &mdash; no per-router label ranges, SRGB planning, or <code>show mpls forwarding</code> troubleshooting for the SR underlay.</li>
+  <li><strong>IPv6-native designs</strong> &mdash; greenfield cores, 5G transport, and cloud/DCI networks where IPv6 is the long-term substrate.</li>
+  <li><strong>Rich endpoint behaviors</strong> &mdash; a single SID can mean &ldquo;route to node,&rdquo; &ldquo;lookup in VRF,&rdquo; or &ldquo;cross-connect to interface&rdquo; (End, End.DT, End.DX) without extra MPLS label stacks.</li>
+  <li><strong>Micro-SID (&mu;SID) efficiency</strong> &mdash; &mu;SID can encode multiple 16-bit compressed segment identifiers in one 128-bit IPv6 destination-address container, reducing the number of full-length SIDs required in an SRH (this lab&rsquo;s <strong>F3216</strong> format: 32-bit block + 16-bit micro-segments). Micro-SID is commonly written <strong>uSID</strong>; <strong>uN</strong>, <strong>uA</strong>, and <code>usid-f3216</code> are the ASCII forms used in standards, documentation, and CLI syntax.</li>
+</ul>
+<p>
+  <strong>SR-MPLS</strong> remains common in <strong>brownfield</strong> networks that already run MPLS VPNs, have ASICs
+  optimized for label switching, or are mid-migration from LDP. Many operators run <strong>SR-MPLS today and SRv6
+  tomorrow</strong>; the high-level Segment Routing model transfers, but SID representation, forwarding behavior, packet overhead, hardware requirements, steering, and troubleshooting differ.
+</p>
+
+<h4>Why SRv6 in this CML lab?</h4>
+<p>This lab keeps Quisted&rsquo;s topology and verification flow but implements SRv6 uSID instead of MPLS-SR. CML-specific reasons:</p>
+<ul>
+  <li><strong>Platform reality</strong> &mdash; Quisted&rsquo;s IOSv PEs cannot run MPLS-SR or SRv6. SRv6 uSID requires
+    <strong>CAT 8000V</strong> on PEs and <strong>IOS XRv 9000</strong> on P routers. There is no SRMS workaround for
+    SRv6; all nodes must support it natively.</li>
+  <li><strong>Images validated on CML 2.10</strong> &mdash; <code>iosxrv9000-25-4-1</code> and <code>cat8000v-17-18-02</code>
+    with SRv6 uSID features enabled out of the box in the imported configs.</li>
+  <li><strong>Locator replaces label range</strong> &mdash; Quisted&rsquo;s device table uses <strong>Label Ranges</strong>
+    (P1 = 24100&ndash;24199). Our table uses <strong>SRv6 locators</strong> in the same column
+    (<code>fcbb:bb00:00NN::/48</code>).</li>
+  <li><strong>IPv6 verification targets</strong> &mdash; ping/traceroute <code>fc00:0:7::1</code> instead of
+    <code>7.7.7.7</code>; commands are <code>show isis ipv6 route</code> and <code>show segment-routing srv6 sid</code>
+    instead of <code>show mpls forwarding</code>.</li>
+</ul>
+<p>
+  If you completed Quisted&rsquo;s MPLS-SR lab first, use this <strong>approximate mental mapping</strong> (not direct equivalence):</p>
+<ul>
+  <li><strong>SRGB or label-allocation plan &rarr; locator and SID-allocation plan</strong></li>
+  <li><strong>prefix-SID &rarr; node or endpoint SID</strong></li>
+  <li><strong>MPLS label &rarr; SID or compressed SID instruction</strong></li>
+  <li><strong>label stack &rarr; SID list or compressed SID containers</strong></li>
+  <li><strong><code>show mpls forwarding</code> &rarr; <code>show isis ipv6 route</code></strong></li>
+</ul>
+<p>
+  If you have not, you do not need LDP or OSPF-SR experience &mdash; this guide is self-contained on IS-IS + SRv6.
+</p>
+
+<h3>What is SRv6 uSID (micro-SID)?</h3>
+<p>Micro-SID is commonly written <strong>uSID</strong>; <strong>uN</strong>, <strong>uA</strong>, and <code>usid-f3216</code> are the ASCII forms used in standards, documentation, and CLI syntax.</p>
+<p>
+  A full 128-bit SID per hop can be heavy. <strong>Micro-SID (uSID)</strong> can encode multiple 16-bit compressed segment identifiers in one 128-bit IPv6 destination-address container using a fixed format &mdash; on IOS-XE, <strong>usid-f3216</strong> (format <strong>F3216</strong>).
+  Each node still advertises a <code>/48</code> locator; the router programs a <strong>uN</strong> (node) SID and
+  <strong>uA</strong> (adjacency) SIDs from that block. You will see them with
+  <code>show segment-routing srv6 sid</code> on P1, analogous to Quisted&rsquo;s
+  <code>show mpls label table detail</code>.
+</p>
+<p>
+  <strong>Cisco and Juniper both implement uSID</strong> against the same IETF baseline (mandatory
+  <strong>F3216</strong>: 32-bit locator block + 16-bit micro-SIDs in the IPv6 destination). The
+  <em>concept</em> is vendor-neutral; the <em>configuration</em> differs:
+</p>
+<table>
+  <thead>
+    <tr><th></th><th>Cisco (this lab)</th><th>Juniper (Junos)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Locator config</strong></td><td>IOS-XR: <code>segment-routing srv6</code> &rarr; <code>locator MAIN</code> + <code>micro-segment behavior unode</code><br>IOS-XE: <code>format usid-f3216</code> under locator</td><td><code>routing-options source-packet-routing srv6</code> &rarr; locator + <code>micro-sid { block-name ... }</code></td></tr>
+    <tr><td><strong>IGP</strong></td><td>IS-IS SRv6 locator under <code>address-family ipv6</code></td><td>IS-IS advertises micro-SID locators from SPR block</td></tr>
+    <tr><td><strong>TE segment list</strong></td><td>SRv6 TE policies (platform-dependent)</td><td><code>micro-srv6-sid</code> in segment list (all hops must be micro-SID; cannot mix with classic <code>srv6-sid</code>)</td></tr>
+    <tr><td><strong>Verify</strong></td><td><code>show segment-routing srv6 locator</code>, <code>show segment-routing srv6 sid</code></td><td><code>show isis database</code> (SRv6 locator TLVs), SPR show commands</td></tr>
+  </tbody>
+</table>
+<p class="footnote">This CML lab is <strong>Cisco-only</strong> (IOS-XR + IOS-XE). A Juniper uSID domain would use the same F3216 addressing math but different config hierarchy and show commands.</p>
+
+<h3>What this lab demonstrates</h3>
+<p>
+  In this lab I demonstrate the same 8-router diamond Quisted used for MPLS-SR, but with an
+  <strong>SRv6 uSID underlay</strong> instead of OSPF, LDP, and MPLS labels. You will build <strong>IPv6-only IS-IS</strong> adjacencies on IOS-XR P routers and IOS-XE PE routers, enable uSID locators on every node,
+  and verify end-to-end IPv6 reachability from PE5 to PE7 through the P core. There is no SR mapping server step:
+  every platform in the lab supports SRv6 directly.
+</p>
+
+<hr>
+
+<!-- ===== QUISTED METHOD ===== -->
+<h2 id="quisted-method">Quisted&rsquo;s method &mdash; how we teach, not what</h2>
+<p>Fidelity to Quisted&rsquo;s MPLS-SR post is <strong>not</strong> &ldquo;same commands, different address family.&rdquo; It is the <strong>proof arc</strong>: build belief layer by layer until the student <em>sees</em> forwarding work, then challenge it with a harder destination.</p>
+<table>
+  <thead><tr><th>Quisted&rsquo;s move</th><th>What the student learns</th><th>This lab</th></tr></thead>
+  <tbody>
+    <tr><td>Same canvas</td><td>Topology familiar; technology swaps</td><td>Same diamond; P1 = 5 peers; ECMP via P3/P4</td></tr>
+    <tr><td>Underlay first</td><td>Neighbors before segments</td><td>Step 2 &mdash; <code>show isis neighbors</code></td></tr>
+    <tr><td>Segments second</td><td>SIDs programmed</td><td>Step 3 &mdash; locator / SID table</td></tr>
+    <tr><td>FIB on P1</td><td>Where would P1 send this?</td><td>Step 4 + <a href="#p1-fib">P1 FIB &harr; SRv6</a></td></tr>
+    <tr><td>Easy ping first</td><td>IGP loopback only</td><td>Step 5.1 &mdash; <code>fc00:0:7::1</code></td></tr>
+    <tr><td>Endpoint-SID ping second</td><td>Segment semantics matter</td><td>Step 5.3 &mdash; <code>fcbb:bb00:7::</code></td></tr>
+    <tr><td>Walk the path</td><td>Every hop explainable</td><td>Step 5.4 &mdash; <a href="#srv6-path-walk">SRv6 show walk</a></td></tr>
+    <tr><td>Wire proof</td><td>Don&rsquo;t trust CLI alone</td><td>PCAP + debug on PE7</td></tr>
+  </tbody>
+</table>
+<p><strong>Swapped (the <em>what</em>):</strong> OSPF/LDP/MPLS &rarr; IS-IS/SRv6 uSID. <strong>Kept (the <em>how</em>):</strong> neighbor &rarr; segment &rarr; FIB &rarr; easy ping &rarr; endpoint-SID ping &rarr; path walk &rarr; capture.</p>
+<p class="footnote"><strong>Endpoint-SID ping</strong> (Step 5.3) proves PE7 uN reachability and local endpoint behavior; it does <strong>not</strong> demonstrate a multi-uSID segment list or explicit traffic engineering.</p>
+
+<!-- ===== WHAT CHANGED ===== -->
+<h2 id="what-changed">What changed from the original MPLS-SR lab</h2>
+
+<table>
+  <thead>
+    <tr><th>Original (Quisted MPLS-SR)</th><th>This lab (SRv6 uSID)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>OSPF area 0 underlay</td><td>IS-IS 100, <code>level-2-only</code></td></tr>
+    <tr><td>LDP + MPLS forwarding</td><td>No LDP; SRv6 uSID</td></tr>
+    <tr><td>MPLS prefix-SID indexes</td><td>Per-node SRv6 locators</td></tr>
+    <tr><td>IOS XRv core + CSR1000v / <strong>IOSv</strong> PEs</td><td>IOS XRv 9000 core + <strong>CAT 8000V</strong> on all PEs</td></tr>
+    <tr><td>SR mapping server (SRMS) for IOSv PEs</td><td><strong>Not needed</strong> &mdash; no SRv6 mapping server exists; PE7/PE8 upgraded to <strong>CAT 8000V</strong> so every router originates its own SRv6 locator via IS-IS</td></tr>
+    <tr><td><code>show ospf database</code></td><td><code>show isis database</code></td></tr>
+    <tr><td><code>show mpls ldp neighbor</code></td><td><code>show isis neighbors</code></td></tr>
+    <tr><td><code>show mpls forwarding</code></td><td><code>show isis ipv6 route</code>, <code>show segment-routing srv6 locator</code></td></tr>
+    <tr><td><code>traceroute mpls ipv4</code></td><td>IPv6 <code>ping</code> / <code>traceroute</code></td></tr>
+    <tr><td>CML 2.7</td><td>CML <strong>2.10</strong> (parallel boot)</td></tr>
+    <tr><td>P1: 5 OSPF neighbors; ECMP to PE7 via P3/P4</td><td>Same topology: P1 has <strong>5</strong> IS-IS peers; ECMP to PE7 via P3 and P4</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>What about non-SRv6 speakers? (Quisted&rsquo;s SRMS lesson)</strong>
+  <p style="margin:0.5rem 0 0">Quisted&rsquo;s lab explicitly teaches <em>how to attach legacy routers</em>: IOSv PEs cannot originate MPLS-SR prefix-SIDs, so a
+  <strong>Segment Routing Mapping Server (SRMS)</strong> on a capable P router advertises SID mappings on their behalf. The IOSv boxes stay in the topology; SRMS makes them visible to the SR control plane.</p>
+  <p style="margin:0.5rem 0 0"><strong>This lab does not replicate that problem</strong> &mdash; there are no non-speakers. PE7/PE8 were upgraded from IOSv to <strong>CAT 8000V</strong>, so every router natively runs SRv6 uSID and advertises its own locator in IS-IS. That is a valid lab simplification, not a new SRv6 feature.</p>
+  <p style="margin:0.5rem 0 0">In production, legacy/non-SRv6 edges are handled differently (there is <strong>no SRv6 SRMS</strong>):</p>
+  <ul style="margin:0.5rem 0 0">
+    <li><strong>Platform upgrade</strong> &mdash; replace IOSv/older PEs with SRv6-capable hardware (what this lab models).</li>
+    <li><strong>SRv6&harr;SR-MPLS interworking gateway (IWG)</strong> &mdash; a border PE translates between an SRv6 domain and an MPLS/SR-MPLS domain (control + data plane) for VPN services during migration.</li>
+    <li><strong>Dual-connected PE</strong> &mdash; one PE speaks both MPLS and SRv6 for the same VRF while you migrate site by site.</li>
+    <li><strong>Island / coexistence</strong> &mdash; leave legacy PEs on LDP/MPLS; only attach them through a gateway or separate VRF, not inside the SRv6 uSID underlay.</li>
+  </ul>
+  <p style="margin:0.5rem 0 0">SRMS maps <em>IGP prefix-SIDs</em> for routers that cannot speak MPLS-SR. SRv6 has no equivalent &ldquo;map my locator for me&rdquo; service &mdash; either the box programs SRv6 SIDs locally, or traffic is translated at a border.</p>
+</div>
+
+<hr>
+
+<!-- ===== LAB DOWNLOAD ===== -->
+<h2 id="lab-download">Lab download &amp; import</h2>
+
+<div class="download-box">
+  <div class="lab-icon" aria-hidden="true">🧪</div>
+  <div class="download-body">
+    <p class="download-title">Labs download</p>
+    <p style="margin:0 0 0.5rem">Two CML labs are available in this repo:</p>
+    <ol>
+      <li>Lab <strong>mgmt</strong> &mdash; <code>quisted-srv6-mgmt-initial.yaml</code> (recommended: ext-conn + mgmt-sw).</li>
+      <li>Lab <strong>data</strong> &mdash; <code>quisted-srv6-initial.yaml</code> (8 routers, 14 links only).</li>
+    </ol>
+    <p style="margin:0.75rem 0 0">Full router configs: <code>configs/*.cfg</code></p>
+  </div>
+</div>
+
+<!-- ===== LAB SETUP ===== -->
+<h2 id="lab-setup">SRv6 Lab Setup (Baseline)</h2>
+
+<p class="lab-setup-intro">Using Cisco&rsquo;s Modeling Labs (CML) I build the following SRv6 lab using IS-IS neighbor relationships.</p>
+
+<ul class="lab-setup-list">
+  <li>2 &times; <span class="role-pe-left">PE router ( Left )</span> (PE5, PE6) running <strong>CAT 8000V</strong> with <strong>IOS-XE</strong>.</li>
+  <li>4 &times; <span class="role-p-core">P router ( Center )</span> (P1, P2, P3, P4) running <strong>IOS XRv 9000</strong> with <strong>IOS-XR</strong>.</li>
+  <li>2 &times; <span class="role-pe-right">PE router ( Right )</span> (PE7, PE8) running <strong>CAT 8000V</strong> with <strong>IOS-XE</strong>.</li>
+</ul>
+
+<h3 class="section-sub">Interfaces:</h3>
+
+<p class="logical-view-label"><em>Logical View:</em></p>
+
+<div class="topo-frame logical-view-frame">
+<svg viewBox="0 0 560 220" width="560" height="220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logical view mesh: PE5 PE6 left, P1 P2 P3 P4 center, PE7 PE8 right; full mesh between adjacent columns">
+  <defs>
+    <g id="router-pe-left">
+      <circle r="22" fill="#add8e6" stroke="#3d85c6" stroke-width="2"/>
+      <g stroke="#2a6a9e" stroke-width="2" stroke-linecap="round">
+        <line x1="0" y1="-11" x2="0" y2="11"/>
+        <line x1="-11" y1="0" x2="11" y2="0"/>
+        <line x1="-8" y1="-8" x2="8" y2="8"/>
+        <line x1="8" y1="-8" x2="-8" y2="8"/>
+      </g>
+    </g>
+    <g id="router-p-core">
+      <circle r="22" fill="#4a4558" stroke="#2d2a35" stroke-width="2"/>
+      <g stroke="#fff" stroke-width="2" stroke-linecap="round">
+        <line x1="0" y1="-11" x2="0" y2="11"/>
+        <line x1="-11" y1="0" x2="11" y2="0"/>
+        <line x1="-8" y1="-8" x2="8" y2="8"/>
+        <line x1="8" y1="-8" x2="-8" y2="8"/>
+      </g>
+    </g>
+    <g id="router-pe-right">
+      <circle r="22" fill="#d4b8e8" stroke="#7b2d8e" stroke-width="2"/>
+      <g stroke="#5a1f6e" stroke-width="2" stroke-linecap="round">
+        <line x1="0" y1="-11" x2="0" y2="11"/>
+        <line x1="-11" y1="0" x2="11" y2="0"/>
+        <line x1="-8" y1="-8" x2="8" y2="8"/>
+        <line x1="8" y1="-8" x2="-8" y2="8"/>
+      </g>
+    </g>
+  </defs>
+  <g stroke-width="2" fill="none">
+    <line x1="72" y1="55" x2="148" y2="55" stroke="#3d85c6"/>
+    <line x1="72" y1="165" x2="148" y2="165" stroke="#3d85c6"/>
+    <line x1="72" y1="55" x2="148" y2="165" stroke="#3d85c6"/>
+    <line x1="72" y1="165" x2="148" y2="55" stroke="#3d85c6"/>
+    <line x1="192" y1="55" x2="268" y2="55" stroke="#4a4558"/>
+    <line x1="192" y1="165" x2="268" y2="165" stroke="#4a4558"/>
+    <line x1="192" y1="55" x2="268" y2="165" stroke="#4a4558"/>
+    <line x1="192" y1="165" x2="268" y2="55" stroke="#4a4558"/>
+    <line x1="170" y1="77" x2="170" y2="143" stroke="#4a4558"/>
+    <line x1="290" y1="77" x2="290" y2="143" stroke="#4a4558"/>
+    <line x1="312" y1="55" x2="388" y2="55" stroke="#7b2d8e"/>
+    <line x1="312" y1="165" x2="388" y2="165" stroke="#7b2d8e"/>
+    <line x1="312" y1="55" x2="388" y2="165" stroke="#7b2d8e"/>
+    <line x1="312" y1="165" x2="388" y2="55" stroke="#7b2d8e"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a1a">
+    <use href="#router-pe-left" x="50" y="55"/><text x="50" y="90">PE5</text>
+    <use href="#router-pe-left" x="50" y="165"/><text x="50" y="200">PE6</text>
+    <use href="#router-p-core" x="170" y="55"/><text x="170" y="90">P1</text>
+    <use href="#router-p-core" x="170" y="165"/><text x="170" y="200">P2</text>
+    <use href="#router-p-core" x="290" y="55"/><text x="290" y="90">P3</text>
+    <use href="#router-p-core" x="290" y="165"/><text x="290" y="200">P4</text>
+    <use href="#router-pe-right" x="410" y="55"/><text x="410" y="90">PE7</text>
+    <use href="#router-pe-right" x="410" y="165"/><text x="410" y="200">PE8</text>
+  </g>
+</svg>
+</div>
+
+<p class="iface-wiring-label"><em>Interface wiring</em> (CML link labels):</p>
+
+<div class="topo-frame iface-wiring-frame">
+<svg viewBox="0 0 560 220" width="560" height="220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interface wiring: Gi labels on each link">
+  <defs>
+    <g id="router-icon-iface">
+      <circle r="22" fill="#fff" stroke-width="2"/>
+      <path d="M-8,-8 L8,8 M8,-8 L-8,8" stroke-width="2" fill="none"/>
+      <path d="M0,-12 L0,12 M-12,0 L12,0" stroke-width="1.5" fill="none" opacity="0.5"/>
+    </g>
+    <style>
+      .iface-lbl { font: 8px/1 Arial, sans-serif; fill: #222; }
+      .iface-lbl-bg { fill: #fff; opacity: 0.85; }
+    </style>
+  </defs>
+  <g stroke-width="2" fill="none">
+    <line x1="72" y1="55" x2="148" y2="55" stroke="#3d85c6"/>
+    <line x1="72" y1="165" x2="148" y2="165" stroke="#3d85c6"/>
+    <line x1="72" y1="55" x2="148" y2="165" stroke="#3d85c6" opacity="0.65"/>
+    <line x1="72" y1="165" x2="148" y2="55" stroke="#3d85c6" opacity="0.65"/>
+    <line x1="192" y1="55" x2="268" y2="55" stroke="#4a4558"/>
+    <line x1="192" y1="165" x2="268" y2="165" stroke="#4a4558"/>
+    <line x1="192" y1="55" x2="268" y2="165" stroke="#4a4558"/>
+    <line x1="192" y1="165" x2="268" y2="55" stroke="#4a4558"/>
+    <line x1="170" y1="77" x2="170" y2="143" stroke="#4a4558"/>
+    <line x1="290" y1="77" x2="290" y2="143" stroke="#4a4558"/>
+    <line x1="312" y1="55" x2="388" y2="55" stroke="#7b2d8e"/>
+    <line x1="312" y1="165" x2="388" y2="165" stroke="#7b2d8e"/>
+    <line x1="312" y1="55" x2="388" y2="165" stroke="#7b2d8e" opacity="0.65"/>
+    <line x1="312" y1="165" x2="388" y2="55" stroke="#7b2d8e" opacity="0.65"/>
+  </g>
+  <!-- interface labels (left end | right end along each link) -->
+  <g class="iface-lbl">
+    <text x="88" y="48">G1</text><text x="124" y="48">G0/3</text>
+    <text x="88" y="172">G2</text><text x="124" y="172">G0/3</text>
+    <text x="88" y="118">G2</text><text x="124" y="102">G0/4</text>
+    <text x="88" y="102">G1</text><text x="124" y="118">G0/4</text>
+    <text x="200" y="48">G0/1</text><text x="256" y="48">G0/1</text>
+    <text x="200" y="172">G0/1</text><text x="256" y="172">G0/1</text>
+    <text x="218" y="118">G0/2</text><text x="238" y="102">G0/2</text>
+    <text x="218" y="102">G0/2</text><text x="238" y="118">G0/2</text>
+    <text x="162" y="108">G0/0</text><text x="162" y="120">G0/0</text>
+    <text x="282" y="108">G0/0</text><text x="282" y="120">G0/0</text>
+    <text x="328" y="48">G0/3</text><text x="368" y="48">G1</text>
+    <text x="328" y="172">G0/4</text><text x="368" y="172">G2</text>
+    <text x="348" y="118">G0/3</text><text x="368" y="102">G1</text>
+    <text x="348" y="102">G0/4</text><text x="368" y="118">G2</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">
+    <use href="#router-icon-iface" x="50" y="55" stroke="#3d85c6"/><text x="50" y="90">PE5</text>
+    <use href="#router-icon-iface" x="50" y="165" stroke="#3d85c6"/><text x="50" y="200">PE6</text>
+    <use href="#router-icon-iface" x="170" y="55" stroke="#4a4558"/><text x="170" y="90">P1</text>
+    <use href="#router-icon-iface" x="170" y="165" stroke="#4a4558"/><text x="170" y="200">P2</text>
+    <use href="#router-icon-iface" x="290" y="55" stroke="#4a4558"/><text x="290" y="90">P3</text>
+    <use href="#router-icon-iface" x="290" y="165" stroke="#4a4558"/><text x="290" y="200">P4</text>
+    <use href="#router-icon-iface" x="410" y="55" stroke="#7b2d8e"/><text x="410" y="90">PE7</text>
+    <use href="#router-icon-iface" x="410" y="165" stroke="#7b2d8e"/><text x="410" y="200">PE8</text>
+  </g>
+</svg>
+</div>
+
+<p class="footnote" style="font-style:normal;margin-top:0.75rem">
+  <strong>P routers (IOS-XR):</strong> data links <code>GigabitEthernet0/0/0/0</code>&ndash;<code>/4</code> (labeled <strong>G0/0</strong>&ndash;<strong>G0/4</strong> above).
+  Quisted&rsquo;s MPLS-SR post uses <code>/1</code>&ndash;<code>/5</code> for the same wiring &mdash; subtract one from the index.
+  <strong>PE routers (IOS-XE):</strong> <code>GigabitEthernet1</code>, <code>GigabitEthernet2</code> (data); <code>GigabitEthernet3</code> (mgmt, not shown).</p>
+
+<h3 class="section-sub">Firmware:</h3>
+
+<div class="topo-frame firmware-zone-frame">
+<svg viewBox="0 0 560 250" width="560" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Firmware zones: IOS-XE left and right PE routers, IOS-XR center P routers">
+  <defs>
+    <pattern id="fw-hatch-left" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#3d85c6" stroke-width="1" opacity="0.18"/>
+    </pattern>
+    <pattern id="fw-hatch-core" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#4a4558" stroke-width="1" opacity="0.22"/>
+    </pattern>
+    <pattern id="fw-hatch-right" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#7b2d8e" stroke-width="1" opacity="0.18"/>
+    </pattern>
+    <g id="fw-router-pe-left">
+      <circle r="22" fill="#add8e6" stroke="#3d85c6" stroke-width="2"/>
+      <rect x="-7" y="-7" width="14" height="14" fill="none" stroke="#2a6a9e" stroke-width="1.5"/>
+      <g stroke="#2a6a9e" stroke-width="1.5" stroke-linecap="round">
+        <line x1="0" y1="-14" x2="0" y2="-9"/><line x1="0" y1="9" x2="0" y2="14"/>
+        <line x1="-14" y1="0" x2="-9" y2="0"/><line x1="9" y1="0" x2="14" y2="0"/>
+      </g>
+    </g>
+    <g id="fw-router-p-core">
+      <circle r="22" fill="#4a4558" stroke="#2d2a35" stroke-width="2"/>
+      <rect x="-7" y="-7" width="14" height="14" fill="none" stroke="#fff" stroke-width="1.5"/>
+      <g stroke="#fff" stroke-width="1.5" stroke-linecap="round">
+        <line x1="0" y1="-14" x2="0" y2="-9"/><line x1="0" y1="9" x2="0" y2="14"/>
+        <line x1="-14" y1="0" x2="-9" y2="0"/><line x1="9" y1="0" x2="14" y2="0"/>
+      </g>
+    </g>
+    <g id="fw-router-pe-right">
+      <circle r="22" fill="#d4b8e8" stroke="#7b2d8e" stroke-width="2"/>
+      <rect x="-7" y="-7" width="14" height="14" fill="none" stroke="#5a1f6e" stroke-width="1.5"/>
+      <g stroke="#5a1f6e" stroke-width="1.5" stroke-linecap="round">
+        <line x1="0" y1="-14" x2="0" y2="-9"/><line x1="0" y1="9" x2="0" y2="14"/>
+        <line x1="-14" y1="0" x2="-9" y2="0"/><line x1="9" y1="0" x2="14" y2="0"/>
+      </g>
+    </g>
+  </defs>
+  <!-- zone columns -->
+  <rect x="8" y="30" width="138" height="210" rx="10" fill="#add8e6" fill-opacity="0.18" stroke="#3d85c6" stroke-width="2"/>
+  <rect x="8" y="30" width="138" height="210" rx="10" fill="url(#fw-hatch-left)"/>
+  <rect x="154" y="30" width="172" height="210" rx="10" fill="#c8c0d0" fill-opacity="0.28" stroke="#4a4558" stroke-width="2"/>
+  <rect x="154" y="30" width="172" height="210" rx="10" fill="url(#fw-hatch-core)"/>
+  <rect x="334" y="30" width="138" height="210" rx="10" fill="#d4b8e8" fill-opacity="0.2" stroke="#7b2d8e" stroke-width="2"/>
+  <rect x="334" y="30" width="138" height="210" rx="10" fill="url(#fw-hatch-right)"/>
+  <!-- zone badges -->
+  <g font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">
+    <rect x="24" y="6" width="106" height="22" rx="6" fill="#3d85c6"/>
+    <text x="77" y="21" fill="#fff">IOS-XE</text>
+    <rect x="170" y="6" width="140" height="22" rx="6" fill="#4a4558"/>
+    <text x="240" y="21" fill="#fff">IOS-XR</text>
+    <rect x="350" y="6" width="106" height="22" rx="6" fill="#7b2d8e"/>
+    <text x="403" y="21" fill="#fff">IOS-XE</text>
+  </g>
+  <!-- mesh links (shifted +30y for badge room) -->
+  <g stroke-width="2" fill="none">
+    <line x1="72" y1="85" x2="148" y2="85" stroke="#3d85c6"/>
+    <line x1="72" y1="195" x2="148" y2="195" stroke="#3d85c6"/>
+    <line x1="72" y1="85" x2="148" y2="195" stroke="#3d85c6"/>
+    <line x1="72" y1="195" x2="148" y2="85" stroke="#3d85c6"/>
+    <line x1="192" y1="85" x2="268" y2="85" stroke="#4a4558"/>
+    <line x1="192" y1="195" x2="268" y2="195" stroke="#4a4558"/>
+    <line x1="192" y1="85" x2="268" y2="195" stroke="#4a4558"/>
+    <line x1="192" y1="195" x2="268" y2="85" stroke="#4a4558"/>
+    <line x1="170" y1="107" x2="170" y2="173" stroke="#4a4558"/>
+    <line x1="290" y1="107" x2="290" y2="173" stroke="#4a4558"/>
+    <line x1="312" y1="85" x2="388" y2="85" stroke="#7b2d8e"/>
+    <line x1="312" y1="195" x2="388" y2="195" stroke="#7b2d8e"/>
+    <line x1="312" y1="85" x2="388" y2="195" stroke="#7b2d8e"/>
+    <line x1="312" y1="195" x2="388" y2="85" stroke="#7b2d8e"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a1a">
+    <use href="#fw-router-pe-left" x="50" y="85"/><text x="50" y="120">PE5</text>
+    <use href="#fw-router-pe-left" x="50" y="195"/><text x="50" y="230">PE6</text>
+    <use href="#fw-router-p-core" x="170" y="85"/><text x="170" y="120">P1</text>
+    <use href="#fw-router-p-core" x="170" y="195"/><text x="170" y="230">P2</text>
+    <use href="#fw-router-p-core" x="290" y="85"/><text x="290" y="120">P3</text>
+    <use href="#fw-router-p-core" x="290" y="195"/><text x="290" y="230">P4</text>
+    <use href="#fw-router-pe-right" x="410" y="85"/><text x="410" y="120">PE7</text>
+    <use href="#fw-router-pe-right" x="410" y="195"/><text x="410" y="230">PE8</text>
+  </g>
+</svg>
+</div>
+
+<ul class="firmware-zone-list">
+  <li><span class="role-pe-left">IOS-XE (left)</span> &mdash; PE5, PE6 on <strong>CAT 8000V</strong></li>
+  <li><span class="role-p-core">IOS-XR (center)</span> &mdash; P1, P2, P3, P4 on <strong>IOS XRv 9000</strong></li>
+  <li><span class="role-pe-right">IOS-XE (right)</span> &mdash; PE7, PE8 on <strong>CAT 8000V</strong></li>
+</ul>
+
+<p class="footnote" style="margin-top:0;margin-bottom:1rem">
+  Quisted&rsquo;s original used <strong>IOSv</strong> on the right PEs; this lab uses <strong>CAT 8000V IOS-XE</strong> on all PE nodes for SRv6 uSID feature parity.
+  Zone colors match Quisted&rsquo;s teaching layout (left = blue/teal, center = grey, right = purple) even though both PE zones run IOS-XE here.</p>
+
+<table>
+  <thead>
+    <tr><th>Platform</th><th>CML image (validated)</th><th>Earliest documented support&mdash;platform dependent</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>IOS XRv 9000</td><td><code>iosxrv9000-25-4-1</code></td><td>IOS XR 7.3.1+</td></tr>
+    <tr><td>CAT 8000V</td><td><code>cat8000v-17-18-02</code></td><td>IOS XE 17.12.1a+</td></tr>
+  </tbody>
+</table>
+<p class="footnote">Listed CML images are versions validated for this lab; minimum release columns are vendor-documented baselines&mdash;confirm against your platform&rsquo;s SRv6 uSID feature matrix before production use.</p>
+
+<h3 class="section-sub">IP Addressing:</h3>
+
+<p>The point-to-point links use this IPv6 addressing scheme:</p>
+<ul>
+  <li class="addr-formula"><strong>Links:</strong> <code>2001:<span class="addr-low">X</span><span class="addr-high">Y</span>::/64</code> where <span class="addr-low">X</span> and <span class="addr-high">Y</span> are the two endpoint router IDs (lowest first, highest second in the prefix)</li>
+  <li class="addr-formula"><strong>Host on each side:</strong> <code>2001:<span class="addr-low">X</span><span class="addr-high">Y</span>::<span class="addr-own">&lt;Router Id&gt;</span>/64</code></li>
+</ul>
+<p>For example the link between P1 and P2 uses prefix <code>2001:<span class="addr-low">1</span><span class="addr-high">2</span>::/64</code>; on P1:
+  <span class="addr-example"><code>2001:<span class="addr-low">1</span><span class="addr-high">2</span>::<span class="addr-own">1</span>/64</code></span>
+  and on P2:
+  <span class="addr-example"><code>2001:<span class="addr-low">1</span><span class="addr-high">2</span>::<span class="addr-own">2</span>/64</code></span>.
+  The link between P1 and PE5 uses <code>2001:<span class="addr-low">1</span><span class="addr-high">5</span>::/64</code>; on P1:
+  <span class="addr-example"><code>2001:<span class="addr-low">1</span><span class="addr-high">5</span>::<span class="addr-own">1</span>/64</code></span>
+  and on PE5:
+  <span class="addr-example"><code>2001:<span class="addr-low">1</span><span class="addr-high">5</span>::<span class="addr-own">5</span>/64</code></span>.</p>
+
+<div class="callout" id="quisted-ipv6-links">
+  <strong>Quisted IPv4 link addressing (pedagogical map)</strong>
+  <p style="margin:0.5rem 0 0">If you completed Quisted&rsquo;s <a href="https://www.quisted.net/index.php/2024/11/11/mpls-segment-routing-mpls-sr-lab/">MPLS-SR lab</a>, point-to-point links used
+  <strong>10.<span class="addr-low">&lt;Lowest Router Id&gt;</span>.<span class="addr-high">&lt;Highest Router Id&gt;</span>.<span class="addr-own">&lt;Router Id&gt;</span>./24</strong>
+  &mdash; same diamond wiring, IPv4 address family. The <strong>lowest</strong> and <strong>highest</strong> router IDs on the link define the subnet; each router&rsquo;s own ID is the host octet.</p>
+  <table style="margin:0.75rem 0 0">
+    <thead>
+      <tr><th>Link</th><th>Quisted IPv4 subnet</th><th>Lower-ID router</th><th>Higher-ID router</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>P1&ndash;P2</td>
+        <td><code>10.<span class="addr-low">1</span>.<span class="addr-high">2</span>.0/24</code></td>
+        <td>P1 &rarr; <code>10.<span class="addr-low">1</span>.<span class="addr-high">2</span>.<span class="addr-high">1</span>/24</code></td>
+        <td>P2 &rarr; <code>10.<span class="addr-low">1</span>.<span class="addr-high">2</span>.<span class="addr-low">2</span>/24</code></td>
+      </tr>
+      <tr>
+        <td>P1&ndash;PE5</td>
+        <td><code>10.<span class="addr-low">1</span>.<span class="addr-high">5</span>.0/24</code></td>
+        <td>P1 &rarr; <code>10.<span class="addr-low">1</span>.<span class="addr-high">5</span>.<span class="addr-high">1</span>/24</code></td>
+        <td>PE5 &rarr; <code>10.<span class="addr-low">1</span>.<span class="addr-high">5</span>.<span class="addr-own">5</span>/24</code></td>
+      </tr>
+      <tr>
+        <td>P3&ndash;PE7</td>
+        <td><code>10.<span class="addr-low">3</span>.<span class="addr-high">7</span>.0/24</code></td>
+        <td>P3 &rarr; <code>10.<span class="addr-low">3</span>.<span class="addr-high">7</span>.<span class="addr-own">3</span>/24</code></td>
+        <td>PE7 &rarr; <code>10.<span class="addr-low">3</span>.<span class="addr-high">7</span>.<span class="addr-own">7</span>/24</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin:0.75rem 0 0"><strong>Pedagogical mapping only</strong> &mdash; same diamond wiring as Quisted&rsquo;s post, but the data plane is <strong>IPv6-only</strong>. Day-0 configs do not add <code>10.x</code> on data interfaces.</p>
+</div>
+
+<p>Loopback IPv6 for IS-IS reachability: <code>fc00:0:N::1/128</code>.
+SRv6 uSID locators (F3216): shared block <code>fcbb:bb00</code> + 16-bit node ID &rarr; <code>fcbb:bb00:00NN::/48</code> on all eight routers.
+Data-plane interfaces have <strong>no IPv4</strong>; mgmt VRF uses IPv4 DHCP for OOB SSH only.</p>
+
+<div class="callout">
+  <strong>Why Loopback IPv6 / SRv6 locator / Image &mdash; not Quisted&rsquo;s Label Ranges?</strong>
+  <p style="margin:0.5rem 0 0">Quisted&rsquo;s table ends with <strong>Label Ranges</strong> (e.g. P1 = <code>24100&ndash;24199</code>) because MPLS-SR allocates
+  <strong>MPLS labels</strong> from a per-router static range for LDP and prefix-SID forwarding.</p>
+  <p style="margin:0.5rem 0 0">This lab uses <strong>SRv6 uSID</strong> instead of MPLS labels. There is no LDP and no label range to configure.
+  Each router advertises an IPv6 <strong>locator</strong> (<code>/48</code>); micro-SIDs (uN node, uA adjacency) are programmed from that block.
+  The extra columns map directly to what you verify on the wire:</p>
+  <ul style="margin:0.5rem 0 0">
+    <li><strong>IPv6 links</strong> &mdash; replaces Quisted&rsquo;s <code>10.x</code> subnets; verify with <code>show ipv6 interface brief</code> (data plane is IPv6-only).</li>
+    <li><strong>Loopback IPv6</strong> &mdash; end-to-end reachability target (replaces pinging <code>7.7.7.7</code>; use <code>fc00:0:7::1</code>).</li>
+    <li><strong>SRv6 locator</strong> &mdash; replaces <strong>Label Ranges</strong>; the locator is the SRv6 forwarding anchor (see <code>show segment-routing srv6 locator</code>).</li>
+    <li><strong>Image</strong> &mdash; same role as Quisted; platforms updated (IOS XRv 9000 + CAT 8000V) because IOSv/CSR1000v cannot run SRv6 uSID.</li>
+  </ul>
+</div>
+
+<table class="device-table">
+  <thead>
+    <tr>
+      <th>Device</th><th>Function</th><th>IPv6 links</th><th>Loopback IPv6</th><th>SRv6 locator</th><th>Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="row-p"><td>P1</td><td>P Router</td><td>Gi0/0/0/0 2001:<span class="addr-low">1</span><span class="addr-high">2</span>::<span class="addr-own">1</span>/64<br>Gi0/0/0/1 2001:<span class="addr-low">1</span><span class="addr-high">3</span>::<span class="addr-own">1</span>/64<br>Gi0/0/0/2 2001:<span class="addr-low">1</span><span class="addr-high">4</span>::<span class="addr-own">1</span>/64<br>Gi0/0/0/3 2001:<span class="addr-low">1</span><span class="addr-high">5</span>::<span class="addr-own">1</span>/64<br>Gi0/0/0/4 2001:<span class="addr-low">1</span><span class="addr-high">6</span>::<span class="addr-own">1</span>/64</td><td>fc00:0:1::1/128</td><td>fcbb:bb00:0001::/48</td><td>IOS XRv 9000</td></tr>
+    <tr class="row-p"><td>P2</td><td>P Router</td><td>Gi0/0/0/0 2001:<span class="addr-low">1</span><span class="addr-high">2</span>::<span class="addr-own">2</span>/64<br>Gi0/0/0/1 2001:<span class="addr-low">2</span><span class="addr-high">4</span>::<span class="addr-own">2</span>/64<br>Gi0/0/0/2 2001:<span class="addr-low">2</span><span class="addr-high">3</span>::<span class="addr-own">2</span>/64<br>Gi0/0/0/3 2001:<span class="addr-low">2</span><span class="addr-high">6</span>::<span class="addr-own">2</span>/64<br>Gi0/0/0/4 2001:<span class="addr-low">2</span><span class="addr-high">5</span>::<span class="addr-own">2</span>/64</td><td>fc00:0:2::1/128</td><td>fcbb:bb00:0002::/48</td><td>IOS XRv 9000</td></tr>
+    <tr class="row-p"><td>P3</td><td>P Router</td><td>Gi0/0/0/0 2001:<span class="addr-low">3</span><span class="addr-high">4</span>::<span class="addr-own">3</span>/64<br>Gi0/0/0/1 2001:<span class="addr-low">1</span><span class="addr-high">3</span>::<span class="addr-own">3</span>/64<br>Gi0/0/0/2 2001:<span class="addr-low">2</span><span class="addr-high">3</span>::<span class="addr-own">3</span>/64<br>Gi0/0/0/3 2001:<span class="addr-low">3</span><span class="addr-high">7</span>::<span class="addr-own">3</span>/64<br>Gi0/0/0/4 2001:<span class="addr-low">3</span><span class="addr-high">8</span>::<span class="addr-own">3</span>/64</td><td>fc00:0:3::1/128</td><td>fcbb:bb00:0003::/48</td><td>IOS XRv 9000</td></tr>
+    <tr class="row-p"><td>P4</td><td>P Router</td><td>Gi0/0/0/0 2001:<span class="addr-low">3</span><span class="addr-high">4</span>::<span class="addr-own">4</span>/64<br>Gi0/0/0/1 2001:<span class="addr-low">2</span><span class="addr-high">4</span>::<span class="addr-own">4</span>/64<br>Gi0/0/0/2 2001:<span class="addr-low">1</span><span class="addr-high">4</span>::<span class="addr-own">4</span>/64<br>Gi0/0/0/3 2001:<span class="addr-low">4</span><span class="addr-high">8</span>::<span class="addr-own">4</span>/64<br>Gi0/0/0/4 2001:<span class="addr-low">4</span><span class="addr-high">7</span>::<span class="addr-own">4</span>/64</td><td>fc00:0:4::1/128</td><td>fcbb:bb00:0004::/48</td><td>IOS XRv 9000</td></tr>
+    <tr class="row-pe-left"><td>PE5</td><td>PE Router</td><td>G1 2001:<span class="addr-low">1</span><span class="addr-high">5</span>::<span class="addr-own">5</span>/64<br>G2 2001:<span class="addr-low">2</span><span class="addr-high">5</span>::<span class="addr-own">5</span>/64</td><td>fc00:0:5::1/128</td><td>fcbb:bb00:0005::/48</td><td>CAT 8000V</td></tr>
+    <tr class="row-pe-left"><td>PE6</td><td>PE Router</td><td>G1 2001:<span class="addr-low">1</span><span class="addr-high">6</span>::<span class="addr-own">6</span>/64<br>G2 2001:<span class="addr-low">2</span><span class="addr-high">6</span>::<span class="addr-own">6</span>/64</td><td>fc00:0:6::1/128</td><td>fcbb:bb00:0006::/48</td><td>CAT 8000V</td></tr>
+    <tr class="row-pe-right"><td>PE7</td><td>PE Router</td><td>G1 2001:<span class="addr-low">3</span><span class="addr-high">7</span>::<span class="addr-own">7</span>/64<br>G2 2001:<span class="addr-low">4</span><span class="addr-high">7</span>::<span class="addr-own">7</span>/64</td><td>fc00:0:7::1/128</td><td>fcbb:bb00:0007::/48</td><td>CAT 8000V</td></tr>
+    <tr class="row-pe-right"><td>PE8</td><td>PE Router</td><td>G1 2001:<span class="addr-low">3</span><span class="addr-high">8</span>::<span class="addr-own">8</span>/64<br>G2 2001:<span class="addr-low">4</span><span class="addr-high">8</span>::<span class="addr-own">8</span>/64</td><td>fc00:0:8::1/128</td><td>fcbb:bb00:0008::/48</td><td>CAT 8000V</td></tr>
+  </tbody>
+</table>
+
+<p class="footnote">P1 data interfaces: Gi0/0/0/0&ndash;/4 (Quisted&rsquo;s post used G0/0&ndash;G0/4 with <code>10.x</code> IPv4 &mdash; same topology, IPv6-only here).
+PE data: Gi1, Gi2; mgmt: Gi3. PE8: Gi1&rarr;P3, Gi2&rarr;P4 &mdash; do not swap.
+<strong>SRv6 locator</strong> column = Quisted <strong>Label Ranges</strong> column (same table slot, different technology).</p>
+
+<h3 class="section-sub" id="management-access">Management access</h3>
+
+<p>Path: <code>ext-conn</code> &rarr; <code>mgmt-sw</code> &rarr; XR <code>MgmtEth0/RP0/CPU0/0</code> / PE <code>GigabitEthernet3</code> (DHCP).
+Look up current mgmt IPs in <code>verification/mgmt_hosts.json</code>, or query live from CML (PyATS <code>send_cli_command</code>): XR <code>show ip interface brief | include MgmtEth</code>; XE <code>show ip interface brief | include GigabitEthernet3</code>.</p>
+
+<table class="device-table">
+  <thead><tr><th>Node</th><th>Mgmt interface</th><th>SSH user</th><th>Password</th></tr></thead>
+  <tbody>
+    <tr class="row-p"><td>P1&ndash;P4</td><td><code>MgmtEth0/RP0/CPU0/0</code></td><td><code>cisco</code></td><td><code>Cisc01@3</code></td></tr>
+    <tr class="row-pe-left"><td>PE5&ndash;PE8</td><td><code>GigabitEthernet3</code></td><td><code>cisco</code></td><td><code>cisco</code></td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>OOB SSH day-0 config</strong>
+  <p style="margin:0.5rem 0 0"><strong>IOS-XRv (P1&ndash;P4):</strong> <code>ssh server v2</code> + <code>ssh server vrf Mgmt-intf</code> on <code>MgmtEth0/RP0/CPU0/0</code> (IPv4 DHCP).</p>
+  <p style="margin:0.5rem 0 0"><strong>IOS-XE (PE5&ndash;PE8):</strong> after <code>ip domain name</code> and <code>GigabitEthernet3</code> in <code>Mgmt-intf</code> VRF, generate an RSA key and bind SSH to Gi3:</p>
+  <pre class="config" style="margin:0.5rem 0 0">crypto key generate rsa general-keys modulus 3072
+ip ssh version 2
+ip ssh source-interface GigabitEthernet3
+line vty 0 15
+ exec-timeout 0 0
+ login local
+ transport input ssh</pre>
+  <p style="margin:0.5rem 0 0">Without the RSA key, <code>show ip ssh</code> reports <strong>SSH Disabled</strong> and port 22 on the PE mgmt IP stays closed.</p>
+</div>
+
+<p><code>python verification/discover_mgmt.py</code> &mdash; refresh <code>mgmt_hosts.json</code> from CML PyATS.
+<code>python verification/ssh_check_mgmt.py --refresh</code> &mdash; discover then expect 8/8 SSH.
+SSH: <code>ssh cisco@&lt;mgmt-ip&gt;</code>.</p>
+
+<div class="callout">
+  <p style="margin:0.5rem 0 0"><strong>SecureCRT (Windows) &mdash; all 8 tabs:</strong> set <code>LAB_XR_SSH_PASSWORD</code> / <code>LAB_XE_SSH_PASSWORD</code>, then <code>.\connect-lab.ps1 -Refresh</code> from repo or package root, or <code>.\verification\connect_securecrt.ps1 -Refresh</code>. P1 = R1 &hellip; P4 = R4.</p>
+</div>
+
+<h3 class="section-sub">Import steps</h3>
+<ol>
+  <li>Confirm IOS XRv 9000 and CAT 8000V under <strong>Tools &rarr; Node and Image Definitions</strong>.</li>
+  <li><strong>Import Lab</strong> &rarr; <code>quisted-srv6-mgmt-initial.yaml</code>.</li>
+  <li><strong>Start</strong> the lab (all 8 routers boot in parallel).</li>
+  <li>Wait for all eight routers <strong>BOOTED</strong> (XR cold boot ~15&ndash;20 min each).</li>
+  <li>First boot: XR setup wizard, PE license reload, IS-IS converge (~2&ndash;3 min).</li>
+</ol>
+
+<hr>
+
+<!-- ===== LAB CONFIGS ===== -->
+<h2 id="lab-configs">Lab configs (snippets)</h2>
+
+<p>Configs ship in the CML import (<code>quisted-srv6-mgmt-initial.yaml</code>). Regenerate with
+<code>python generate-configs.py</code> &rarr; <code>configs/*.cfg</code>.
+Full per-node configs are in <a href="#appendix-d">Appendix D</a>.</p>
+
+<h3>Per-node variables</h3>
+<table class="device-table">
+  <thead><tr><th>Node</th><th>NET</th><th>Loopback IPv6</th><th>SRv6 locator</th><th>File</th></tr></thead>
+  <tbody>
+    <tr class="row-p"><td>P1</td><td>0001</td><td>fc00:0:1::1/128</td><td>fcbb:bb00:0001::/48</td><td><code>p1.cfg</code></td></tr>
+    <tr class="row-p"><td>P2</td><td>0002</td><td>fc00:0:2::1/128</td><td>fcbb:bb00:0002::/48</td><td><code>p2.cfg</code></td></tr>
+    <tr class="row-p"><td>P3</td><td>0003</td><td>fc00:0:3::1/128</td><td>fcbb:bb00:0003::/48</td><td><code>p3.cfg</code></td></tr>
+    <tr class="row-p"><td>P4</td><td>0004</td><td>fc00:0:4::1/128</td><td>fcbb:bb00:0004::/48</td><td><code>p4.cfg</code></td></tr>
+    <tr class="row-pe-left"><td>PE5</td><td>0005</td><td>fc00:0:5::1/128</td><td>fcbb:bb00:0005::/48</td><td><code>pe5.cfg</code></td></tr>
+    <tr class="row-pe-left"><td>PE6</td><td>0006</td><td>fc00:0:6::1/128</td><td>fcbb:bb00:0006::/48</td><td><code>pe6.cfg</code></td></tr>
+    <tr class="row-pe-right"><td>PE7</td><td>0007</td><td>fc00:0:7::1/128</td><td>fcbb:bb00:0007::/48</td><td><code>pe7.cfg</code></td></tr>
+    <tr class="row-pe-right"><td>PE8</td><td>0008</td><td>fc00:0:8::1/128</td><td>fcbb:bb00:0008::/48</td><td><code>pe8.cfg</code></td></tr>
+  </tbody>
+</table>
+<p class="footnote">NET format: <code>49.0001.0000.0000.NNNN.00</code>. PE8: Gi1&rarr;P3, Gi2&rarr;P4.</p>
+
+<h3>IS-IS underlay (P router &mdash; P1)</h3>
+<p>Every data interface is <code>point-to-point</code> under IS-IS. Level-2 only, wide metrics, <strong>IPv6 unicast only</strong> on the data plane (no <code>address-family ipv4</code> under <code>router isis</code>).</p>
+<pre class="config">router isis 100
+ is-type level-2-only
+ net 49.0001.0000.0000.0001.00
+ address-family ipv6 unicast
+  metric-style wide
+  segment-routing srv6
+   locator MAIN
+  !
+ !
+ interface Loopback0
+  passive
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0
+  point-to-point
+  address-family ipv6 unicast
+  !
+ !</pre>
+
+<h3>IS-IS underlay (PE router &mdash; PE5)</h3>
+<p>IOS-XE: <code>ipv6 router isis 100</code> on data interfaces only (no <code>ip router isis</code>). <code>multi-topology</code> under IPv6 AF.</p>
+<pre class="config">interface GigabitEthernet1
+ isis network point-to-point
+ ipv6 router isis 100
+!
+router isis 100
+ net 49.0001.0000.0000.0005.00
+ is-type level-2-only
+ metric-style wide
+ address-family ipv6 unicast
+  multi-topology
+  segment-routing srv6
+   locator MAIN
+  !
+ !</pre>
+
+<h3>SRv6 uSID locator (P router &mdash; P1)</h3>
+<pre class="config">segment-routing
+ srv6
+  encapsulation
+   source-address fc00:0:1::1
+  !
+  locators
+   locator MAIN
+    prefix fcbb:bb00:0001::/48
+    micro-segment behavior unode psp-usd
+   !
+  !
+ !</pre>
+
+<h3>SRv6 uSID locator (PE router &mdash; PE5)</h3>
+<pre class="config">segment-routing srv6
+ encapsulation
+  source-address fc00:0:5::1
+ !
+ locators
+  locator MAIN
+   format usid-f3216
+   prefix fcbb:bb00:0005::/48
+ !</pre>
+<p class="footnote">P2&ndash;P4: change router ID, NET, locator prefix, and interface addresses.
+PE6&ndash;PE8: same PE pattern; PE first boot may require license + <code>reload</code>.</p>
+
+<hr>
+
+<h2 id="lab-procedure">Lab procedure &mdash; configure and verify</h2>
+
+<p>Work through the steps below on a <strong>booted</strong> lab. SSH via mgmt (<code>verification/mgmt_hosts.json</code>).
+Quisted&rsquo;s proof arc is neighbor &rarr; segment &rarr; FIB &rarr; easy ping &rarr; endpoint-SID ping &rarr; path walk &rarr; capture &mdash; same order here with SRv6 commands.</p>
+
+<!-- ===== LAB VERIFICATION ===== -->
+<h2 id="lab-verification">Lab verification &mdash; proof run (Steps 1&ndash;6)</h2>
+
+<div class="callout">
+  <strong>Proof run order</strong>
+  <ol style="margin:0.5rem 0 0">
+    <li><strong>Before ping</strong> &mdash; loopback ping on PE5, save CLI output</li>
+    <li><strong>Arm debug</strong> &mdash; CML PCAP on P1&ndash;P4; PE7 (IOS-XE): <code>terminal monitor</code>, <code>logging monitor debugging</code>, <code>debug ipv6 icmp</code>, <code>debug ipv6 packet detail</code></li>
+    <li><strong>Then ping</strong> &mdash; uSID ping on PE5 while capture + debug run</li>
+  </ol>
+</div>
+
+<h3 class="section-sub">Step 1 &mdash; Mgmt reachability</h3>
+<pre class="config">python verification/ssh_check_mgmt.py</pre>
+<p class="pass-fail pass">&#10003; Pass: 8/8 SSH</p>
+
+<h3 class="section-sub">Step 2 &mdash; IS-IS underlay</h3>
+<p><strong>IPv6-only data plane</strong> &mdash; <code>address-family ipv6 unicast</code> only under <code>router isis</code>; no <code>ip router isis</code> on PE data interfaces. Mgmt VRF IPv4 is OOB only.
+Config snippets: <a href="#lab-configs">IS-IS underlay (P1 / PE5)</a>.</p>
+
+<p><strong>Quisted equivalent:</strong> <code>show ospf database</code> (8 routers) + <code>show mpls interfaces</code> (LDP on links).
+This lab: <code>show isis database</code> on P1 + <code>show isis neighbors</code> on every node.</p>
+
+<h4>Verify &mdash; run on each router</h4>
+<pre class="config">show isis neighbors</pre>
+<p>Count neighbors <strong>Up</strong> against the table below. Every data interface should be <strong>L2</strong>, <strong>Up</strong> (replaces LDP &ldquo;Yes&rdquo; on MPLS interfaces).</p>
+
+<table>
+  <thead><tr><th>Node</th><th>Neighbors Up</th><th>Peers</th></tr></thead>
+  <tbody>
+    <tr><td>P1</td><td>5</td><td>P2, P3, P4, PE5, PE6</td></tr>
+    <tr><td>P2</td><td>5</td><td>P1, P3, P4, PE5, PE6</td></tr>
+    <tr><td>P3</td><td>5</td><td>P1, P2, P4, PE7, PE8</td></tr>
+    <tr><td>P4</td><td>5</td><td>P1, P2, P3, PE7, PE8</td></tr>
+    <tr><td>PE5</td><td>2</td><td>P1, P2</td></tr>
+    <tr><td>PE6</td><td>2</td><td>P1, P2</td></tr>
+    <tr><td>PE7</td><td>2</td><td>P3, P4</td></tr>
+    <tr><td>PE8</td><td>2</td><td>P3, P4</td></tr>
+  </tbody>
+</table>
+
+<h4>Verify &mdash; P1 only (whole-mesh LSP view)</h4>
+<pre class="config">show isis database</pre>
+<p class="pass-fail pass">&#10003; Pass: <strong>Total Level-2 LSP count: 8</strong> (P1, P2, P3, P4, PE5, PE6, PE7, PE8)</p>
+
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis database
+
+Wed Jul 15 07:37:00.118 UTC
+IS-IS 100 (Level-2) Link State Database
+LSPID                 LSP Seq Num  LSP Checksum  LSP Holdtime/Rcvd  ATT/P/OL
+P1.00-00 *            0x00000039   0x9203        682 /*             0/0/0
+P2.00-00              0x00000038   0x8241        1091 /1200         0/0/0
+P3.00-00              0x00000035   0xf917        691 /1200          0/0/0
+P4.00-00              0x00000035   0xf5a2        510 /1200          0/0/0
+PE5.00-00             0x00000032   0x85ef        1118 /1199         0/0/0
+PE6.00-00             0x00000031   0x9aca        771 /1199          0/0/0
+PE7.00-00             0x00000032   0x9eeb        855 /1200          0/0/0
+PE8.00-00             0x00000034   0xadc9        881 /1200          0/0/0
+
+Total Level-2 LSP count: 8
+Local Level-2 LSP count: 1</pre>
+
+<h4>Expected output &mdash; P1 neighbors</h4>
+<pre class="config">show isis neighbors</pre>
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis neighbors
+
+Wed Jul 15 07:36:35.612 UTC
+IS-IS 100 neighbors:
+System Id      Interface        SNPA           State Holdtime Type IETF-NSF
+P2             Gi0/0/0/0        *PtoP*         Up    28       L2   Capable
+P3             Gi0/0/0/1        *PtoP*         Up    28       L2   Capable
+P4             Gi0/0/0/2        *PtoP*         Up    25       L2   Capable
+PE5            Gi0/0/0/3        *PtoP*         Up    23       L2   Capable
+PE6            Gi0/0/0/4        *PtoP*         Up    22       L2   Capable
+
+Total neighbor count: 5</pre>
+<p class="pass-fail pass">&#10003; Pass: 5 neighbors <strong>Up</strong> on Gi0/0/0/0&ndash;/4</p>
+
+<h4>Expected output &mdash; PE5 neighbors (IOS-XE format)</h4>
+<pre class="config">show isis neighbors</pre>
+<pre class="cli">PE5# show isis neighbors
+
+Tag 100:
+System Id       Type Interface     IP Address      State Holdtime Circuit Id
+P1              L2   Gi1           2001:15::1      UP    21       00
+P2              L2   Gi2           2001:25::2      UP    29       00</pre>
+<p class="pass-fail pass">&#10003; Pass: 2 neighbors <strong>UP</strong>, link addresses <code>2001:15::1</code> / <code>2001:25::2</code> (IPv6, not <code>10.x</code>)</p>
+
+<h3 class="section-sub">Step 3 &mdash; SRv6 uSID locators</h3>
+<p><strong>Quisted equivalent:</strong> per-router <strong>Label Ranges</strong> + prefix-SID blocks.
+This lab: each router owns a locator <code>/48</code> plus local uN/uA SIDs.
+Config snippets: <a href="#lab-configs">SRv6 uSID locator (P1 / PE5)</a>.</p>
+
+<div class="callout">
+  <strong>Live lab (validated Jul 15&ndash;16):</strong> All nodes use F3216 locator <code>fcbb:bb00:000N::/48</code>
+  (<code>usid-f3216</code> on IOS-XE). IOS-XR may display <code>fcbb:bb00:N::/48</code> (leading zeros omitted).
+  Re-collected Jul 16&ndash;17 on CML lab <code>eeee6ffa</code>; full artifact:
+  <code>verification/quisted-srv6/proof_locator_fcbb.txt</code>.
+</div>
+
+<h4>Live proof: unified fcbb locators on P and PE</h4>
+<p>P routers and PEs share the same <code>fcbb:bb00</code> uSID block by design in <code>topology.py</code>.
+Loopback0 remains <code>fc00:0:N::1/128</code> for IGP reachability &mdash; that prefix is <strong>not</strong> the SRv6 locator.
+Seeing <code>fc00</code> on Loopback0 alongside <code>fcbb</code> locators is intentional: infrastructure addresses and segment IDs
+live in separate namespaces (analogous to Quisted loopbacks vs per-router label ranges).</p>
+<table>
+  <thead><tr><th>Node</th><th>Locator prefix</th><th>Status</th><th>uN SID</th><th>Loopback (fc00)</th></tr></thead>
+  <tbody>
+    <tr><td>P1</td><td><code>fcbb:bb00:1::/48</code></td><td>Up (intended fcbb)</td><td><code>fcbb:bb00:1::</code></td><td><code>fc00:0:1::1</code></td></tr>
+    <tr><td>P2</td><td><code>fcbb:bb00:2::/48</code></td><td>Up (intended fcbb)</td><td><code>fcbb:bb00:2::</code></td><td><code>fc00:0:2::1</code></td></tr>
+    <tr><td>P3</td><td><code>fcbb:bb00:3::/48</code></td><td>Up (intended fcbb)</td><td><code>fcbb:bb00:3::</code></td><td><code>fc00:0:3::1</code></td></tr>
+    <tr><td>P4</td><td><code>fcbb:bb00:4::/48</code></td><td>Up (intended fcbb)</td><td><code>fcbb:bb00:4::</code></td><td><code>fc00:0:4::1</code></td></tr>
+    <tr><td>PE5</td><td><code>FCBB:BB00:5::/48</code></td><td>Up, <code>usid-f3216</code></td><td><code>FCBB:BB00:5::</code></td><td><code>fc00:0:5::1</code></td></tr>
+    <tr><td>PE7</td><td><code>FCBB:BB00:7::/48</code></td><td>Up, <code>usid-f3216</code></td><td><code>FCBB:BB00:7::</code></td><td><code>fc00:0:7::1</code></td></tr>
+  </tbody>
+</table>
+<p><strong>P1 &mdash; locator + uN SID (Jul 17, lab eeee6ffa):</strong></p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show segment-routing srv6 locator
+
+Name                  ID       Algo  Prefix                    Status   Flags
+--------------------  -------  ----  ------------------------  -------  --------
+MAIN                  1        0     fcbb:bb00:1::/48          Up       U
+
+RP/0/RP0/CPU0:P1# show segment-routing srv6 sid
+
+*** Locator: 'MAIN' ***
+
+SID                         Behavior          Identification                    Owner               State  RW
+fcbb:bb00:1::               uN (PSP/USD)      'default':1                       sidmgr              InUse  Y
+fcbb:bb00:1:e000::          uA (PSP/USD)      [Gi0/0/0/3, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e001::          uA (PSP/USD)      [Gi0/0/0/4, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e002::          uA (PSP/USD)      [Gi0/0/0/0, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e003::          uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e004::          uA (PSP/USD)      [Gi0/0/0/1, Link-Local]:0         isis-100            InUse  Y
+
+RP/0/RP0/CPU0:P1# show ipv6 interface loopback0 brief
+
+Loopback0              [Up/Up]
+    fc00:0:1::1</pre>
+<p><strong>PE5 &mdash; uSID ping to PE7 uN (5/5):</strong></p>
+<pre class="cli">PE5# ping fcbb:bb00:7:: source fc00:0:5::1 repeat 5
+
+Sending 5, 100-byte ICMP Echos to FCBB:BB00:7::, timeout is 2 seconds:
+Packet sent with a source address of FC00:0:5::1
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 3/4/6 ms</pre>
+<p class="pass-fail pass">&#10003; Pass: P1&ndash;P4 locators Up under <code>fcbb</code>; loopbacks stay <code>fc00</code>; PE5 uSID ping 5/5</p>
+
+<h4>Verify &mdash; every router</h4>
+<pre class="config">show segment-routing srv6 locator</pre>
+<table>
+  <thead><tr><th>Node</th><th>Expected prefix (live)</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>P1&ndash;P4</td><td><code>fcbb:bb00:000N::/48</code></td><td>Up</td></tr>
+    <tr><td>PE5&ndash;PE8</td><td><code>fcbb:bb00:000N::/48</code></td><td>Up, <code>usid-f3216</code> (XE)</td></tr>
+  </tbody>
+</table>
+<p class="pass-fail pass">&#10003; Pass: locator <strong>Up</strong> on all 8 nodes</p>
+
+<h4>Verify &mdash; P1 and PE5 (SID table)</h4>
+<pre class="config">show segment-routing srv6 sid</pre>
+
+<p><strong>P1 locator:</strong></p>
+<pre class="config">show segment-routing srv6 locator</pre>
+<pre class="cli">RP/0/RP0/CPU0:P1# show segment-routing srv6 locator
+
+Name                  ID       Algo  Prefix                    Status   Flags
+--------------------  -------  ----  ------------------------  -------  --------
+MAIN                  1        0     fcbb:bb00:1::/48             Up       U</pre>
+
+<p><strong>P1 SIDs (live):</strong></p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show segment-routing srv6 sid
+
+Wed Jul 15 07:34:29.898 UTC
+
+*** Locator: 'MAIN' ***
+
+SID                         Behavior          Identification                    Owner               State  RW
+--------------------------  ----------------  --------------------------------  ------------------  -----  --
+fcbb:bb00:1::                  uN (PSP/USD)      'default':1                       sidmgr              InUse  Y
+fcbb:bb00:1:e005::             uA (PSP/USD)      [Gi0/0/0/0, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e006::             uA (PSP/USD)      [Gi0/0/0/3, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e007::             uA (PSP/USD)      [Gi0/0/0/4, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e008::             uA (PSP/USD)      [Gi0/0/0/1, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e009::             uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0         isis-100            InUse  Y</pre>
+<p class="pass-fail pass">&#10003; Pass: uN <code>fcbb:bb00:1::</code> + five uA SIDs on Gi0/0/0/0&ndash;/4</p>
+
+<p><strong>PE5 locator (IOS-XE):</strong></p>
+<pre class="cli">PE5# show segment-routing srv6 locator
+
+Name            Algo Prefix                                   Format               Status
+MAIN            0    FCBB:BB00:5::/48                         usid-f3216           Up</pre>
+
+<p><strong>PE5 SIDs (live):</strong></p>
+<pre class="cli">PE5# show segment-routing srv6 sid
+
+SID                                  Locator         Behavior             Context                                  Owner
+FCBB:BB00:5::                        MAIN            uN (PSP/USD)                                                  SID-MGR
+FCBB:BB00:5:E002::                   MAIN            uA (PSP/USD)         Gi1 FE80:0:1::1                          router isis 100
+FCBB:BB00:5:E003::                   MAIN            uA (PSP/USD)         Gi2 FE80:0:2::1                          router isis 100</pre>
+<p class="pass-fail pass">&#10003; Pass: PE uN in <code>fcbb:bb00</code> block; uA owned by <code>router isis 100</code></p>
+
+<h3 class="section-sub">Step 4 &mdash; Core forwarding (P1)</h3>
+<p><strong>Quisted equivalent:</strong> <code>show mpls forwarding</code> + <code>show cef</code> for core prefixes.
+This lab: IS-IS IPv6 routes + SRv6 SID table on P1.</p>
+
+<h4>Verify &mdash; P1</h4>
+<pre class="config">show isis ipv6 route fc00:0:5::1/128
+show isis ipv6 route fc00:0:7::1/128
+show segment-routing srv6 sid
+show cef ipv6 fc00:0:2::1/128</pre>
+<p>Full side-by-side: <a href="#p1-fib">P1 MPLS FIB &harr; SRv6 verification</a>.</p>
+
+<p><strong>Route to PE5 (direct):</strong></p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis ipv6 route fc00:0:5::1/128
+
+L2 fc00:0:5::1/128 [20/115]
+     via fe80:0:5::1, GigabitEthernet0/0/0/3, PE5, Weight: 0</pre>
+<p class="pass-fail pass">&#10003; Pass: PE5 via Gi0/0/0/3 (was Quisted <code>24100 Pop 5.5.5.5/32</code>)</p>
+
+<p><strong>Route to PE7 (ECMP):</strong></p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis ipv6 route fc00:0:7::1/128
+
+L2 fc00:0:7::1/128 [30/115]
+     via fe80:0:4::1, GigabitEthernet0/0/0/2, P4, Weight: 0
+     via fe80:0:3::1, GigabitEthernet0/0/0/1, P3, Weight: 0</pre>
+<p class="pass-fail pass">&#10003; Pass: two next-hops via P3 and P4 (was dual MPLS labels to <code>7.7.7.7/32</code>)</p>
+
+<p><strong>CEF to P2 loopback (live):</strong></p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show cef ipv6 fc00:0:2::1/128
+
+fc00:0:2::1/128, version 316, internal ...
+ remote adjacency to GigabitEthernet0/0/0/0
+   via fe80:0:2::1/128, GigabitEthernet0/0/0/0
+    next hop fe80:0:2::1/128
+    remote adjacency
+
+    Hash  OK  Interface                 Address
+    0     Y   GigabitEthernet0/0/0/0    remote</pre>
+<p class="pass-fail pass">&#10003; Pass: IPv6 FIB adjacency &mdash; no MPLS label stack</p>
+
+<h3 class="section-sub" id="proof-run">Step 5 &mdash; Proof run (PE5 &rarr; PE7)</h3>
+
+<table>
+  <thead><tr><th>Address</th><th>Role</th></tr></thead>
+  <tbody>
+    <tr><td><code>fc00:0:7::1</code></td><td>PE7 loopback &mdash; IS-IS route (<strong>step 5.1</strong> ping)</td></tr>
+    <tr><td><code>fcbb:bb00:7::</code></td><td>PE7 uN micro-SID (<strong>step 5.3</strong> ping + PCAP)</td></tr>
+  </tbody>
+</table>
+
+<h4>1. Before ping &mdash; loopback (PE5)</h4>
+<p>Ping the <strong>IS-IS loopback</strong> first. Save terminal output &mdash; no PCAP yet. Proves underlay only, not uSID steering.</p>
+<pre class="config">ping fc00:0:7::1 source fc00:0:5::1 repeat 5
+traceroute fc00:0:7::1 source fc00:0:5::1</pre>
+<pre class="cli">Sending 5, 100-byte ICMP Echos to FC00:0:7::1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 2/3/4 ms</pre>
+<p class="pass-fail pass">&#10003; Pass: IGP loopback ping 100% + traceroute shows core hops (T6 in <code>run_live.py</code>)</p>
+
+<h4>2. Arm debug + PCAP</h4>
+<p><strong>CML:</strong> right-click link on PE5&rarr;PE7 path (recommended: <strong>P1 &harr; P4</strong>, P1 <code>GigabitEthernet0/0/0/2</code>) &rarr; Packet capture &rarr; <strong>Start</strong>.</p>
+<p><strong>PE7 (uN endpoint &mdash; cat8000v IOS-XE):</strong></p>
+<div class="callout">
+  <strong>Platform note:</strong> PE nodes run <strong>cat8000v IOS-XE</strong>; P nodes run <strong>IOS-XR</strong>.
+  Do not mix debug syntax &mdash; <code>debug segment-routing srv6</code> is valid on IOS-XR but returns <code>% Unrecognized command</code> on PE7.
+</div>
+<pre class="config">show segment-routing srv6 sid
+terminal monitor
+logging monitor debugging
+debug ipv6 icmp
+debug ipv6 packet detail</pre>
+<pre class="cli">FCBB:BB00:7::    MAIN    uN (PSP/USD)    SID-MGR</pre>
+<p class="pass-fail pass">&#10003; Pass: PE7 has local uN before you ping; <code>show debug</code> shows ICMPv6 + IPv6 packet debugging <strong>on</strong></p>
+
+<h4>3. Then ping &mdash; Endpoint-SID (PE5)</h4>
+<p>With capture <strong>still running</strong> and debug on PE7. This <strong>endpoint-SID ping</strong> proves PE7 uN reachability and local endpoint behavior; it does <strong>not</strong> demonstrate a multi-uSID segment list or explicit traffic engineering.</p>
+<pre class="config">ping fcbb:bb00:7:: source fc00:0:5::1 repeat 10
+traceroute fcbb:bb00:7:: source fc00:0:5::1</pre>
+<pre class="cli">Sending 10, 100-byte ICMP Echos to FCBB:BB00:7::, timeout is 2 seconds:
+!!!!!!!!!!
+Success rate is 100 percent (10/10)
+
+Type escape sequence to abort.
+Tracing the route to FCBB:BB00:7::
+  1 2001:15::1 4 msec 3 msec 3 msec
+  2 2001:13::3 5 msec
+    2001:14::4 5 msec 4 msec
+  3 2001:37::7 4 msec 4 msec 4 msec</pre>
+
+<h5>What to look for (PE7)</h5>
+<p>While debug is running, or immediately after the ping, confirm endpoint processing on PE7:</p>
+<table>
+  <thead><tr><th>Check</th><th>Command / log line</th><th>Proof</th></tr></thead>
+  <tbody>
+    <tr><td>uN route via SR0</td><td><code>show ipv6 route fcbb:bb00:7::</code></td><td><code>receive via SR0</code> (not Loopback0)</td></tr>
+    <tr><td>Endpoint processing</td><td><code>show logging</code> (last 30)</td><td><code>Dst=FCBB:BB00:7::</code>, <code>if_output=SR0</code>; reply <code>Src=FCBB:BB00:7::</code></td></tr>
+    <tr><td>SID programmed</td><td><code>show segment-routing srv6 sid</code></td><td><code>FCBB:BB00:7::</code> <strong>uN (PSP/USD)</strong></td></tr>
+  </tbody>
+</table>
+<p>Live capture excerpt (PE7 console, Jul 15):</p>
+<pre class="cli">*Jul 15 17:54:18.913: IPv6-Fwd: Destination lookup for FCBB:BB00:7:: : Local, i/f=SR0, nexthop=FCBB:BB00:7::
+*Jul 15 17:54:18.914: ICMPv6: Echo request received,  Src: FC00:0:5::1 Dst: FCBB:BB00:7:: if_input: GigabitEthernet2 if_output: SR0
+*Jul 15 17:54:18.914: ICMPv6: Sent echo reply, Src=FCBB:BB00:7::, Dst=FC00:0:5::1</pre>
+<p>Stop CML capture; PE7: <code>undebug all</code> then <code>no terminal monitor</code>. Save CLI + PCAP.</p>
+
+<table>
+  <thead><tr><th>PCAP field (step 3)</th><th>Expected</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Source</strong></td><td><code>fc00:0:5::1</code></td></tr>
+    <tr><td><strong>Destination</strong></td><td><code>fcbb:bb00:7::</code> (uN SID &mdash; not loopback)</td></tr>
+    <tr><td><strong>Next Header</strong></td><td>ICMPv6 (58)</td></tr>
+    <tr><td><strong>Protocol</strong></td><td>ICMPv6 &mdash; no MPLS</td></tr>
+  </tbody>
+</table>
+<p class="pass-fail pass">&#10003; Pass: uSID ping 100% + PCAP Dst <code>fcbb:bb00:7::</code></p>
+<p><strong>Announcement contrast:</strong> step 1 CLI &rarr; Dst <code>fc00:0:7::1</code>; step 3 PCAP &rarr; Dst <code>fcbb:bb00:7::</code>.</p>
+
+<h4 id="srv6-path-walk">4. Walk the path with SRv6 show commands</h4>
+<p>After step 3, walk the <strong>same path on the control plane</strong>. Traceroute shows where packets go; these commands show why each hop forwards to <code>fcbb:bb00:7::</code>.</p>
+<p><strong>Path:</strong> PE5 &rarr; P1 &rarr; P3 (or P4 ECMP) &rarr; PE7. <strong>Destination:</strong> <code>fcbb:bb00:7::/48</code> (PE7 locator; micro-SID <code>fcbb:bb00:7::</code> is the uN inside that block).</p>
+
+<table>
+  <thead><tr><th>Hop</th><th>Platform</th><th>Route to PE7 locator</th><th>IS-IS SRv6</th><th>SID table</th></tr></thead>
+  <tbody>
+    <tr><td>PE5</td><td>IOS-XE</td><td><code>show ipv6 route fcbb:bb00:7::</code></td><td>&mdash;</td><td><code>show segment-routing srv6 sid</code></td></tr>
+    <tr><td>P1, P3, P4</td><td>IOS-XR</td><td><code>show isis ipv6 route fcbb:bb00:7::/48</code></td><td><code>show isis segment-routing srv6 locators</code></td><td><code>show segment-routing srv6 sid</code></td></tr>
+    <tr><td>PE7</td><td>IOS-XE</td><td><code>show ipv6 route fcbb:bb00:7::</code> &rarr; <strong>receive via SR0</strong></td><td>&mdash;</td><td><code>show segment-routing srv6 sid</code></td></tr>
+  </tbody>
+</table>
+<p><strong>IOS-XRv quirk:</strong> <code>show isis segment-routing srv6</code> alone is incomplete &mdash; append <code>locators</code>.</p>
+
+<h5>PE5 (origin)</h5>
+<pre class="config">show ipv6 route fcbb:bb00:7::
+show segment-routing srv6 locator
+show segment-routing srv6 sid</pre>
+<pre class="cli">PE5# show ipv6 route fcbb:bb00:7::
+
+Routing entry for FCBB:BB00:7::/48
+  Known via "isis 100", distance 115, metric 30, type level-2
+  Routing paths:
+    FE80:0:1::1, GigabitEthernet1
+    FE80:0:2::1, GigabitEthernet2
+
+PE5# show segment-routing srv6 sid
+FCBB:BB00:5::          uN (PSP/USD)                              SID-MGR
+FCBB:BB00:5:E002::     uA (PSP/USD)   Gi1 FE80:0:1::1 → P1      router isis 100
+FCBB:BB00:5:E003::     uA (PSP/USD)   Gi2 FE80:0:2::1 → P2      router isis 100</pre>
+<p class="pass-fail pass">&#10003; Pass: IS-IS route to PE7 locator; ECMP next-hops on Gi1/Gi2</p>
+
+<h5>P1 (transit &mdash; ECMP to P3/P4)</h5>
+<pre class="config">show isis ipv6 route fcbb:bb00:7::/48
+show isis segment-routing srv6 locators
+show segment-routing srv6 sid</pre>
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis ipv6 route fcbb:bb00:7::/48
+
+L2 fcbb:bb00:7::/48 [20/115]
+     via fe80:0:4::1, GigabitEthernet0/0/0/2, P4, Weight: 0
+     via fe80:0:3::1, GigabitEthernet0/0/0/1, P3, Weight: 0
+
+IS-IS 100 SRv6 Locators
+MAIN                  1        0     fcbb:bb00:1::/48             Active
+
+fcbb:bb00:1::                  uN (PSP/USD)      sidmgr              InUse
+fcbb:bb00:1:e008::             uA (PSP/USD)      [Gi0/0/0/1] → P3    isis-100
+fcbb:bb00:1:e009::             uA (PSP/USD)      [Gi0/0/0/2] → P4    isis-100</pre>
+<p class="pass-fail pass">&#10003; Pass: IS-IS route to PE7 <code>fcbb</code> locator; local P locator stays <code>fcbb:bb00:1::/48</code></p>
+
+<h5>P3 (transit &mdash; direct to PE7)</h5>
+<pre class="config">show isis ipv6 route fcbb:bb00:7::/48
+show segment-routing srv6 sid</pre>
+<pre class="cli">RP/0/RP0/CPU0:P3# show isis ipv6 route fcbb:bb00:7::/48
+
+L2 fcbb:bb00:7::/48 [10/115]
+     via fe80:0:7::1, GigabitEthernet0/0/0/3, PE7, Weight: 0
+
+fcbb:bb00:3::                  uN (PSP/USD)      sidmgr              InUse
+fc00:0:3:e008::             uA (PSP/USD)      [Gi0/0/0/3] → PE7   isis-100</pre>
+<p class="pass-fail pass">&#10003; Pass: one hop to PE7 on Gi0/0/0/3 (matches traceroute hop 3)</p>
+
+<h5>PE7 (destination &mdash; uN endpoint)</h5>
+<pre class="config">show segment-routing srv6 sid
+show ipv6 route fcbb:bb00:7::</pre>
+<pre class="cli">FCBB:BB00:7::          uN (PSP/USD)                              SID-MGR
+FCBB:BB00:7:E002::     uA (PSP/USD)   Gi1 FE80:0:3::1 → P3
+FCBB:BB00:7:E003::     uA (PSP/USD)   Gi2 FE80:0:4::1 → P4
+
+Routing entry for FCBB:BB00:7::/128
+  Known via "connected", type receive
+  receive via SR0</pre>
+<p class="pass-fail pass">&#10003; Pass: local uN; <strong>receive via SR0</strong> (endpoint processing)</p>
+
+<p><strong>Data-plane tie-in</strong> (step 5.3 traceroute): hop 1 <code>2001:15::1</code> (P1) &rarr; hop 2 P3/P4 ECMP &rarr; hop 3 PE7. Control plane and traceroute must agree.</p>
+<p class="pass-fail pass">&#10003; Automation: <code>python verification/node_swarm.py P3</code> or <code>python verification/run_swarms.py</code></p>
+
+<h3 class="section-sub" id="usid-forwarding">Step 5 reference &mdash; loopback vs uSID</h3>
+<div class="callout">
+  <p style="margin:0.5rem 0 0"><code>fc00:0:7::1</code> = PE7 loopback (step 1).
+  <code>fcbb:bb00:7::</code> = PE7 uN micro-SID (step 3).
+  For path steering / SRH, see <a href="#srte-usid-advanced">Optional: SR-TE uSID policy</a>.</p>
+</div>
+
+<h3 class="section-sub" id="pcap-proof">PCAP details</h3>
+<p>See <a href="#proof-run">Step 5 &sect;2&ndash;3</a>. Capture during uSID ping only. Echo reply: Src <code>fcbb:bb00:7::</code>, Dst <code>fc00:0:5::1</code>.</p>
+<div class="callout">
+  <strong>Where is the micro-SID?</strong>
+  <p style="margin:0.5rem 0 0">The micro-SID <em>is</em> <code>fcbb:bb00:7::</code> in the IPv6 destination.
+  Baseline uSID ping has no SRH (Next Header 58). SR-TE optional path adds Next Header 43.</p>
+</div>
+
+<h3 class="section-sub" id="debug-proof">Debug details</h3>
+<p>See <a href="#proof-run">Step 5 &sect;2&ndash;3</a>. IOS-XE debug stack on <strong>PE7</strong> (<code>terminal monitor</code>, <code>logging monitor debugging</code>, <code>debug ipv6 icmp</code>, <code>debug ipv6 packet detail</code>) before uSID ping; <code>undebug all</code> + <code>no terminal monitor</code> after. P1 transit debug optional.</p>
+<table>
+  <thead><tr><th>Node</th><th>Role</th><th>Correlate with</th></tr></thead>
+  <tbody>
+    <tr><td>PE5</td><td>Source</td><td>CLI ping 100%</td></tr>
+    <tr><td>P1 / P4</td><td>IPv6 forward</td><td>PCAP Dst <code>fcbb:bb00:7::</code></td></tr>
+    <tr><td>PE7</td><td><strong>uN endpoint</strong></td><td>Debug + <code>show segment-routing srv6 sid</code></td></tr>
+  </tbody>
+</table>
+
+<h3 class="section-sub">Step 6 &mdash; Automation (optional)</h3>
+<pre class="config">python verification/run_live.py</pre>
+<p class="pass-fail pass">&#10003; Pass: overall PASS in verification/results.json</p>
+
+<hr>
+<!-- ===== P1 FIB ===== -->
+<h2 id="p1-fib">P1 MPLS FIB &harr; SRv6 verification</h2>
+
+<p><strong>Prefix mapping:</strong> <code>2.2.2.2/32</code> &rarr; <code>fc00:0:2::1/128</code> &nbsp;
+<code>5.5.5.5/32</code> &rarr; <code>fc00:0:5::1/128</code> &nbsp;
+<code>7.7.7.7/32</code> &rarr; <code>fc00:0:7::1/128</code></p>
+
+<h3 class="section-sub">Verification on Router P1:</h3>
+
+<p>Quisted starts with <code>sh ospf database</code> (8 routers in area 0) and <code>show mpls interfaces</code> (LDP enabled on data links).
+This lab uses IS-IS + SRv6 &mdash; run the equivalents below on P1 first.</p>
+
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis database
+
+IS-IS 100 (Level-2) Link State Database
+LSPID                 LSP Seq Num  LSP Checksum  LSP Holdtime  ATT/P/OL
+P1.00-00              0x00000042   0x8a3f        892           0/0/0
+P2.00-00              0x00000038   0xb21c        845           0/0/0
+P3.00-00              0x00000031   0xc104        901           0/0/0
+P4.00-00              0x00000029   0xd5e8        867           0/0/0
+PE5.00-00             0x0000001a   0xe6b2        823           0/0/0
+PE6.00-00             0x00000015   0xf104        856           0/0/0
+PE7.00-00             0x00000012   0xa8c3        889           0/0/0
+PE8.00-00             0x0000000f   0xb9d1        834           0/0/0
+
+    Total LSP count: 8</pre>
+<p class="pass-fail pass">&#10003; Pass: 8 LSPs (same 8 router IDs as Quisted&rsquo;s OSPF database)</p>
+
+<p>Quisted: <code>show mpls interfaces</code> &mdash; LDP <strong>Yes</strong> on Gi0/0/0/1&ndash;/5.
+This lab has <strong>no LDP/MPLS</strong>; confirm IS-IS adjacencies Up on all data interfaces instead:</p>
+
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis neighbors
+
+IS-IS 100 neighbors:
+System Id      Interface        SNPA           State Holdtime Type IETF-NSF
+P2             Gi0/0/0/0        *PtoP*         Up    22       L2   Capable
+P3             Gi0/0/0/1        *PtoP*         Up    24       L2   Capable
+P4             Gi0/0/0/2        *PtoP*         Up    27       L2   Capable
+PE5            Gi0/0/0/3        *PtoP*         Up    27       L2   Capable
+PE6            Gi0/0/0/4        *PtoP*         Up    24       L2   Capable
+
+Total neighbor count: 5</pre>
+<p class="pass-fail pass">&#10003; Pass: 5 neighbors Up (replaces Quisted&rsquo;s 5 LDP-enabled MPLS interfaces)</p>
+
+<p>Confirm SRv6 locator is Up (replaces checking MPLS label range assignment):</p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show segment-routing srv6 locator
+
+Name                  ID       Algo  Prefix                    Status   Flags
+--------------------  -------  ----  ------------------------  -------  --------
+MAIN                  1        0     fcbb:bb00:1::/48             Up       U</pre>
+<p class="pass-fail pass">&#10003; Pass: locator <code>fcbb:bb00:1::/48</code> Up (P1&rsquo;s SRv6 anchor; was label range 24100&ndash;24199)</p>
+
+<p>After baseline checks, Quisted verified MPLS-SR forwarding with <code>show mpls forwarding</code>,
+<code>show cef</code>, <code>show ospf sid-database</code>, and <code>show mpls label table detail</code>.
+Use the SRv6 equivalents below.</p>
+
+<table>
+  <thead>
+    <tr><th>Quisted MPLS-SR on P-1</th><th>Lab equivalent on P1</th><th>What it proves</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>show mpls forwarding</code></td><td><code>show isis ipv6 route &lt;prefix&gt;</code></td><td>Per-prefix next-hop / ECMP</td></tr>
+    <tr><td></td><td><code>show segment-routing srv6 sid</code></td><td>Local uN + uA SIDs installed</td></tr>
+    <tr><td><code>show cef 2.2.2.2/32</code></td><td><code>show cef ipv6 fc00:0:2::1/128</code></td><td>FIB entry for P2 loopback</td></tr>
+    <tr><td></td><td><code>show route ipv6 fc00:0:2::1/128</code></td><td>RIB + outgoing interface</td></tr>
+    <tr><td><code>show ospf sid-database</code></td><td><code>show isis database verbose</code></td><td>Remote locators + END/END.X SIDs in LSPs</td></tr>
+    <tr><td><code>show mpls label table detail</code></td><td><code>show segment-routing srv6 sid</code></td><td>SID ownership, behavior, interface binding</td></tr>
+  </tbody>
+</table>
+
+<h3 class="section-sub">1. <code>show mpls forwarding</code> &rarr; <code>show isis ipv6 route</code></h3>
+
+<p>Quisted saw <code>16002 Pop SR Pfx (idx 2)</code> and <code>24100 Pop 5.5.5.5/32</code>. Lab equivalents:</p>
+
+<h4>Route to P2 (was <code>2.2.2.2/32</code> via Gi0/0/0/1)</h4>
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis ipv6 route fc00:0:2::1/128
+
+L2 fc00:0:2::1/128 [10/115]
+     via fe80::5054:ff:fe09:a39e, GigabitEthernet0/0/0/0, P2, SRGB Base: 16000, Weight: 0</pre>
+<p class="pass-fail pass">&#10003; Pass: direct adjacency to P2 on Gi0/0/0/0</p>
+
+<h4>Route to PE5 (was <code>24100 Pop 5.5.5.5/32 Gi&hellip; 10.1.5.5</code>)</h4>
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis ipv6 route fc00:0:5::1/128
+
+L2 fc00:0:5::1/128 [20/115]
+     via fe80::5054:ff:fe88:a50b, GigabitEthernet0/0/0/3, PE5, Weight: 0</pre>
+<p class="pass-fail pass">&#10003; Pass: direct PE5 attachment on Gi0/0/0/3</p>
+
+<h4>ECMP to PE7 (was dual labels to <code>7.7.7.7/32</code> via P3/P4)</h4>
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis ipv6 route fc00:0:7::1/128
+
+L2 fc00:0:7::1/128 [30/115]
+     via fe80::5054:ff:fe58:612a, GigabitEthernet0/0/0/2, P4, SRGB Base: 16000, Weight: 0
+     via fe80::5054:ff:fef5:c8d4, GigabitEthernet0/0/0/1, P3, SRGB Base: 16000, Weight: 0</pre>
+<p class="pass-fail pass">&#10003; Pass: two next-hops (ECMP) via Gi0/0/0/1 and Gi0/0/0/2</p>
+
+<p class="footnote">P1 may still show a slim <code>show mpls forwarding</code> with IS-IS SR Adj labels (24000&ndash;24009) only &mdash; not the full MPLS-SR FIB from Quisted. Use IS-IS IPv6 routes for this lab.</p>
+
+<h3 class="section-sub">2. <code>show cef 2.2.2.2/32</code> &rarr; <code>show cef ipv6</code></h3>
+
+<p>Quisted showed <code>labeled SR</code> and <code>context-label:16002</code>. Lab FIB is IPv6-native:</p>
+
+<pre class="cli">RP/0/RP0/CPU0:P1# show cef ipv6 fc00:0:2::1/128
+
+fc00:0:2::1/128, version 34, internal ...
+ remote adjacency to GigabitEthernet0/0/0/0
+   via fe80::5054:ff:fe09:a39e/128, GigabitEthernet0/0/0/0
+    next hop fe80::5054:ff:fe09:a39e/128
+    remote adjacency
+    Hash  OK  Interface                 Address
+    0     Y   GigabitEthernet0/0/0/0    remote</pre>
+
+<pre class="cli">RP/0/RP0/CPU0:P1# show route ipv6 fc00:0:2::1/128
+
+Routing entry for fc00:0:2::1/128
+  Known via "isis 100", distance 115, metric 10, type level-2
+    fe80::5054:ff:fe09:a39e, from fc00:0:2::1, via GigabitEthernet0/0/0/0</pre>
+<p class="pass-fail pass">&#10003; Pass: IS-IS route via Gi0/0/0/0 toward P2</p>
+
+<h3 class="section-sub">3. <code>show ospf sid-database</code> &rarr; <code>show isis database verbose</code></h3>
+
+<p>Quisted&rsquo;s prefix-SID table (indexes 1&ndash;4 for P routers) becomes SRv6 locators and SIDs in IS-IS LSPs.</p>
+
+<p><strong>Local P1 LSP</strong> (locator + node SID + adjacency SIDs):</p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis database verbose
+  ...
+  SRv6 Locator:   MT (IPv6 Unicast) fcbb:bb00:1::/48 ...
+    END SID: fcbb:bb00:1:: uN (PSP/USD)
+  ...
+    END.X SID: fcbb:bb00:1:e002:: ... uA (PSP/USD)   ! Gi0/0/0/0 toward P2
+    END.X SID: fcbb:bb00:1:e001:: ... uA (PSP/USD)   ! Gi0/0/0/1 toward P3
+    END.X SID: fcbb:bb00:1:e000:: ... uA (PSP/USD)   ! Gi0/0/0/2 toward P4</pre>
+
+<p><strong>Remote P2 LSP</strong> (like prefix-SID index 2 for <code>2.2.2.2</code>):</p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show isis database P2.00-00 detail
+  IPv6 Address:   fc00:0:2::1
+  SRv6 Locator:   MT (IPv6 Unicast) fcbb:bb00:2::/48 ...
+  Metric: 0  MT (IPv6 Unicast) IPv6 fc00:0:2::1/128</pre>
+<p class="pass-fail pass">&#10003; Pass: P2 advertises locator <code>fcbb:bb00:2::/48</code> and loopback</p>
+
+<h3 class="section-sub">4. <code>show mpls label table detail</code> &rarr; <code>show segment-routing srv6 sid</code></h3>
+
+<p>Quisted&rsquo;s SR Adj segments on interfaces map to uA (adjacency) micro-SIDs:</p>
+
+<pre class="cli">RP/0/RP0/CPU0:P1# show segment-routing srv6 sid
+
+*** Locator: 'MAIN' ***
+
+SID                         Behavior          Identification                    Owner
+fcbb:bb00:1::                  uN (PSP/USD)      'default':1                       sidmgr
+fcbb:bb00:1:e000::             uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0         isis-100
+fcbb:bb00:1:e001::             uA (PSP/USD)      [Gi0/0/0/1, Link-Local]:0         isis-100
+fcbb:bb00:1:e002::             uA (PSP/USD)      [Gi0/0/0/0, Link-Local]:0         isis-100
+fcbb:bb00:1:e003::             uA (PSP/USD)      [Gi0/0/0/3, Link-Local]:0         isis-100
+fcbb:bb00:1:e004::             uA (PSP/USD)      [Gi0/0/0/4, Link-Local]:0         isis-100</pre>
+
+<table>
+  <thead><tr><th>Quisted MPLS label table</th><th>Lab SRv6 SID table</th></tr></thead>
+  <tbody>
+    <tr><td><code>SR Adj Segment &hellip; Gi0/0/0/1, nh=10.1.2.2</code></td><td><code>uA &hellip; [Gi0/0/0/0]</code> toward P2</td></tr>
+    <tr><td><code>SR Pfx (idx 2)</code> &rarr; label 16002</td><td><code>uN</code> at remote <code>fcbb:bb00:2::</code> (in P2 LSP)</td></tr>
+    <tr><td>SRGB 16000&ndash;23999</td><td>Still in LSP (<code>SRGB Base: 16000</code>) for MPLS-SR adj-SID remnants</td></tr>
+  </tbody>
+</table>
+<p class="pass-fail pass">&#10003; Pass: uN node SID + uA per-interface adjacency SIDs</p>
+
+<h3>Quick checklist on P1</h3>
+<pre class="config">! "mpls forwarding" equivalent
+show isis ipv6 route fc00:0:2::1/128    ! P2  (was 2.2.2.2)
+show isis ipv6 route fc00:0:5::1/128    ! PE5 (was 5.5.5.5)
+show isis ipv6 route fc00:0:7::1/128    ! PE7 ECMP (was 7.7.7.7)
+
+! "cef" equivalent
+show cef ipv6 fc00:0:2::1/128
+
+! "ospf sid-database" equivalent
+show isis database verbose
+show isis database P2.00-00 detail
+
+! "mpls label table detail" equivalent
+show segment-routing srv6 sid
+show segment-routing srv6 locator</pre>
+
+<hr>
+
+<!-- ===== SIDE BY SIDE ===== -->
+<h2 id="side-by-side">Side-by-side: Quisted MPLS commands vs this lab</h2>
+
+<table>
+  <thead>
+    <tr><th>Original on P-1 (MPLS-SR)</th><th>This lab on P1 (SRv6 uSID)</th><th>Expected parity</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>show ospf database</code> (8 routers)</td><td><code>show isis database</code> (8 LSPs)</td><td>Same 8 router IDs</td></tr>
+    <tr><td>5 LDP neighbors</td><td>5 IS-IS neighbors Up</td><td>Same peer set: P2,P3,P4,PE5,PE6</td></tr>
+    <tr><td><code>24100 Pop 5.5.5.5/32</code> via Gi&hellip; 10.1.5.5</td><td><code>show isis ipv6 route fc00:0:5::1/128</code> via Gi0/0/0/3</td><td>Direct PE5 attachment</td></tr>
+    <tr><td>ECMP 7.7.7.7 via P3/P4</td><td>ECMP <code>fc00:0:7::1/128</code> via Gi0/0/0/1 and /2</td><td>Same ECMP pattern</td></tr>
+    <tr><td><code>traceroute mpls ipv4 7.7.7.7</code></td><td><code>traceroute fc00:0:7::1 source fc00:0:1::1</code></td><td>Multi-hop through core</td></tr>
+  </tbody>
+</table>
+
+<table>
+  <thead><tr><th>Original (MPLS-SR)</th><th>This lab</th></tr></thead>
+  <tbody>
+    <tr><td><code>show mpls ldp neighbor</code></td><td><code>show isis neighbors</code></td></tr>
+    <tr><td><code>show mpls forwarding</code></td><td><code>show isis ipv6 route</code>, <code>show route ipv6 summary</code></td></tr>
+    <tr><td><code>show segment-routing mpls connected-prefix-sid</code></td><td><code>show segment-routing srv6 locator</code></td></tr>
+    <tr><td><code>ping 7.7.7.7 source 5.5.5.5</code></td><td><code>ping fc00:0:7::1 source fc00:0:5::1</code></td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- ===== GOTCHAS ===== -->
+<h2 id="gotchas">Troubleshooting / gotchas</h2>
+
+<h3>Platform &amp; CML</h3>
+<ol>
+  <li><strong>XR cold boot</strong> &mdash; ~15&ndash;20 min per IOS XRv 9000 node on first start. Factory YAML boots all nodes in parallel.</li>
+  <li><strong>CAT 8000V license</strong> &mdash; <code>license boot level network-advantage addon dna-advantage</code> + reload once.</li>
+  <li><strong>XR setup wizard</strong> &mdash; run <code>verification/complete_xr_setup.py</code> if SSH blocked.</li>
+  <li><strong>PE SSH disabled</strong> &mdash; XE needs RSA key, <code>ip ssh source-interface GigabitEthernet3</code>, and <code>line vty</code> &rarr; <code>login local</code>. If <code>show ip ssh</code> says <strong>SSH Disabled</strong>, port 22 on the PE mgmt IP stays closed. See <a href="#management-access">Management access</a>.</li>
+</ol>
+
+<h3>IS-IS</h3>
+<ol start="5">
+  <li><strong>Unique NET per node</strong> &mdash; duplicate NET prevents adjacencies.</li>
+  <li><strong>Level mismatch</strong> &mdash; all nodes must be <code>level-2-only</code>.</li>
+  <li><strong>IOS XE multi-topology</strong> &mdash; required for IPv6 IS-IS on PE routers.</li>
+  <li><strong>Point-to-point</strong> &mdash; XR: <code>point-to-point</code> under interface; XE: <code>isis network point-to-point</code>.</li>
+</ol>
+
+<h3>SRv6 &amp; wiring</h3>
+<ol start="9">
+  <li><strong>PE locator overlap</strong> &mdash; all SRv6 locators must use <code>fcbb:bb00:…</code>, not <code>fc00:0:N::/48</code> (loopback space only).</li>
+  <li><strong>Reachability vs locator</strong> &mdash; IGP tests use <code>fc00:0:N::1</code> loopbacks.
+  uSID endpoint tests use PE uN SIDs (e.g. <code>fcbb:bb00:7::</code>). See <a href="#proof-run">Step 5 proof run</a>.</li>
+  <li><strong>PE8 Gi1/Gi2</strong> &mdash; Gi1&rarr;P3 (<code>10.3.8.8</code>), Gi2&rarr;P4 (<code>10.4.8.8</code>). Swapping breaks IS-IS.</li>
+  <li><strong>XR interface indices</strong> &mdash; Gi0/0/0/0&ndash;/4 in this lab (not /1&ndash;/5 from Quisted&rsquo;s post).</li>
+</ol>
+
+<hr>
+
+<h2 id="srte-usid-advanced">Optional: SR-TE uSID policy (path steering)</h2>
+<p>To elevate from <em>SRv6 enablement</em> to <em>explicit uSID steering</em>, add an SR-TE policy on an
+<strong>IOS-XR head-end</strong> (P1). IOS-XE on PE5 exposes <code>show segment-routing traffic-eng</code>
+but does not accept policy configuration in the <code>cat8000v-17.18</code> image used here.</p>
+<ul>
+  <li>Explicit uSID segment list: P4 uN <code>fcbb:bb00:4::</code> then PE7 uN <code>fcbb:bb00:7::</code></li>
+  <li>Policy tuple <code>(head-end, color, end-point)</code> with <code>explicit segment-list</code></li>
+  <li>Force traffic via P4 instead of IGP ECMP via P3</li>
+  <li>Verify policy state, counters, optional SRH/IPv6 destination capture; fail a link and observe fallback</li>
+</ul>
+<pre class="config">! configs/snippets/p1-srte-usid-policy.cfg
+segment-routing
+ traffic-eng
+  segment-lists
+   srv6
+    sid-format usid-f3216
+   segment-list pe5-via-p4-usid
+    srv6
+     index 10 sid fcbb:bb00:4::
+     index 20 sid fcbb:bb00:7::
+  policy to-pe7-usid-via-p4
+   color 100 end-point ipv6 fcbb:bb00:7::
+   srv6 locator MAIN
+   candidate-paths
+    preference 100
+     explicit segment-list pe5-via-p4-usid</pre>
+<p class="footnote">Commit segment-list and policy in <strong>separate</strong> commits on P1.
+CML IOS XRv may reject policy binding until SR-TE topology validation passes for mixed P/PE uSIDs.</p>
+
+<!-- ===== APPENDIX A ===== -->
+<h2 id="appendix-a">Appendix A &mdash; Automation (<code>run_live.py</code>, T1&ndash;T12)</h2>
+
+<pre class="config">$env:CML_HOST = '&lt;your-cml-host&gt;'
+$env:CML_LAB_ID = '&lt;your-lab-id&gt;'
+$env:CML_PASSWORD = '...'          # or VERIFY_SSH_ONLY=1
+python verification/run_live.py</pre>
+
+<table>
+  <thead><tr><th>Test</th><th>What it checks</th><th>Pass criteria</th></tr></thead>
+  <tbody>
+    <tr><td>T1</td><td>Topology YAML</td><td>8 nodes, 14 links</td></tr>
+    <tr><td>T2</td><td>Addressing model</td><td>Derived from <code>topology.py</code></td></tr>
+    <tr><td>T3</td><td>Lab on CML</td><td>Lab ID present</td></tr>
+    <tr><td>T4</td><td>IS-IS adjacencies</td><td>P1 &ge;5, PE5 &ge;2 neighbors</td></tr>
+    <tr><td>T5</td><td>SRv6 locators</td><td>P1 fcbb Up; PE5 fcbb Up</td></tr>
+    <tr><td>T6</td><td>Ping</td><td>PE5&rarr;PE7 and P1&rarr;PE7 100%</td></tr>
+    <tr><td>T7</td><td>Traceroute</td><td>Multi-hop paths</td></tr>
+    <tr><td>T9</td><td>Mgmt SSH</td><td>8/8 reachable</td></tr>
+    <tr><td>T6</td><td>IGP loopback ping</td><td><code>fc00:0:7::1</code> 100% (IS-IS route)</td></tr>
+    <tr><td>T11</td><td>uSID endpoint</td><td>PE7 uN <code>fcbb:bb00:7::</code> ping 100%</td></tr>
+    <tr><td>T12</td><td>uSID traceroute</td><td>Traceroute to <code>fcbb:bb00:7::</code> has core hops</td></tr>
+    <tr><td>T10</td><td>IS-IS route</td><td>P1 route to fc00:0:7::1/128</td></tr>
+  </tbody>
+</table>
+
+<p>Artifacts: <code>verification/quisted-srv6/*.txt</code>, summary in <code>verification/results.json</code>.</p>
+
+<hr>
+
+<h2 id="appendix-b">Appendix B &mdash; CML canvas layout</h2>
+
+<p>Coordinates and zone annotations: <code>layout.py</code>. Apply with:</p>
+<pre class="config">export CML_PASSWORD=...
+python verification/apply_lab_layout.py</pre>
+
+<table>
+  <thead><tr><th>Priority</th><th>Nodes booted first</th></tr></thead>
+  <tbody>
+    <tr><td>40</td><td>ext-conn, mgmt-sw</td></tr>
+    <tr><td>30</td><td>P1</td></tr>
+    <tr><td>29&ndash;27</td><td>P2, P3, P4</td></tr>
+    <tr><td>20</td><td>PE5&ndash;PE8 (parallel)</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2 id="appendix-c">Appendix C &mdash; Future: L3VPN over SRv6 (out of scope)</h2>
+
+<div class="out-of-scope">
+  <p>Quisted&rsquo;s original lab progressed to L3VPN / BGP over MPLS-SR. <strong>This lab stops at SRv6 uSID underlay reachability.</strong>
+  A future Part 3 could add VRFs, BGP VPNv4/VPNv6 with SRv6 encapsulation, and CE connectivity &mdash; not required here.</p>
+</div>
+
+<hr>
+
+<h2 id="appendix-d">Appendix D &mdash; Full router configs</h2>
+
+<p><strong>IPv6-only data plane.</strong> IS-IS and SRv6 run on <code>address-family ipv6 unicast</code> only.
+Loopbacks and links use IPv6; mgmt (<code>Mgmt-intf</code> VRF) may use IPv4 DHCP for OOB SSH &mdash; not in IS-IS.</p>
+<p>Regenerate: <code>python generate-configs.py</code> then <code>python build-quisted-srv6-yaml.py</code>.
+P2&ndash;P4 and PE6&ndash;PE8: same patterns in <code>configs/</code>.</p>
+
+<h3>P1 &mdash; full config (<code>configs/p1.cfg</code>)</h3>
+<pre class="config">hostname P1
+logging console disable
+service timestamps log datetime msec
+service timestamps debug datetime msec
+domain name lab.local
+domain lookup disable
+ssh server v2
+username cisco
+ group root-lr
+ group cisco-support
+ secret Cisc01@3
+!
+line console
+ exec-timeout 0 0
+ login authentication default
+!
+line default
+ exec-timeout 0 0
+ login authentication default
+!
+aaa authentication login default local
+!
+vrf Mgmt-intf
+ address-family ipv4 unicast
+ !
+!
+interface MgmtEth0/RP0/CPU0/0
+ vrf Mgmt-intf
+ ipv4 address dhcp
+ no shutdown
+!
+ssh server vrf Mgmt-intf
+!
+
+interface Loopback0
+ ipv6 address fc00:0:1::1/128
+ ipv6 address fe80:0:1::1 link-local
+ cdp
+!
+interface GigabitEthernet0/0/0/0
+ description to P2
+ ipv6 address fe80:0:1::1 link-local
+ ipv6 address 2001:12::1/64
+ cdp
+ no shutdown
+!
+interface GigabitEthernet0/0/0/1
+ description to P3
+ ipv6 address fe80:0:1::1 link-local
+ ipv6 address 2001:13::1/64
+ cdp
+ no shutdown
+!
+interface GigabitEthernet0/0/0/2
+ description to P4
+ ipv6 address fe80:0:1::1 link-local
+ ipv6 address 2001:14::1/64
+ cdp
+ no shutdown
+!
+interface GigabitEthernet0/0/0/3
+ description to PE5
+ ipv6 address fe80:0:1::1 link-local
+ ipv6 address 2001:15::1/64
+ cdp
+ no shutdown
+!
+interface GigabitEthernet0/0/0/4
+ description to PE6
+ ipv6 address fe80:0:1::1 link-local
+ ipv6 address 2001:16::1/64
+ cdp
+ no shutdown
+!
+segment-routing
+ srv6
+  encapsulation
+   source-address fc00:0:1::1
+  !
+  locators
+   locator MAIN
+    prefix fcbb:bb00:0001::/48
+    micro-segment behavior unode psp-usd
+   !
+  !
+ !
+!
+router isis 100
+ is-type level-2-only
+ net 49.0001.0000.0000.0001.00
+ address-family ipv6 unicast
+  metric-style wide
+  segment-routing srv6
+   locator MAIN
+  !
+ !
+ interface Loopback0
+  passive
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0
+  point-to-point
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/1
+  point-to-point
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/2
+  point-to-point
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/3
+  point-to-point
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/4
+  point-to-point
+  address-family ipv6 unicast
+  !
+ !
+!
+end</pre>
+
+<h3>PE5 &mdash; full config (<code>configs/pe5.cfg</code>)</h3>
+<pre class="config">hostname PE5
+no service config
+no logging console
+license boot level network-advantage addon dna-advantage
+ip domain name lab.local
+username cisco privilege 15 secret cisco
+ipv6 unicast-routing
+!
+vrf definition Mgmt-intf
+ address-family ipv4
+ exit-address-family
+!
+interface Loopback0
+ ipv6 address fc00:0:5::1/128
+ ipv6 address fe80:0:5::1 link-local
+ ipv6 router isis 100
+!
+interface GigabitEthernet1
+ description to P1
+ ipv6 address fe80:0:5::1 link-local
+ ipv6 address 2001:15::5/64
+ cdp enable
+ isis network point-to-point
+ ipv6 router isis 100
+ no shutdown
+!
+interface GigabitEthernet2
+ description to P2
+ ipv6 address fe80:0:5::1 link-local
+ ipv6 address 2001:25::5/64
+ cdp enable
+ isis network point-to-point
+ ipv6 router isis 100
+ no shutdown
+!
+interface GigabitEthernet3
+ description management (external bridge)
+ vrf forwarding Mgmt-intf
+ ip address dhcp
+ no cdp enable
+ no shutdown
+!
+no cdp run
+cdp run
+!
+crypto key generate rsa general-keys modulus 3072
+ip ssh version 2
+ip ssh source-interface GigabitEthernet3
+line vty 0 15
+ exec-timeout 0 0
+ login local
+ transport input ssh
+!
+segment-routing srv6
+ encapsulation
+  source-address fc00:0:5::1
+ !
+ locators
+  locator MAIN
+   format usid-f3216
+   prefix fcbb:bb00:0005::/48
+ !
+!
+router isis 100
+ net 49.0001.0000.0000.0005.00
+ is-type level-2-only
+ metric-style wide
+ address-family ipv6 unicast
+  multi-topology
+  segment-routing srv6
+   locator MAIN
+  !
+ !
+end</pre>
+
+<h3>Remaining nodes</h3>
+<ul>
+  <li><code>configs/p2.cfg</code> &hellip; <code>p4.cfg</code> &mdash; IOS-XR P routers</li>
+  <li><code>configs/pe6.cfg</code> &hellip; <code>pe8.cfg</code> &mdash; IOS-XE PE routers</li>
+</ul>
+
+<hr>
+
+<p class="footnote">
+  Markdown source: <code>srv6-usid-isis-lab.md</code> &middot;
+  Reference: <code>README.md</code>, <code>topology.py</code>, <code>configs/*.cfg</code>
+</p>
+
+</div>
+<script>
+(function () {
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function span(cls, html) {
+    return '<span class="' + cls + '">' + html + "</span>";
+  }
+
+  function highlightTokens(lineHtml) {
+    return lineHtml
+      .replace(/\bUp\b/g, span("cli-up", "Up"))
+      .replace(/\b(InUse|Capable|Active)\b/g, span("cli-ok", "$1"))
+      .replace(/(\*PtoP\*|\s\*\s)/g, function (m) { return span("cli-ok", m); });
+  }
+
+  function highlightCliLine(line) {
+    var raw = line;
+    var e = escapeHtml(line);
+
+    if (/^(RP\/|PE\d#|[\w.-]+#)\s/.test(raw)) {
+      var m = raw.match(/^((?:RP\/[\w/.:-]+#|PE\d#|[\w.-]+#)\s*)(.*)$/);
+      if (m) {
+        return span("cli-prompt", escapeHtml(m[1])) + span("cli-cmd", escapeHtml(m[2]));
+      }
+    }
+
+    if (/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+\w+\s+\d+\s+\d+:\d+:\d+\.\d+\s+UTC/.test(raw)) {
+      return span("cli-ts", e);
+    }
+
+    if (/^\*\*\*/.test(raw) || /^IS-IS \d+/.test(raw) || /^Routing entry for/.test(raw) || /^Tag \d+:/.test(raw)) {
+      return span("cli-banner", e);
+    }
+
+    if (/^Total /.test(raw)) {
+      return raw.replace(/^(Total [^:]+)(:)(.*)$/, function (_, label, colon, rest) {
+        return span("cli-summary", escapeHtml(label)) + colon + escapeHtml(rest);
+      });
+    }
+
+    if (/^Local Level-2 LSP count:/.test(raw)) {
+      return raw.replace(/^(Local Level-2 LSP count)(:.*)$/, function (_, label, rest) {
+        return span("cli-summary", escapeHtml(label)) + escapeHtml(rest);
+      });
+    }
+
+    if (/^-{5,}/.test(raw)) {
+      return span("cli-sep", e);
+    }
+
+    if (/^(SID\s{2,}|System Id\s{2,}|LSPID\s{2,}|Name\s{2,}|SID\s+Locator\s|Routing paths:)/.test(raw)) {
+      return span("cli-colhead", e);
+    }
+
+    return highlightTokens(e);
+  }
+
+  function highlightCliPre(pre) {
+    var text = pre.textContent.replace(/\r\n/g, "\n");
+    pre.innerHTML = text.split("\n").map(highlightCliLine).join("\n");
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+    } finally {
+      document.body.removeChild(ta);
+    }
+    return Promise.resolve();
+  }
+
+  document.querySelectorAll("pre.config, pre.cli, pre.topo").forEach(function (pre) {
+    var wrap = document.createElement("div");
+    wrap.className = "code-wrap";
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.setAttribute("aria-label", "Copy to clipboard");
+    btn.textContent = "Copy";
+    wrap.insertBefore(btn, pre);
+
+    btn.addEventListener("click", function () {
+      var text = pre.textContent.replace(/\r\n/g, "\n");
+      copyText(text).then(function () {
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+        setTimeout(function () {
+          btn.textContent = "Copy";
+          btn.classList.remove("copied");
+        }, 1600);
+      });
+    });
+  });
+
+  document.querySelectorAll("pre.cli").forEach(highlightCliPre);
+})();
+</script>
+</body>
+</html>

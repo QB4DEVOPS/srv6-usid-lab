@@ -9,7 +9,7 @@ Proof model: **before/after ping + PCAP** (+ optional debug).
 ## Quick start
 
 1. **Import** → `quisted-srv6-baseline.yaml` — IS-IS + IPv6 running, no SRv6 configured (student starting point)
-2. **Follow the lab guide** — configure SRv6 uSID step by step, verify as you go
+2. **Lab guide** → [`srv6-usid-isis-lab.html`](srv6-usid-isis-lab.html) — configure SRv6 uSID step by step, verify as you go
 3. **Reference** → `quisted-srv6-solution.yaml` — full SRv6 uSID configured (answer key)
 
 Credentials:
