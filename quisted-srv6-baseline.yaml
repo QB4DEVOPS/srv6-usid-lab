@@ -1,0 +1,1457 @@
+annotations:
+  - type: rectangle
+    border_color: 'rgba(70, 130, 180, 0.90)'
+    border_radius: 16
+    border_style: ''
+    color: 'rgba(173, 216, 230, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: -320.0
+    y1: -165.0
+    x2: 160.0
+    y2: 310.0
+    z_index: -200
+  - type: rectangle
+    border_color: 'rgba(90, 80, 110, 0.90)'
+    border_radius: 16
+    border_style: ''
+    color: 'rgba(120, 110, 140, 0.22)'
+    rotation: 0
+    thickness: 2
+    x1: -80.0
+    y1: -165.0
+    x2: 360.0
+    y2: 310.0
+    z_index: -200
+  - type: rectangle
+    border_color: 'rgba(128, 0, 128, 0.85)'
+    border_radius: 16
+    border_style: ''
+    color: 'rgba(186, 140, 220, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: 360.0
+    y1: -165.0
+    x2: 160.0
+    y2: 310.0
+    z_index: -200
+  - type: rectangle
+    border_color: 'rgba(70, 130, 180, 0.90)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(70, 130, 180, 0.90)'
+    rotation: 0
+    thickness: 1
+    x1: -320.0
+    y1: -198.0
+    x2: 160.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: -285.0
+    y1: -192.0
+    z_index: -90
+  - type: rectangle
+    border_color: 'rgba(90, 80, 110, 0.90)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(90, 80, 110, 0.90)'
+    rotation: 0
+    thickness: 1
+    x1: -80.0
+    y1: -198.0
+    x2: 360.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XR'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: 70.0
+    y1: -192.0
+    z_index: -90
+  - type: rectangle
+    border_color: 'rgba(128, 0, 128, 0.85)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(128, 0, 128, 0.85)'
+    rotation: 0
+    thickness: 1
+    x1: 360.0
+    y1: -198.0
+    x2: 160.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: 405.0
+    y1: -192.0
+    z_index: -90
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#2F4F6F'
+    rotation: 0
+    text_bold: true
+    text_content: 'PE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: -270.0
+    y1: -148.0
+    z_index: -150
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#3A3345'
+    rotation: 0
+    text_bold: true
+    text_content: 'P'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 90.0
+    y1: -148.0
+    z_index: -150
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#5A2D6F'
+    rotation: 0
+    text_bold: true
+    text_content: 'PE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 410.0
+    y1: -148.0
+    z_index: -150
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#222222'
+    rotation: 0
+    text_bold: true
+    text_content: 'Quisted SRv6 uSID Lab'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 16
+    text_unit: 'pt'
+    thickness: 1
+    x1: -40.0
+    y1: -280.0
+    z_index: 200
+  - type: rectangle
+    border_color: 'rgba(70, 130, 180, 0.90)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(173, 216, 230, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: -345.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#2F4F6F'
+    rotation: 0
+    text_bold: false
+    text_content: 'PE Routers (Provider Edge)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: -326.0
+    y1: 221.0
+    z_index: 110
+  - type: rectangle
+    border_color: 'rgba(90, 80, 110, 0.90)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(120, 110, 140, 0.22)'
+    rotation: 0
+    thickness: 2
+    x1: -5.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#3A3345'
+    rotation: 0
+    text_bold: false
+    text_content: 'P Routers (Provider)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: 34.0
+    y1: 221.0
+    z_index: 110
+  - type: rectangle
+    border_color: 'rgba(128, 0, 128, 0.85)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(186, 140, 220, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: 335.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#5A2D6F'
+    rotation: 0
+    text_bold: false
+    text_content: 'PE Routers (Provider Edge)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: 354.0
+    y1: 221.0
+    z_index: 110
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#555555'
+    rotation: 0
+    text_bold: false
+    text_content: 'Mgmt: ext-conn -> mgmt-sw -> all nodes'
+    text_font: 'Arial'
+    text_italic: true
+    text_size: 10
+    text_unit: 'pt'
+    thickness: 1
+    x1: -400.0
+    y1: 400.0
+    z_index: 110
+smart_annotations: []
+lab:
+  description: |
+    Quisted 8-node MPLS-SR mesh adapted for SRv6 (IS-IS + uSID).
+    Based on https://www.quisted.net/index.php/2024/11/11/mpls-segment-routing-mpls-sr-lab/
+  notes: |
+    Import on CML 2.9 or 2.10. Requires iosxrv9000 and cat8000v node definitions.
+    PE7/PE8 use CAT 8000V instead of IOSv so the full domain supports SRv6 uSID.
+    CAT8000V day-0 includes license boot level network-advantage (reload once for SRv6).
+    Mgmt: ext-conn (System Bridge) -> mgmt-sw -> all nodes. Mgmt VRF + DHCP on XR MgmtEth and PE GigabitEthernet3.
+    IS-IS + IPv6 only. No SRv6 configs — student starting point.
+  timestamp: 1784399497.7921314
+  title: Quisted SRv6 Lab — Baseline (IS-IS only)
+  version: 0.1.0
+nodes:
+  - id: n0
+    label: P1
+    node_definition: iosxrv9000
+    x: 0
+    y: -100
+    configuration: |-
+      hostname P1
+      logging console disable
+      service timestamps log datetime msec
+      service timestamps debug datetime msec
+      domain name lab.local
+      domain lookup disable
+      ssh server v2
+      username cisco
+       group root-lr
+       group cisco-support
+       secret Cisc01@3
+      !
+      line console
+       exec-timeout 0 0
+       login authentication default
+      !
+      line default
+       exec-timeout 0 0
+       login authentication default
+      !
+      aaa authentication login default local
+      !
+      vrf Mgmt-intf
+       address-family ipv4 unicast
+       !
+      !
+      interface MgmtEth0/RP0/CPU0/0
+       vrf Mgmt-intf
+       ipv4 address dhcp
+       no shutdown
+      !
+      ssh server vrf Mgmt-intf
+      !
+      
+      interface Loopback0
+       ipv6 address fc00:0:1::1/128
+       ipv6 address fe80:0:1::1 link-local
+       cdp
+      !
+      interface GigabitEthernet0/0/0/0
+       description to P2
+       ipv6 address fe80:0:1::1 link-local
+       ipv6 address 2001:12::1/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/1
+       description to P3
+       ipv6 address fe80:0:1::1 link-local
+       ipv6 address 2001:13::1/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/2
+       description to P4
+       ipv6 address fe80:0:1::1 link-local
+       ipv6 address 2001:14::1/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/3
+       description to PE5
+       ipv6 address fe80:0:1::1 link-local
+       ipv6 address 2001:15::1/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/4
+       description to PE6
+       ipv6 address fe80:0:1::1 link-local
+       ipv6 address 2001:16::1/64
+       cdp
+       no shutdown
+      !
+      router isis 100
+       is-type level-2-only
+       net 49.0001.0000.0000.0001.00
+       address-family ipv6 unicast
+        metric-style wide
+       !
+       interface Loopback0
+        passive
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/0
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/1
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/2
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/3
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/4
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+      !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        type: physical
+        slot: 0
+      - id: i2
+        label: donotuse1
+        type: physical
+        slot: 1
+      - id: i3
+        label: donotuse2
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/0
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet0/0/0/1
+        type: physical
+        slot: 4
+      - id: i6
+        label: GigabitEthernet0/0/0/2
+        type: physical
+        slot: 5
+      - id: i7
+        label: GigabitEthernet0/0/0/3
+        type: physical
+        slot: 6
+      - id: i8
+        label: GigabitEthernet0/0/0/4
+        type: physical
+        slot: 7
+    pyats:
+      username: cisco
+      password: Cisc01@3
+      enable_password: Cisc01@3
+    tags: []
+  - id: n1
+    label: P2
+    node_definition: iosxrv9000
+    x: 0
+    y: 100
+    configuration: |-
+      hostname P2
+      logging console disable
+      service timestamps log datetime msec
+      service timestamps debug datetime msec
+      domain name lab.local
+      domain lookup disable
+      ssh server v2
+      username cisco
+       group root-lr
+       group cisco-support
+       secret Cisc01@3
+      !
+      line console
+       exec-timeout 0 0
+       login authentication default
+      !
+      line default
+       exec-timeout 0 0
+       login authentication default
+      !
+      aaa authentication login default local
+      !
+      vrf Mgmt-intf
+       address-family ipv4 unicast
+       !
+      !
+      interface MgmtEth0/RP0/CPU0/0
+       vrf Mgmt-intf
+       ipv4 address dhcp
+       no shutdown
+      !
+      ssh server vrf Mgmt-intf
+      !
+      
+      interface Loopback0
+       ipv6 address fc00:0:2::1/128
+       ipv6 address fe80:0:2::1 link-local
+       cdp
+      !
+      interface GigabitEthernet0/0/0/0
+       description to P1
+       ipv6 address fe80:0:2::1 link-local
+       ipv6 address 2001:12::2/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/1
+       description to P4
+       ipv6 address fe80:0:2::1 link-local
+       ipv6 address 2001:24::2/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/2
+       description to P3
+       ipv6 address fe80:0:2::1 link-local
+       ipv6 address 2001:23::2/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/3
+       description to PE6
+       ipv6 address fe80:0:2::1 link-local
+       ipv6 address 2001:26::2/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/4
+       description to PE5
+       ipv6 address fe80:0:2::1 link-local
+       ipv6 address 2001:25::2/64
+       cdp
+       no shutdown
+      !
+      router isis 100
+       is-type level-2-only
+       net 49.0001.0000.0000.0002.00
+       address-family ipv6 unicast
+        metric-style wide
+       !
+       interface Loopback0
+        passive
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/0
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/1
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/2
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/3
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/4
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+      !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        type: physical
+        slot: 0
+      - id: i2
+        label: donotuse1
+        type: physical
+        slot: 1
+      - id: i3
+        label: donotuse2
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/0
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet0/0/0/1
+        type: physical
+        slot: 4
+      - id: i6
+        label: GigabitEthernet0/0/0/2
+        type: physical
+        slot: 5
+      - id: i7
+        label: GigabitEthernet0/0/0/3
+        type: physical
+        slot: 6
+      - id: i8
+        label: GigabitEthernet0/0/0/4
+        type: physical
+        slot: 7
+    pyats:
+      username: cisco
+      password: Cisc01@3
+      enable_password: Cisc01@3
+    tags: []
+  - id: n2
+    label: P3
+    node_definition: iosxrv9000
+    x: 200
+    y: -100
+    configuration: |-
+      hostname P3
+      logging console disable
+      service timestamps log datetime msec
+      service timestamps debug datetime msec
+      domain name lab.local
+      domain lookup disable
+      ssh server v2
+      username cisco
+       group root-lr
+       group cisco-support
+       secret Cisc01@3
+      !
+      line console
+       exec-timeout 0 0
+       login authentication default
+      !
+      line default
+       exec-timeout 0 0
+       login authentication default
+      !
+      aaa authentication login default local
+      !
+      vrf Mgmt-intf
+       address-family ipv4 unicast
+       !
+      !
+      interface MgmtEth0/RP0/CPU0/0
+       vrf Mgmt-intf
+       ipv4 address dhcp
+       no shutdown
+      !
+      ssh server vrf Mgmt-intf
+      !
+      
+      interface Loopback0
+       ipv6 address fc00:0:3::1/128
+       ipv6 address fe80:0:3::1 link-local
+       cdp
+      !
+      interface GigabitEthernet0/0/0/0
+       description to P4
+       ipv6 address fe80:0:3::1 link-local
+       ipv6 address 2001:34::3/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/1
+       description to P1
+       ipv6 address fe80:0:3::1 link-local
+       ipv6 address 2001:13::3/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/2
+       description to P2
+       ipv6 address fe80:0:3::1 link-local
+       ipv6 address 2001:23::3/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/3
+       description to PE7
+       ipv6 address fe80:0:3::1 link-local
+       ipv6 address 2001:37::3/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/4
+       description to PE8
+       ipv6 address fe80:0:3::1 link-local
+       ipv6 address 2001:38::3/64
+       cdp
+       no shutdown
+      !
+      router isis 100
+       is-type level-2-only
+       net 49.0001.0000.0000.0003.00
+       address-family ipv6 unicast
+        metric-style wide
+       !
+       interface Loopback0
+        passive
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/0
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/1
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/2
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/3
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/4
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+      !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        type: physical
+        slot: 0
+      - id: i2
+        label: donotuse1
+        type: physical
+        slot: 1
+      - id: i3
+        label: donotuse2
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/0
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet0/0/0/1
+        type: physical
+        slot: 4
+      - id: i6
+        label: GigabitEthernet0/0/0/2
+        type: physical
+        slot: 5
+      - id: i7
+        label: GigabitEthernet0/0/0/3
+        type: physical
+        slot: 6
+      - id: i8
+        label: GigabitEthernet0/0/0/4
+        type: physical
+        slot: 7
+    pyats:
+      username: cisco
+      password: Cisc01@3
+      enable_password: Cisc01@3
+    tags: []
+  - id: n3
+    label: P4
+    node_definition: iosxrv9000
+    x: 200
+    y: 100
+    configuration: |-
+      hostname P4
+      logging console disable
+      service timestamps log datetime msec
+      service timestamps debug datetime msec
+      domain name lab.local
+      domain lookup disable
+      ssh server v2
+      username cisco
+       group root-lr
+       group cisco-support
+       secret Cisc01@3
+      !
+      line console
+       exec-timeout 0 0
+       login authentication default
+      !
+      line default
+       exec-timeout 0 0
+       login authentication default
+      !
+      aaa authentication login default local
+      !
+      vrf Mgmt-intf
+       address-family ipv4 unicast
+       !
+      !
+      interface MgmtEth0/RP0/CPU0/0
+       vrf Mgmt-intf
+       ipv4 address dhcp
+       no shutdown
+      !
+      ssh server vrf Mgmt-intf
+      !
+      
+      interface Loopback0
+       ipv6 address fc00:0:4::1/128
+       ipv6 address fe80:0:4::1 link-local
+       cdp
+      !
+      interface GigabitEthernet0/0/0/0
+       description to P3
+       ipv6 address fe80:0:4::1 link-local
+       ipv6 address 2001:34::4/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/1
+       description to P2
+       ipv6 address fe80:0:4::1 link-local
+       ipv6 address 2001:24::4/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/2
+       description to P1
+       ipv6 address fe80:0:4::1 link-local
+       ipv6 address 2001:14::4/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/3
+       description to PE8
+       ipv6 address fe80:0:4::1 link-local
+       ipv6 address 2001:48::4/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/4
+       description to PE7
+       ipv6 address fe80:0:4::1 link-local
+       ipv6 address 2001:47::4/64
+       cdp
+       no shutdown
+      !
+      router isis 100
+       is-type level-2-only
+       net 49.0001.0000.0000.0004.00
+       address-family ipv6 unicast
+        metric-style wide
+       !
+       interface Loopback0
+        passive
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/0
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/1
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/2
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/3
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/4
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+      !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        type: physical
+        slot: 0
+      - id: i2
+        label: donotuse1
+        type: physical
+        slot: 1
+      - id: i3
+        label: donotuse2
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/0
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet0/0/0/1
+        type: physical
+        slot: 4
+      - id: i6
+        label: GigabitEthernet0/0/0/2
+        type: physical
+        slot: 5
+      - id: i7
+        label: GigabitEthernet0/0/0/3
+        type: physical
+        slot: 6
+      - id: i8
+        label: GigabitEthernet0/0/0/4
+        type: physical
+        slot: 7
+    pyats:
+      username: cisco
+      password: Cisc01@3
+      enable_password: Cisc01@3
+    tags: []
+  - id: n4
+    label: PE5
+    node_definition: cat8000v
+    x: -240
+    y: -100
+    configuration: |-
+      hostname PE5
+      no service config
+      no logging console
+      license boot level network-advantage addon dna-advantage
+      ip domain name lab.local
+      username cisco privilege 15 secret cisco
+      ipv6 unicast-routing
+      !
+      vrf definition Mgmt-intf
+       address-family ipv4
+       exit-address-family
+      !
+      interface Loopback0
+       ipv6 address fc00:0:5::1/128
+       ipv6 address fe80:0:5::1 link-local
+       ipv6 router isis 100
+      !
+      interface GigabitEthernet1
+       description to P1
+       ipv6 address fe80:0:5::1 link-local
+       ipv6 address 2001:15::5/64
+       cdp enable
+       isis network point-to-point
+       ipv6 router isis 100
+       no shutdown
+      !
+      interface GigabitEthernet2
+       description to P2
+       ipv6 address fe80:0:5::1 link-local
+       ipv6 address 2001:25::5/64
+       cdp enable
+       isis network point-to-point
+       ipv6 router isis 100
+       no shutdown
+      !
+      interface GigabitEthernet3
+       description management (external bridge)
+       vrf forwarding Mgmt-intf
+       ip address dhcp
+       no cdp enable
+       no shutdown
+      !
+      no cdp run
+      cdp run
+      !
+      crypto key generate rsa general-keys modulus 3072
+      ip ssh version 2
+      ip ssh source-interface GigabitEthernet3
+      line vty 0 15
+       exec-timeout 0 0
+       login local
+       transport input ssh
+      !
+      router isis 100
+       net 49.0001.0000.0000.0005.00
+       is-type level-2-only
+       metric-style wide
+       address-family ipv6 unicast
+        multi-topology
+       !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet1
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet2
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet3
+        type: physical
+        slot: 2
+    pyats:
+      username: cisco
+      password: cisco
+      enable_password: cisco
+    tags: []
+  - id: n5
+    label: PE6
+    node_definition: cat8000v
+    x: -240
+    y: 100
+    configuration: |-
+      hostname PE6
+      no service config
+      no logging console
+      license boot level network-advantage addon dna-advantage
+      ip domain name lab.local
+      username cisco privilege 15 secret cisco
+      ipv6 unicast-routing
+      !
+      vrf definition Mgmt-intf
+       address-family ipv4
+       exit-address-family
+      !
+      interface Loopback0
+       ipv6 address fc00:0:6::1/128
+       ipv6 address fe80:0:6::1 link-local
+       ipv6 router isis 100
+      !
+      interface GigabitEthernet1
+       description to P1
+       ipv6 address fe80:0:6::1 link-local
+       ipv6 address 2001:16::6/64
+       cdp enable
+       isis network point-to-point
+       ipv6 router isis 100
+       no shutdown
+      !
+      interface GigabitEthernet2
+       description to P2
+       ipv6 address fe80:0:6::1 link-local
+       ipv6 address 2001:26::6/64
+       cdp enable
+       isis network point-to-point
+       ipv6 router isis 100
+       no shutdown
+      !
+      interface GigabitEthernet3
+       description management (external bridge)
+       vrf forwarding Mgmt-intf
+       ip address dhcp
+       no cdp enable
+       no shutdown
+      !
+      no cdp run
+      cdp run
+      !
+      crypto key generate rsa general-keys modulus 3072
+      ip ssh version 2
+      ip ssh source-interface GigabitEthernet3
+      line vty 0 15
+       exec-timeout 0 0
+       login local
+       transport input ssh
+      !
+      router isis 100
+       net 49.0001.0000.0000.0006.00
+       is-type level-2-only
+       metric-style wide
+       address-family ipv6 unicast
+        multi-topology
+       !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet1
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet2
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet3
+        type: physical
+        slot: 2
+    pyats:
+      username: cisco
+      password: cisco
+      enable_password: cisco
+    tags: []
+  - id: n6
+    label: PE7
+    node_definition: cat8000v
+    x: 440
+    y: -100
+    configuration: |-
+      hostname PE7
+      no service config
+      no logging console
+      license boot level network-advantage addon dna-advantage
+      ip domain name lab.local
+      username cisco privilege 15 secret cisco
+      ipv6 unicast-routing
+      !
+      vrf definition Mgmt-intf
+       address-family ipv4
+       exit-address-family
+      !
+      interface Loopback0
+       ipv6 address fc00:0:7::1/128
+       ipv6 address fe80:0:7::1 link-local
+       ipv6 router isis 100
+      !
+      interface GigabitEthernet1
+       description to P3
+       ipv6 address fe80:0:7::1 link-local
+       ipv6 address 2001:37::7/64
+       cdp enable
+       isis network point-to-point
+       ipv6 router isis 100
+       no shutdown
+      !
+      interface GigabitEthernet2
+       description to P4
+       ipv6 address fe80:0:7::1 link-local
+       ipv6 address 2001:47::7/64
+       cdp enable
+       isis network point-to-point
+       ipv6 router isis 100
+       no shutdown
+      !
+      interface GigabitEthernet3
+       description management (external bridge)
+       vrf forwarding Mgmt-intf
+       ip address dhcp
+       no cdp enable
+       no shutdown
+      !
+      no cdp run
+      cdp run
+      !
+      crypto key generate rsa general-keys modulus 3072
+      ip ssh version 2
+      ip ssh source-interface GigabitEthernet3
+      line vty 0 15
+       exec-timeout 0 0
+       login local
+       transport input ssh
+      !
+      router isis 100
+       net 49.0001.0000.0000.0007.00
+       is-type level-2-only
+       metric-style wide
+       address-family ipv6 unicast
+        multi-topology
+       !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet1
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet2
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet3
+        type: physical
+        slot: 2
+    pyats:
+      username: cisco
+      password: cisco
+      enable_password: cisco
+    tags: []
+  - id: n7
+    label: PE8
+    node_definition: cat8000v
+    x: 440
+    y: 100
+    configuration: |-
+      hostname PE8
+      no service config
+      no logging console
+      license boot level network-advantage addon dna-advantage
+      ip domain name lab.local
+      username cisco privilege 15 secret cisco
+      ipv6 unicast-routing
+      !
+      vrf definition Mgmt-intf
+       address-family ipv4
+       exit-address-family
+      !
+      interface Loopback0
+       ipv6 address fc00:0:8::1/128
+       ipv6 address fe80:0:8::1 link-local
+       ipv6 router isis 100
+      !
+      interface GigabitEthernet1
+       description to P3
+       ipv6 address fe80:0:8::1 link-local
+       ipv6 address 2001:38::8/64
+       cdp enable
+       isis network point-to-point
+       ipv6 router isis 100
+       no shutdown
+      !
+      interface GigabitEthernet2
+       description to P4
+       ipv6 address fe80:0:8::1 link-local
+       ipv6 address 2001:48::8/64
+       cdp enable
+       isis network point-to-point
+       ipv6 router isis 100
+       no shutdown
+      !
+      interface GigabitEthernet3
+       description management (external bridge)
+       vrf forwarding Mgmt-intf
+       ip address dhcp
+       no cdp enable
+       no shutdown
+      !
+      no cdp run
+      cdp run
+      !
+      crypto key generate rsa general-keys modulus 3072
+      ip ssh version 2
+      ip ssh source-interface GigabitEthernet3
+      line vty 0 15
+       exec-timeout 0 0
+       login local
+       transport input ssh
+      !
+      router isis 100
+       net 49.0001.0000.0000.0008.00
+       is-type level-2-only
+       metric-style wide
+       address-family ipv6 unicast
+        multi-topology
+       !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet1
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet2
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet3
+        type: physical
+        slot: 2
+    pyats:
+      username: cisco
+      password: cisco
+      enable_password: cisco
+    tags: []
+  - id: n_ext
+    label: ext-conn
+    node_definition: external_connector
+    x: -400
+    y: 320
+    hide_links: true
+    configuration: |-
+      System Bridge
+    interfaces:
+      - id: i0
+        label: port
+        type: physical
+        slot: 0
+    tags: []
+  - id: n_sw
+    label: mgmt-sw
+    node_definition: unmanaged_switch
+    x: -240
+    y: 320
+    hide_links: true
+    configuration: |-
+      mode: Bridge
+    interfaces:
+      - id: i0
+        label: port0
+        type: physical
+        slot: 0
+      - id: i1
+        label: port1
+        type: physical
+        slot: 1
+      - id: i2
+        label: port2
+        type: physical
+        slot: 2
+      - id: i3
+        label: port3
+        type: physical
+        slot: 3
+      - id: i4
+        label: port4
+        type: physical
+        slot: 4
+      - id: i5
+        label: port5
+        type: physical
+        slot: 5
+      - id: i6
+        label: port6
+        type: physical
+        slot: 6
+      - id: i7
+        label: port7
+        type: physical
+        slot: 7
+      - id: i8
+        label: port8
+        type: physical
+        slot: 8
+      - id: i9
+        label: port9
+        type: physical
+        slot: 9
+    tags: []
+links:
+  - id: l0
+    n1: n0
+    i1: i4
+    n2: n1
+    i2: i4
+  - id: l1
+    n1: n0
+    i1: i5
+    n2: n2
+    i2: i5
+  - id: l2
+    n1: n0
+    i1: i6
+    n2: n3
+    i2: i6
+  - id: l3
+    n1: n0
+    i1: i7
+    n2: n4
+    i2: i1
+  - id: l4
+    n1: n0
+    i1: i8
+    n2: n5
+    i2: i1
+  - id: l5
+    n1: n1
+    i1: i5
+    n2: n3
+    i2: i5
+  - id: l6
+    n1: n1
+    i1: i6
+    n2: n2
+    i2: i6
+  - id: l7
+    n1: n1
+    i1: i7
+    n2: n5
+    i2: i2
+  - id: l8
+    n1: n1
+    i1: i8
+    n2: n4
+    i2: i2
+  - id: l9
+    n1: n2
+    i1: i4
+    n2: n3
+    i2: i4
+  - id: l10
+    n1: n2
+    i1: i7
+    n2: n6
+    i2: i1
+  - id: l11
+    n1: n2
+    i1: i8
+    n2: n7
+    i2: i1
+  - id: l12
+    n1: n3
+    i1: i7
+    n2: n7
+    i2: i2
+  - id: l13
+    n1: n3
+    i1: i8
+    n2: n6
+    i2: i2
+  - id: lm0
+    n1: n_ext
+    i1: i0
+    n2: n_sw
+    i2: i0
+  - id: lm1
+    n1: n0
+    i1: i1
+    n2: n_sw
+    i2: i1
+  - id: lm2
+    n1: n1
+    i1: i1
+    n2: n_sw
+    i2: i2
+  - id: lm3
+    n1: n2
+    i1: i1
+    n2: n_sw
+    i2: i3
+  - id: lm4
+    n1: n3
+    i1: i1
+    n2: n_sw
+    i2: i4
+  - id: lm5
+    n1: n4
+    i1: i3
+    n2: n_sw
+    i2: i5
+  - id: lm6
+    n1: n5
+    i1: i3
+    n2: n_sw
+    i2: i6
+  - id: lm7
+    n1: n6
+    i1: i3
+    n2: n_sw
+    i2: i7
+  - id: lm8
+    n1: n7
+    i1: i3
+    n2: n_sw
+    i2: i8
