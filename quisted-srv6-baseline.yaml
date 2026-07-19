@@ -282,6 +282,7 @@ lab:
     PE7/PE8 use CAT 8000V instead of IOSv so the full domain supports SRv6 uSID.
     CAT8000V day-0 includes license boot level network-advantage (reload once for SRv6).
     Mgmt: ext-conn (System Bridge) -> mgmt-sw -> all nodes. Mgmt VRF + DHCP on XR MgmtEth and PE GigabitEthernet3.
+    All nodes boot in parallel (no node staging).
     IS-IS + IPv6 only. No SRv6 configs — student starting point.
   timestamp: 1784399497.7921314
   title: Quisted SRv6 Lab — Baseline (IS-IS only)
