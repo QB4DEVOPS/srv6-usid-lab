@@ -1,269 +1,71 @@
 annotations:
-  - type: rectangle
-    border_color: 'rgba(70, 130, 180, 0.90)'
-    border_radius: 16
-    border_style: ''
-    color: 'rgba(173, 216, 230, 0.30)'
-    rotation: 0
-    thickness: 2
-    x1: -320.0
-    y1: -165.0
-    x2: 160.0
-    y2: 310.0
-    z_index: -200
-  - type: rectangle
-    border_color: 'rgba(90, 80, 110, 0.90)'
-    border_radius: 16
-    border_style: ''
-    color: 'rgba(120, 110, 140, 0.22)'
-    rotation: 0
-    thickness: 2
-    x1: -80.0
-    y1: -165.0
-    x2: 360.0
-    y2: 310.0
-    z_index: -200
-  - type: rectangle
-    border_color: 'rgba(128, 0, 128, 0.85)'
-    border_radius: 16
-    border_style: ''
-    color: 'rgba(186, 140, 220, 0.30)'
-    rotation: 0
-    thickness: 2
-    x1: 360.0
-    y1: -165.0
-    x2: 160.0
-    y2: 310.0
-    z_index: -200
-  - type: rectangle
-    border_color: 'rgba(70, 130, 180, 0.90)'
-    border_radius: 8
-    border_style: ''
-    color: 'rgba(70, 130, 180, 0.90)'
-    rotation: 0
-    thickness: 1
-    x1: -320.0
-    y1: -198.0
-    x2: 160.0
-    y2: 26.0
-    z_index: -100
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#FFFFFF'
-    rotation: 0
-    text_bold: true
-    text_content: 'IOS-XE'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 13
-    text_unit: 'pt'
-    thickness: 1
-    x1: -285.0
-    y1: -192.0
-    z_index: -90
-  - type: rectangle
-    border_color: 'rgba(90, 80, 110, 0.90)'
-    border_radius: 8
-    border_style: ''
-    color: 'rgba(90, 80, 110, 0.90)'
-    rotation: 0
-    thickness: 1
-    x1: -80.0
-    y1: -198.0
-    x2: 360.0
-    y2: 26.0
-    z_index: -100
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#FFFFFF'
-    rotation: 0
-    text_bold: true
-    text_content: 'IOS-XR'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 13
-    text_unit: 'pt'
-    thickness: 1
-    x1: 70.0
-    y1: -192.0
-    z_index: -90
-  - type: rectangle
-    border_color: 'rgba(128, 0, 128, 0.85)'
-    border_radius: 8
-    border_style: ''
-    color: 'rgba(128, 0, 128, 0.85)'
-    rotation: 0
-    thickness: 1
-    x1: 360.0
-    y1: -198.0
-    x2: 160.0
-    y2: 26.0
-    z_index: -100
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#FFFFFF'
-    rotation: 0
-    text_bold: true
-    text_content: 'IOS-XE'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 13
-    text_unit: 'pt'
-    thickness: 1
-    x1: 405.0
-    y1: -192.0
-    z_index: -90
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#2F4F6F'
-    rotation: 0
-    text_bold: true
-    text_content: 'PE'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 20
-    text_unit: 'pt'
-    thickness: 1
-    x1: -270.0
-    y1: -148.0
-    z_index: -150
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#3A3345'
-    rotation: 0
-    text_bold: true
-    text_content: 'P'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 20
-    text_unit: 'pt'
-    thickness: 1
-    x1: 90.0
-    y1: -148.0
-    z_index: -150
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#5A2D6F'
-    rotation: 0
-    text_bold: true
-    text_content: 'PE'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 20
-    text_unit: 'pt'
-    thickness: 1
-    x1: 410.0
-    y1: -148.0
-    z_index: -150
   - type: text
     border_color: ''
     border_style: ''
     color: '#222222'
     rotation: 0
     text_bold: true
-    text_content: 'Quisted SRv6 uSID Lab'
+    text_content: 'Quisted SRv6 uSID L3VPN — Part 5 IGW Solution'
     text_font: 'Arial'
     text_italic: false
     text_size: 16
     text_unit: 'pt'
     thickness: 1
-    x1: -40.0
+    x1: -60.0
     y1: -280.0
     z_index: 200
-  - type: rectangle
-    border_color: 'rgba(70, 130, 180, 0.90)'
-    border_radius: 10
-    border_style: ''
-    color: 'rgba(173, 216, 230, 0.30)'
-    rotation: 0
-    thickness: 2
-    x1: -345.0
-    y1: 210.0
-    x2: 210.0
-    y2: 36.0
-    z_index: 100
   - type: text
     border_color: ''
     border_style: ''
     color: '#2F4F6F'
     rotation: 0
-    text_bold: false
-    text_content: 'PE Routers (Provider Edge)'
+    text_bold: true
+    text_content: 'SRv6 Domain'
     text_font: 'Arial'
     text_italic: false
-    text_size: 11
+    text_size: 13
     text_unit: 'pt'
     thickness: 1
-    x1: -326.0
-    y1: 221.0
-    z_index: 110
-  - type: rectangle
-    border_color: 'rgba(90, 80, 110, 0.90)'
-    border_radius: 10
-    border_style: ''
-    color: 'rgba(120, 110, 140, 0.22)'
-    rotation: 0
-    thickness: 2
-    x1: -5.0
-    y1: 210.0
-    x2: 210.0
-    y2: 36.0
-    z_index: 100
+    x1: -270.0
+    y1: -195.0
+    z_index: 200
   - type: text
     border_color: ''
     border_style: ''
-    color: '#3A3345'
+    color: '#7B3F00'
     rotation: 0
-    text_bold: false
-    text_content: 'P Routers (Provider)'
+    text_bold: true
+    text_content: 'MPLS Domain'
     text_font: 'Arial'
     text_italic: false
-    text_size: 11
+    text_size: 13
     text_unit: 'pt'
     thickness: 1
-    x1: 34.0
-    y1: 221.0
-    z_index: 110
-  - type: rectangle
-    border_color: 'rgba(128, 0, 128, 0.85)'
-    border_radius: 10
-    border_style: ''
-    color: 'rgba(186, 140, 220, 0.30)'
-    rotation: 0
-    thickness: 2
-    x1: 335.0
-    y1: 210.0
-    x2: 210.0
-    y2: 36.0
-    z_index: 100
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#5A2D6F'
-    rotation: 0
-    text_bold: false
-    text_content: 'PE Routers (Provider Edge)'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 11
-    text_unit: 'pt'
-    thickness: 1
-    x1: 354.0
-    y1: 221.0
-    z_index: 110
+    x1: 780.0
+    y1: -130.0
+    z_index: 200
   - type: text
     border_color: ''
     border_style: ''
     color: '#555555'
     rotation: 0
     text_bold: false
-    text_content: 'Mgmt: ext-conn -> mgmt-sw -> all nodes'
+    text_content: 'IGW: translates SRv6 End.DT4 SID <-> MPLS VPN label'
+    text_font: 'Arial'
+    text_italic: true
+    text_size: 10
+    text_unit: 'pt'
+    thickness: 1
+    x1: 540.0
+    y1: 60.0
+    z_index: 200
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#555555'
+    rotation: 0
+    text_bold: false
+    text_content: 'Mgmt: ext-conn -> mgmt-sw -> P/PE nodes'
     text_font: 'Arial'
     text_italic: true
     text_size: 10
@@ -275,17 +77,27 @@ annotations:
 smart_annotations: []
 lab:
   description: |
-    Quisted 8-node MPLS-SR mesh adapted for SRv6 (IS-IS + uSID).
-    Based on https://www.quisted.net/index.php/2024/11/11/mpls-segment-routing-mpls-sr-lab/
+    Part 5 — SRv6 Interworking Gateway (IGW) for L3VPN.
+    IGW sits at the boundary of the SRv6 domain (IS-IS + SRv6 locator fcbb:bb00:9::/48)
+    and the MPLS domain (OSPF 1 + SR-MPLS).
+    IGW allocates both an SRv6 End.DT4 SID (for SRv6 PEs) and an MPLS VPN label
+    (for MPE1) for VRF CUST-A — translating transport at the domain boundary.
+    CE routers are not required: MPE1 uses Loopback100 as a simulated MPLS-side customer prefix.
   notes: |
-    Import on CML 2.9 or 2.10. Requires iosxrv9000 and cat8000v node definitions.
-    PE7/PE8 use CAT 8000V instead of IOSv so the full domain supports SRv6 uSID.
-    CAT8000V day-0 includes license boot level network-advantage (reload once for SRv6).
-    Mgmt: ext-conn (System Bridge) -> mgmt-sw -> all nodes. Mgmt VRF + DHCP on XR MgmtEth and PE GigabitEthernet3.
-    P nodes: iosxrv9000. All nodes boot in parallel (no node staging).
+    Requires iosxrv9000 and cat8000v node definitions in CML 2.9 or 2.10.
+    P3 has an extra Gi0/0/0/5 interface toward IGW; IGW joins SRv6 IS-IS domain.
+    PE5-PE8 add fc00:0:9::1 (IGW SRv6 loopback) as 5th iBGP VPNv4 neighbor.
+    IGW: IS-IS 100 (SRv6) + OSPF 1 (MPLS) + BGP iBGP to all SRv6 PEs and MPE1.
+    IGW VRF CUST-A uses both segment-routing srv6 and segment-routing mpls (per-vrf).
+    MP1: OSPF 1 + SR-MPLS, no VRF. SR-MPLS SRGB 16000-23999.
+    MPE1: OSPF 1 + SR-MPLS + VRF CUST-A + BGP iBGP with IGW.
+    Proof path: CE (left) -> PE5/PE6 (SRv6) -> P core -> IGW -> MP1 -> MPE1 -> Loopback100
+    Verify: show segment-routing srv6 sid on IGW (End.DT4 for CUST-A present)
+            show mpls forwarding on IGW (VPN label for CUST-A present)
+            show bgp vpnv4 unicast vrf CUST-A on IGW (routes from both domains visible)
   timestamp: 1784252880.562071
-  title: Quisted SRv6 uSID — Part 1 Solution
-  version: 0.3.1
+  title: Quisted SRv6 uSID L3VPN — Part 5 IGW Solution
+  version: 0.1.0
 nodes:
   - id: n0
     label: P1
@@ -326,7 +138,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:1::1/128
        ipv6 address fe80:0:1::1 link-local
@@ -501,7 +313,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:2::1/128
        ipv6 address fe80:0:2::1 link-local
@@ -676,7 +488,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:3::1/128
        ipv6 address fe80:0:3::1 link-local
@@ -714,6 +526,13 @@ nodes:
        description to PE8
        ipv6 address fe80:0:3::1 link-local
        ipv6 address 2001:38::3/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/5
+       description to IGW
+       ipv6 address fe80:0:3::1 link-local
+       ipv6 address 2001:39::3/64
        cdp
        no shutdown
       !
@@ -769,6 +588,11 @@ nodes:
         address-family ipv6 unicast
         !
        !
+       interface GigabitEthernet0/0/0/5
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
       !
       end
     interfaces:
@@ -807,6 +631,10 @@ nodes:
         label: GigabitEthernet0/0/0/4
         type: physical
         slot: 7
+      - id: i9
+        label: GigabitEthernet0/0/0/5
+        type: physical
+        slot: 8
     pyats:
       username: cisco
       password: Cisc01@3
@@ -851,7 +679,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:4::1/128
        ipv6 address fe80:0:4::1 link-local
@@ -1005,10 +833,31 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:5::1/128
        ipv6 address fe80:0:5::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-A
+       ip address 192.168.50.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P1
@@ -1066,6 +915,46 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 5.5.5.5
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       neighbor fc00:0:9::1 remote-as 65000
+       neighbor fc00:0:9::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        neighbor fc00:0:9::1 activate
+        neighbor fc00:0:9::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1106,10 +995,31 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:6::1/128
        ipv6 address fe80:0:6::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-B
+       ip address 192.168.60.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P1
@@ -1167,6 +1077,46 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 6.6.6.6
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       neighbor fc00:0:9::1 remote-as 65000
+       neighbor fc00:0:9::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        neighbor fc00:0:9::1 activate
+        neighbor fc00:0:9::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1207,10 +1157,31 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:7::1/128
        ipv6 address fe80:0:7::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-A
+       ip address 192.168.70.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P3
@@ -1268,6 +1239,46 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 7.7.7.7
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       neighbor fc00:0:9::1 remote-as 65000
+       neighbor fc00:0:9::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        neighbor fc00:0:9::1 activate
+        neighbor fc00:0:9::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1308,10 +1319,31 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:8::1/128
        ipv6 address fe80:0:8::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-B
+       ip address 192.168.80.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P3
@@ -1369,6 +1401,46 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 8.8.8.8
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       neighbor fc00:0:9::1 remote-as 65000
+       neighbor fc00:0:9::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        neighbor fc00:0:9::1 activate
+        neighbor fc00:0:9::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1390,6 +1462,440 @@ nodes:
       username: cisco
       password: cisco
       enable_password: cisco
+    tags: []
+  - id: n8
+    label: IGW
+    node_definition: iosxrv9000
+    x: 640
+    y: 0
+    configuration: |-
+      hostname IGW
+      logging console disable
+      service timestamps log datetime msec
+      service timestamps debug datetime msec
+      domain name lab.local
+      domain lookup disable
+      ssh server v2
+      username cisco
+       group root-lr
+       group cisco-support
+       secret Cisc01@3
+      !
+      line console
+       exec-timeout 0 0
+       login authentication default
+      !
+      line default
+       exec-timeout 0 0
+       login authentication default
+      !
+      aaa authentication login default local
+      !
+      vrf Mgmt-intf
+       address-family ipv4 unicast
+       !
+      !
+      interface MgmtEth0/RP0/CPU0/0
+       vrf Mgmt-intf
+       ipv4 address dhcp
+       no shutdown
+      !
+      ssh server vrf Mgmt-intf
+      !
+
+      vrf CUST-A
+       address-family ipv4 unicast
+        import route-target
+         65000:100
+        !
+        export route-target
+         65000:100
+        !
+       !
+      !
+
+      interface Loopback0
+       description SRv6 domain loopback (IS-IS)
+       ipv6 address fc00:0:9::1/128
+       ipv6 address fe80:0:9::1 link-local
+       cdp
+      !
+      interface Loopback1
+       description MPLS domain loopback (OSPF)
+       ipv4 address 10.200.0.9 255.255.255.255
+      !
+      interface GigabitEthernet0/0/0/0
+       description to P3 (SRv6 domain)
+       ipv6 address fe80:0:9::1 link-local
+       ipv6 address 2001:39::9/64
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/1
+       description to MP1 (MPLS domain)
+       ipv4 address 10.200.1.1 255.255.255.252
+       cdp
+       no shutdown
+      !
+
+      segment-routing
+       global-block 16000 23999
+       srv6
+        encapsulation
+         source-address fc00:0:9::1
+        !
+        locators
+         locator MAIN
+          prefix fcbb:bb00:0009::/48
+          micro-segment behavior unode psp-usd
+         !
+        !
+       !
+      !
+
+      router isis 100
+       is-type level-2-only
+       net 49.0001.0000.0000.0009.00
+       address-family ipv6 unicast
+        metric-style wide
+        segment-routing srv6
+         locator MAIN
+        !
+       !
+       interface Loopback0
+        passive
+        address-family ipv6 unicast
+        !
+       !
+       interface GigabitEthernet0/0/0/0
+        point-to-point
+        address-family ipv6 unicast
+        !
+       !
+      !
+
+      router ospf 1
+       router-id 10.200.0.9
+       segment-routing mpls
+       area 0
+        interface Loopback1
+         passive
+         prefix-sid index 9
+        !
+        interface GigabitEthernet0/0/0/1
+        !
+       !
+      !
+
+      router bgp 65000
+       bgp router-id 10.200.0.9
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       neighbor 10.200.0.2 remote-as 65000
+       neighbor 10.200.0.2 update-source Loopback1
+       !
+       address-family vpnv4 unicast
+        retain route-target all
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        neighbor 10.200.0.2 activate
+        neighbor 10.200.0.2 send-community extended
+        segment-routing srv6
+         locator MAIN
+        !
+       !
+       vrf CUST-A
+        rd 65000:100
+        address-family ipv4 unicast
+         segment-routing srv6
+          locator MAIN
+          alloc mode per-vrf
+         !
+         segment-routing mpls
+          alloc mode per-vrf
+         !
+         redistribute connected
+        !
+       !
+      !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        type: physical
+        slot: 0
+      - id: i2
+        label: donotuse1
+        type: physical
+        slot: 1
+      - id: i3
+        label: donotuse2
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/0
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet0/0/0/1
+        type: physical
+        slot: 4
+    pyats:
+      username: cisco
+      password: Cisc01@3
+      enable_password: Cisc01@3
+    tags: []
+  - id: n9
+    label: MP1
+    node_definition: iosxrv9000
+    x: 840
+    y: 0
+    configuration: |-
+      hostname MP1
+      logging console disable
+      service timestamps log datetime msec
+      service timestamps debug datetime msec
+      domain name lab.local
+      domain lookup disable
+      ssh server v2
+      username cisco
+       group root-lr
+       group cisco-support
+       secret Cisc01@3
+      !
+      line console
+       exec-timeout 0 0
+       login authentication default
+      !
+      line default
+       exec-timeout 0 0
+       login authentication default
+      !
+      aaa authentication login default local
+      !
+      vrf Mgmt-intf
+       address-family ipv4 unicast
+       !
+      !
+      interface MgmtEth0/RP0/CPU0/0
+       vrf Mgmt-intf
+       ipv4 address dhcp
+       no shutdown
+      !
+      ssh server vrf Mgmt-intf
+      !
+
+      interface Loopback0
+       description MPLS domain loopback (OSPF)
+       ipv4 address 10.200.0.1 255.255.255.255
+      !
+      interface GigabitEthernet0/0/0/0
+       description to IGW
+       ipv4 address 10.200.1.2 255.255.255.252
+       cdp
+       no shutdown
+      !
+      interface GigabitEthernet0/0/0/1
+       description to MPE1
+       ipv4 address 10.200.2.1 255.255.255.252
+       cdp
+       no shutdown
+      !
+
+      segment-routing
+       global-block 16000 23999
+      !
+
+      router ospf 1
+       router-id 10.200.0.1
+       segment-routing mpls
+       area 0
+        interface Loopback0
+         passive
+         prefix-sid index 11
+        !
+        interface GigabitEthernet0/0/0/0
+        !
+        interface GigabitEthernet0/0/0/1
+        !
+       !
+      !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        type: physical
+        slot: 0
+      - id: i2
+        label: donotuse1
+        type: physical
+        slot: 1
+      - id: i3
+        label: donotuse2
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/0
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet0/0/0/1
+        type: physical
+        slot: 4
+    pyats:
+      username: cisco
+      password: Cisc01@3
+      enable_password: Cisc01@3
+    tags: []
+  - id: n10
+    label: MPE1
+    node_definition: iosxrv9000
+    x: 1040
+    y: 0
+    configuration: |-
+      hostname MPE1
+      logging console disable
+      service timestamps log datetime msec
+      service timestamps debug datetime msec
+      domain name lab.local
+      domain lookup disable
+      ssh server v2
+      username cisco
+       group root-lr
+       group cisco-support
+       secret Cisc01@3
+      !
+      line console
+       exec-timeout 0 0
+       login authentication default
+      !
+      line default
+       exec-timeout 0 0
+       login authentication default
+      !
+      aaa authentication login default local
+      !
+      vrf Mgmt-intf
+       address-family ipv4 unicast
+       !
+      !
+      interface MgmtEth0/RP0/CPU0/0
+       vrf Mgmt-intf
+       ipv4 address dhcp
+       no shutdown
+      !
+      ssh server vrf Mgmt-intf
+      !
+
+      vrf CUST-A
+       address-family ipv4 unicast
+        import route-target
+         65000:100
+        !
+        export route-target
+         65000:100
+        !
+       !
+      !
+
+      interface Loopback0
+       description MPLS domain loopback (OSPF)
+       ipv4 address 10.200.0.2 255.255.255.255
+      !
+      interface Loopback100
+       description simulated MPLS-side customer prefix (CUST-A)
+       vrf CUST-A
+       ipv4 address 10.200.100.1 255.255.255.0
+      !
+      interface GigabitEthernet0/0/0/0
+       description to MP1
+       ipv4 address 10.200.2.2 255.255.255.252
+       cdp
+       no shutdown
+      !
+
+      segment-routing
+       global-block 16000 23999
+      !
+
+      router ospf 1
+       router-id 10.200.0.2
+       segment-routing mpls
+       area 0
+        interface Loopback0
+         passive
+         prefix-sid index 12
+        !
+        interface GigabitEthernet0/0/0/0
+        !
+       !
+      !
+
+      router bgp 65000
+       bgp router-id 10.200.0.2
+       neighbor 10.200.0.9 remote-as 65000
+       neighbor 10.200.0.9 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor 10.200.0.9 activate
+        neighbor 10.200.0.9 send-community extended
+       !
+       vrf CUST-A
+        rd 65000:100
+        address-family ipv4 unicast
+         segment-routing mpls
+          alloc mode per-vrf
+         !
+         import route-target 65000:100
+         export route-target 65000:100
+         redistribute connected
+        !
+       !
+      !
+      end
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        type: physical
+        slot: 0
+      - id: i2
+        label: donotuse1
+        type: physical
+        slot: 1
+      - id: i3
+        label: donotuse2
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/0
+        type: physical
+        slot: 3
+    pyats:
+      username: cisco
+      password: Cisc01@3
+      enable_password: Cisc01@3
     tags: []
   - id: n_ext
     label: ext-conn
@@ -1454,6 +1960,14 @@ nodes:
         label: port9
         type: physical
         slot: 9
+      - id: i10
+        label: port10
+        type: physical
+        slot: 10
+      - id: i11
+        label: port11
+        type: physical
+        slot: 11
     tags: []
 links:
   - id: l0
@@ -1526,6 +2040,21 @@ links:
     i1: i8
     n2: n6
     i2: i2
+  - id: l14
+    n1: n2
+    i1: i9
+    n2: n8
+    i2: i4
+  - id: l15
+    n1: n8
+    i1: i5
+    n2: n9
+    i2: i4
+  - id: l16
+    n1: n9
+    i1: i5
+    n2: n10
+    i2: i4
   - id: lm0
     n1: n_ext
     i1: i0
@@ -1571,3 +2100,18 @@ links:
     i1: i3
     n2: n_sw
     i2: i8
+  - id: lm9
+    n1: n8
+    i1: i1
+    n2: n_sw
+    i2: i9
+  - id: lm10
+    n1: n9
+    i1: i1
+    n2: n_sw
+    i2: i10
+  - id: lm11
+    n1: n10
+    i1: i1
+    n2: n_sw
+    i2: i11

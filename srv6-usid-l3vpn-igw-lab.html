@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SRv6 uSID IGW Lab — Part 5 (Quisted Topology on CML 2.10)</title>
+  <style>
+    :root {
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #d8d8d8;
+      --code-bg: #f4f4f4;
+      --cli-bg: #0a0a0a;
+      --cli-text: #f5f5f5;
+      --cli-prompt: #5ec4ff;
+      --cli-cmd: #5ec4ff;
+      --cli-colhead: #5ec4ff;
+      --cli-banner: #33dd33;
+      --cli-up: #33dd33;
+      --cli-summary: #ffb347;
+      --cli-ts: #e8e8e8;
+      --cli-sep: #4a9fd4;
+      --accent: #0073aa;
+      --accent-dark: #005177;
+      --callout-bg: #f0f6fa;
+      --callout-border: #0073aa;
+      --pass: #1a7f37;
+      --fail: #cf222e;
+      --pe-left: #add8e6;
+      --pe-left-table: #add8e6;
+      --p-core: #c8c0d0;
+      --pe-right: #d4b8e8;
+      --pe-right-table: #d4b8e8;
+      --table-head: #eef3f7;
+      --table-stripe: #f5f5f5;
+      --addr-low: #3d85c6;
+      --addr-high: #7b2d8e;
+      --addr-own: #a020a0;
+      --section-bg: #f9f5fc;
+      --section-border: #d8c8e8;
+      --section-accent: var(--addr-high);
+      --subsection-bg: #f5f0fa;
+      --mpls-bg: #fff8ee;
+      --mpls-border: #d4860a;
+      --mpls-accent: #8B4513;
+      --max-width: 860px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text);
+      background: #fff;
+    }
+    .site-header {
+      background: #23282d;
+      color: #fff;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 4px solid var(--accent);
+    }
+    .site-header h1 { margin: 0; font-size: 1.75rem; font-weight: 600; line-height: 1.3; }
+    .site-header .meta { margin: 0.5rem 0 0; font-size: 0.9rem; color: #b0b8c0; }
+    .site-header a { color: #7ec8ff; }
+    .wrap { max-width: var(--max-width); margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    h2 {
+      font-size: 1.65rem; font-weight: 700;
+      margin: 2.5rem 0 1rem; padding: 0.6rem 1rem;
+      background: var(--section-bg); border: 1px solid var(--section-border);
+      border-left: 5px solid var(--section-accent); border-radius: 4px;
+      color: var(--section-accent);
+    }
+    h2:first-of-type { margin-top: 0; }
+    h3 { font-size: 1.15rem; font-weight: 700; margin: 1.75rem 0 0.75rem; color: var(--text); }
+    h3.section-sub {
+      padding: 0.45rem 0.85rem; background: var(--subsection-bg);
+      border-left: 4px solid var(--section-accent); border-radius: 3px; color: var(--section-accent);
+    }
+    h3.mpls-sub {
+      padding: 0.45rem 0.85rem; background: var(--mpls-bg);
+      border-left: 4px solid var(--mpls-accent); border-radius: 3px; color: var(--mpls-accent);
+    }
+    h4 { font-size: 1rem; font-weight: 700; margin: 1.25rem 0 0.5rem; color: var(--text); }
+    p { margin: 0 0 1rem; }
+    a { color: var(--accent); }
+    ul, ol { margin: 0 0 1rem; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+    .toc {
+      background: #fafafa; border: 1px solid var(--border); border-radius: 4px;
+      padding: 0; margin: 1rem 0 1.25rem; font-size: 0.9rem; overflow: hidden;
+    }
+    .toc details { margin: 0; }
+    .toc summary {
+      cursor: pointer; font-weight: 700; list-style: none;
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+      padding: 0.75rem 1.1rem; background: #f3f3f3;
+      border-bottom: 1px solid transparent; user-select: none;
+    }
+    .toc details[open] summary { border-bottom-color: var(--border); }
+    .toc summary:hover .toc-title { color: var(--accent); }
+    .toc summary::-webkit-details-marker { display: none; }
+    .toc .toc-title { flex: 1; }
+    .toc .toc-toggle-icon {
+      flex: 0 0 auto; display: inline-flex; flex-direction: column;
+      justify-content: center; gap: 3px; width: 30px; height: 26px; padding: 5px 7px;
+      border: 1px solid #c8c8c8; border-radius: 4px; background: #fff;
+    }
+    .toc .toc-toggle-icon span { display: block; height: 2px; background: #666; border-radius: 1px; }
+    .toc details[open] .toc-toggle-icon span:nth-child(2) { opacity: 0.45; }
+    .toc ol { margin: 0; padding: 0.85rem 1.1rem 1rem 2.25rem; }
+    .toc a { text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+    .callout {
+      background: var(--callout-bg); border-left: 4px solid var(--section-accent);
+      padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.95rem;
+    }
+    .callout > strong:first-child {
+      display: block; font-size: 1.02rem; font-weight: 700;
+      color: var(--section-accent); margin-bottom: 0.25rem;
+    }
+    .callout.prereq { background: #f0fff4; border-left-color: var(--pass); }
+    .callout.prereq > strong:first-child { color: var(--pass); }
+    .callout.mpls { background: var(--mpls-bg); border-left-color: var(--mpls-accent); }
+    .callout.mpls > strong:first-child { color: var(--mpls-accent); }
+    code {
+      font-family: Consolas, "Courier New", monospace; font-size: 0.88em;
+      background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 3px;
+    }
+    pre {
+      margin: 0; padding: 1rem 1.1rem; padding-top: 2.25rem;
+      overflow-x: auto; border-radius: 4px; font-size: 0.82rem; line-height: 1.45;
+    }
+    .code-wrap { position: relative; margin: 0.75rem 0 1.25rem; }
+    .copy-btn {
+      position: absolute; top: 0.45rem; right: 0.45rem; z-index: 1;
+      font-size: 0.72rem; font-weight: 600; line-height: 1; padding: 0.35rem 0.55rem;
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;
+      background: rgba(255,255,255,0.12); color: #e6e6e6; cursor: pointer;
+    }
+    .code-wrap:has(pre.config) .copy-btn { border-color: var(--border); background: #fff; color: var(--muted); }
+    .copy-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
+    .code-wrap:has(pre.config) .copy-btn:hover { background: var(--callout-bg); color: var(--accent-dark); }
+    .copy-btn.copied { background: var(--pass); border-color: var(--pass); color: #fff; }
+    pre.config { background: var(--code-bg); border: 1px solid var(--border); color: #222; font-family: Consolas, "Courier New", monospace; }
+    pre.cli { background: var(--cli-bg); color: var(--cli-text); font-family: Consolas, "Courier New", monospace; border: none; border-radius: 6px; }
+    pre.cli .cli-prompt, pre.cli .cli-cmd, pre.cli .cli-colhead { color: var(--cli-colhead); }
+    pre.cli .cli-banner { color: var(--cli-banner); font-weight: 600; }
+    pre.cli .cli-up, pre.cli .cli-ok { color: var(--cli-up); }
+    pre.cli .cli-summary { color: var(--cli-summary); font-weight: 600; }
+    pre.cli .cli-sep { color: var(--cli-sep); }
+    pre.topo { background: #fafafa; border: 1px solid var(--border); font-family: Consolas, "Courier New", monospace; text-align: center; line-height: 1.3; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; line-height: 1.4; }
+    th, td { border: 1px solid var(--border); padding: 0.5rem 0.65rem; text-align: left; vertical-align: top; }
+    thead th { background: var(--table-head); font-weight: 700; }
+    tbody tr:nth-child(even) td { background: var(--table-stripe); }
+    .verify-block { margin: 1.25rem 0 2rem; }
+    .pass-fail { font-size: 0.9rem; font-weight: 600; margin: 0.5rem 0; }
+    .pass { color: var(--pass); }
+    .fail { color: var(--fail); }
+    .expected-label { font-size: 0.82rem; color: var(--muted); font-style: italic; margin: 0 0 0.1rem; }
+    .footnote { font-size: 0.9rem; color: var(--muted); font-style: italic; }
+    .series-nav {
+      background: #f3f3f3; border: 1px solid var(--border);
+      border-radius: 4px; padding: 0.75rem 1.1rem; margin: 0 0 1.5rem; font-size: 0.88rem;
+    }
+    .series-nav > strong:first-child { display: block; margin-bottom: 0.4rem; }
+    .series-nav table { margin: 0; font-size: 0.82rem; width: auto; }
+    .series-nav td, .series-nav th { padding: 0.3rem 0.6rem; }
+    .series-nav .current td { font-weight: 700; color: var(--section-accent); background: var(--section-bg); }
+    .series-nav .skipped td { color: var(--muted); font-style: italic; }
+    .series-note { margin: 0.4rem 0 0; color: var(--muted); font-style: italic; font-size: 0.82rem; }
+    @media (max-width: 700px) { body { font-size: 16px; } table { font-size: 0.75rem; } }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>SRv6 uSID IGW Lab &mdash; Part 5</h1>
+  <p class="meta">
+    Continues from <a href="srv6-usid-l3vpn-lab.html">Part 2: L3VPN</a>
+    &middot; SRv6 &harr; SR-MPLS Interworking Gateway &middot; CML 2.10
+  </p>
+</header>
+
+<div class="wrap">
+
+<nav class="toc" aria-label="Table of contents">
+  <details>
+    <summary>
+      <span class="toc-title">Table of Contents</span>
+      <span class="toc-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </summary>
+    <ol>
+      <li><a href="#prereqs">Prerequisites</a></li>
+      <li><a href="#what-is-igw">What is the SRv6 IGW?</a></li>
+      <li><a href="#topology">Part 5 Topology</a></li>
+      <li><a href="#address-plan">Address Plan</a></li>
+      <li><a href="#step-11">Step 11 &mdash; Verify MPLS domain (OSPF + SR-MPLS)</a></li>
+      <li><a href="#step-12">Step 12 &mdash; IGW joins SRv6 IS-IS domain</a></li>
+      <li><a href="#step-13">Step 13 &mdash; IGW BGP: dual-transport VPNv4</a></li>
+      <li><a href="#step-14">Step 14 &mdash; Verify IGW SID and label allocation</a></li>
+      <li><a href="#step-15">Step 15 &mdash; Proof run: SRv6 PE to MPLS PE</a></li>
+      <li><a href="#gotchas">Troubleshooting</a></li>
+      <li><a href="#appendix">Appendix &mdash; Full IGW / MP1 / MPE1 configs</a></li>
+    </ol>
+  </details>
+</nav>
+
+<div class="series-nav">
+  <strong>Lab series &mdash; where you are:</strong>
+  <table>
+    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
+    <tbody>
+      <tr><td><a href="srv6-usid-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-baseline.yaml</code></td><td>None</td></tr>
+      <tr><td><a href="srv6-usid-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-l3vpn-solution.yaml</code></td><td>Part 1</td></tr>
+      <tr class="skipped"><td>Part 3</td><td>not published</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td><a href="srv6-usid-l3vpn-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-l3vpn-ce-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr class="current"><td>Part 5</td><td>SRv6 &harr; SR-MPLS IGW (this guide)</td><td><code>quisted-srv6-l3vpn-igw-solution.yaml</code></td><td>Part 2</td></tr>
+    </tbody>
+  </table>
+  <p class="series-note">Parts are numbered by conceptual stage. Part 3 is not currently published.</p>
+</div>
+
+<hr>
+
+<h2 id="prereqs">Prerequisites</h2>
+
+<div class="callout prereq">
+  <strong>Load the Part 5 CML file</strong>
+  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-l3vpn-igw-solution.yaml</code> into CML.
+  This file already contains the complete solution. Use it as your running lab, then follow
+  Steps 11&ndash;15 to understand what each piece does and verify that it works.</p>
+  <p style="margin:0.5rem 0 0">Parts 1&ndash;4 are not required to load separately &mdash; the IGW YAML is self-contained.</p>
+</div>
+
+<hr>
+
+<h2 id="what-is-igw">What is the SRv6 IGW?</h2>
+
+<div class="callout">
+  <strong>You already know both halves of this lab</strong>
+  <p style="margin:0.5rem 0 0">Parts 1&ndash;4 gave you the <strong>SRv6 side</strong>: IS-IS, locators,
+  End.DT4 SIDs, VPNv4 over IPv6 BGP sessions. The <strong>MPLS side</strong> (OSPF&nbsp;+&nbsp;SR-MPLS&nbsp;+&nbsp;VPNv4
+  over IPv4 BGP) is the pre-SRv6 world that already exists in most SP networks &mdash; nothing conceptually new.
+  The <strong>IGW is the only genuinely new node</strong>. Everything else you have already configured in some form.
+  Treat Part 5 as two familiar halves finally meeting at a boundary, not a new mountain to climb.</p>
+</div>
+
+<p>
+  In a pure SRv6 network every PE uses an <strong>End.DT4 SID</strong> as the VPN service identifier.
+  But real networks migrate in phases. An existing MPLS domain uses <strong>VPN labels</strong>
+  (allocated by BGP labeled-unicast or SR-MPLS). The two domains cannot exchange VPN services
+  directly because they use incompatible transport identifiers.
+</p>
+<p>
+  The <strong>SRv6 Interworking Gateway (IGW)</strong> sits at the domain boundary and solves this:
+</p>
+<ul>
+  <li>Toward the <strong>SRv6 domain</strong>: IGW allocates an <strong>End.DT4 SID</strong> for each VRF,
+  advertised via BGP VPNv4 to SRv6 PEs. SRv6 PEs send VPN traffic as outer IPv6 packets addressed to that SID.</li>
+  <li>Toward the <strong>MPLS domain</strong>: IGW allocates an <strong>MPLS VPN label</strong> for each VRF,
+  advertised via BGP VPNv4 to MPLS PEs. MPLS PEs send VPN traffic as labelled packets.</li>
+  <li>At the data plane: IGW <strong>decapsulates</strong> whichever encapsulation arrived and
+  <strong>re-encapsulates</strong> in the other format before forwarding.</li>
+</ul>
+<p>
+  The CE routers and MPLS PEs have no knowledge of SRv6. The SRv6 PEs have no knowledge of MPLS labels.
+  The IGW is the only node that speaks both.
+</p>
+
+<div class="callout">
+  <strong>IGW vs non-speaker CE</strong>
+  <p style="margin:0.5rem 0 0">A CE that does not run BGP (Part 4 right-side static CEs) is a
+  &ldquo;non-speaker&rdquo; at the <em>CE-PE boundary</em> &mdash; it just does not participate in
+  the PE-CE routing protocol. That is a PE-CE concern only. The IGW is a completely different
+  concept: it operates at the <em>PE-to-PE transport boundary</em> between two network domains.
+  The IGW needs no CE at all to demonstrate its function.</p>
+</div>
+
+<hr>
+
+<h2 id="topology">Part 5 Topology</h2>
+
+<pre class="topo">
+SRv6 Domain (IS-IS 100, fcbb:bb00::/32)          MPLS Domain (OSPF 1, 10.200.0.0/24)
+─────────────────────────────────────────         ──────────────────────────────────
+ PE5 (Lo100: 192.168.50.1)                                               MPE1
+ PE6 (Lo100: 192.168.60.1)   ══════                                  (Lo100: 10.200.100.1)
+ PE7 (Lo100: 192.168.70.1)  SRv6 core  ── P3 ── IGW ── MP1 ──      VRF CUST-A (MPLS)
+ PE8 (Lo100: 192.168.80.1)   ══════         Gi0/0/0/5    SR-MPLS  (OSPF+SR-MPLS)
+ P1-P4 (SRv6 P routers)
+
+                             ┌────────────────────────────────┐
+                             │              IGW               │
+                             │  SRv6 side  │  MPLS side      │
+                             │  Lo0: fc00:0:9::1              │
+                             │  SRv6 locator: fcbb:bb00:9::/48│
+                             │  End.DT4 SID: fcbb:bb00:9:Exxx │
+                             │  MPLS VPN label: 16xxx          │
+                             └────────────────────────────────┘
+</pre>
+
+<table>
+  <thead><tr><th>Node</th><th>Role</th><th>IGP</th><th>SRv6 / MPLS</th></tr></thead>
+  <tbody>
+    <tr><td>P1&ndash;P4</td><td>SRv6 P router</td><td>IS-IS 100</td><td>SRv6 uSID locator</td></tr>
+    <tr><td>PE5&ndash;PE8</td><td>SRv6 PE</td><td>IS-IS 100</td><td>SRv6 + VPNv4 (IPv6 iBGP)</td></tr>
+    <tr><td><strong>IGW</strong></td><td><strong>Interworking Gateway</strong></td><td>IS-IS 100 + OSPF 1</td><td>SRv6 locator + SR-MPLS (dual)</td></tr>
+    <tr><td>MP1</td><td>MPLS P router</td><td>OSPF 1</td><td>SR-MPLS only</td></tr>
+    <tr><td>MPE1</td><td>MPLS PE</td><td>OSPF 1</td><td>SR-MPLS + VPNv4 (IPv4 iBGP)</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2 id="address-plan">Address Plan</h2>
+
+<h3>SRv6 domain (unchanged from Part 1&ndash;4)</h3>
+<table>
+  <thead><tr><th>Node</th><th>IS-IS loopback</th><th>SRv6 locator</th></tr></thead>
+  <tbody>
+    <tr><td>P1&ndash;P4</td><td>fc00:0:1&ndash;4::1/128</td><td>fcbb:bb00:0001&ndash;0004::/48</td></tr>
+    <tr><td>PE5&ndash;PE8</td><td>fc00:0:5&ndash;8::1/128</td><td>fcbb:bb00:0005&ndash;0008::/48</td></tr>
+    <tr><td><strong>IGW</strong></td><td><strong>fc00:0:9::1/128</strong></td><td><strong>fcbb:bb00:0009::/48</strong></td></tr>
+  </tbody>
+</table>
+
+<h3>MPLS domain (new in Part 5)</h3>
+<table>
+  <thead><tr><th>Node</th><th>OSPF loopback</th><th>SR-MPLS prefix-SID</th><th>MPLS label</th></tr></thead>
+  <tbody>
+    <tr><td>IGW (Loopback1)</td><td>10.200.0.9/32</td><td>index 9</td><td>16009</td></tr>
+    <tr><td>MP1</td><td>10.200.0.1/32</td><td>index 11</td><td>16011</td></tr>
+    <tr><td>MPE1</td><td>10.200.0.2/32</td><td>index 12</td><td>16012</td></tr>
+  </tbody>
+</table>
+
+<h3>Links</h3>
+<table>
+  <thead><tr><th>Link</th><th>Subnet</th><th>Left</th><th>Right</th><th>Domain</th></tr></thead>
+  <tbody>
+    <tr><td>P3 &harr; IGW</td><td>2001:39::/64</td><td>P3 Gi0/0/0/5: ::3</td><td>IGW Gi0/0/0/0: ::9</td><td>SRv6</td></tr>
+    <tr><td>IGW &harr; MP1</td><td>10.200.1.0/30</td><td>IGW Gi0/0/0/1: .1</td><td>MP1 Gi0/0/0/0: .2</td><td>MPLS</td></tr>
+    <tr><td>MP1 &harr; MPE1</td><td>10.200.2.0/30</td><td>MP1 Gi0/0/0/1: .1</td><td>MPE1 Gi0/0/0/0: .2</td><td>MPLS</td></tr>
+  </tbody>
+</table>
+
+<h3>VRF CUST-A simulated customer prefix</h3>
+<table>
+  <thead><tr><th>Node</th><th>Loopback100 (in VRF)</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>PE5</td><td>192.168.50.1/24</td><td>SRv6-domain customer prefix (Part 2)</td></tr>
+    <tr><td>MPE1</td><td>10.200.100.1/24</td><td>MPLS-domain customer prefix (Part 5)</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2 id="step-11">Step 11 &mdash; Verify the MPLS Domain</h2>
+
+<p>Confirm OSPF adjacency and SR-MPLS forwarding between IGW, MP1, and MPE1 before testing the interworking.</p>
+
+<h4>11.1 &mdash; OSPF neighbors</h4>
+<p class="expected-label">Expected on IGW:</p>
+<pre class="cli">RP/0/RP0/CPU0:IGW# show ospf neighbor
+
+* Indicates MADJ interface
+
+Neighbors for OSPF 1
+
+Neighbor ID     Pri  State          Dead  Address         Interface
+10.200.0.1       1  FULL/BDR       00:00:35  10.200.1.2  Gi0/0/0/1</pre>
+<p class="pass-fail pass">&#10003; Pass: IGW &harr; MP1 FULL. Run same on MP1 to confirm MP1 &harr; MPE1 FULL.</p>
+
+<h4>11.2 &mdash; SR-MPLS label database on MP1</h4>
+<p class="expected-label">Expected on MP1 (prefix-SIDs for IGW and MPE1 visible):</p>
+<pre class="cli">RP/0/RP0/CPU0:MP1# show mpls forwarding
+
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes
+Label  Label       or ID              Interface                    Switched
+------ ----------- ------------------ ------------ --------------- ------------
+16009  Pop         SR Pfx (idx 9)     Gi0/0/0/0    10.200.1.1      0
+16012  Pop         SR Pfx (idx 12)    Gi0/0/0/1    10.200.2.2      0</pre>
+<p class="pass-fail pass">&#10003; Pass: labels 16009 (IGW) and 16012 (MPE1) present</p>
+
+<h4>11.3 &mdash; IPv4 reachability across the MPLS domain</h4>
+<pre class="config">RP/0/RP0/CPU0:IGW# ping 10.200.0.2 source 10.200.0.9</pre>
+<p class="pass-fail pass">&#10003; Pass: 5/5 success (IGW Loopback1 &rarr; MPE1 Loopback0 via SR-MPLS)</p>
+
+<hr>
+
+<h2 id="step-12">Step 12 &mdash; IGW Joins the SRv6 IS-IS Domain</h2>
+
+<p>IGW participates in IS-IS 100 on its Gi0/0/0/0 interface (to P3) and advertises its SRv6 locator <code>fcbb:bb00:0009::/48</code>. From the SRv6 PEs&rsquo; perspective, IGW looks like any other SRv6 node.</p>
+
+<h4>12.1 &mdash; IS-IS neighbor on IGW</h4>
+<p class="expected-label">Expected on IGW:</p>
+<pre class="cli">RP/0/RP0/CPU0:IGW# show isis neighbors
+
+IS-IS 100 neighbors:
+System Id      Interface        SNPA           State  Holdtime Type IETF-NSF
+P3             Gi0/0/0/0        *PtoP*         Up     26       L2   Capable</pre>
+<p class="pass-fail pass">&#10003; Pass: P3 neighbor Up</p>
+
+<h4>12.2 &mdash; IGW locator visible in SRv6 SID table</h4>
+<p class="expected-label">Expected on IGW:</p>
+<pre class="cli">RP/0/RP0/CPU0:IGW# show segment-routing srv6 sid
+
+*** Locator: 'MAIN' ***
+SID                         Behavior          Context              State  RW
+FCBB:BB00:9::               uN (PSP/USD)      'default':1          InUse  Y</pre>
+
+<h4>12.3 &mdash; PE5 can reach IGW&rsquo;s SRv6 loopback via IS-IS</h4>
+<pre class="config">PE5# ping fc00:0:9::1 source fc00:0:5::1</pre>
+<p class="pass-fail pass">&#10003; Pass: IS-IS routes IGW loopback correctly through the SRv6 core</p>
+
+<hr>
+
+<h2 id="step-13">Step 13 &mdash; IGW BGP: Dual-Transport VPNv4</h2>
+
+<p>IGW maintains two types of VPNv4 iBGP sessions simultaneously:</p>
+<ul>
+  <li><strong>IPv6 sessions</strong> to PE5&ndash;PE8 (<code>fc00:0:5&ndash;8::1</code>) &mdash; SRv6 transport</li>
+  <li><strong>IPv4 session</strong> to MPE1 (<code>10.200.0.2</code>) &mdash; MPLS transport</li>
+</ul>
+
+<div class="callout">
+  <strong>Why <code>retain route-target all</code> on the IGW?</strong>
+  <p style="margin:0.5rem 0 0">By default, a BGP speaker only keeps VPNv4 routes whose Route Target (RT)
+  matches a locally configured VRF. The IGW sits at the domain boundary and must <em>re-advertise</em>
+  routes between the two domains: routes arriving from MPE1 (RT&nbsp;<code>65000:100</code>) must be
+  forwarded to PE5&ndash;PE8, and routes arriving from the SRv6 PEs must be forwarded to MPE1.
+  Without <code>retain route-target all</code>, the IGW would silently discard any route whose RT
+  does not match a locally imported VRF &mdash; breaking the interworking even though all BGP sessions
+  are up. This command is only needed on nodes that act as <strong>domain boundary translators</strong>;
+  regular PE5&ndash;PE8 do not need it.</p>
+</div>
+
+<h4>13.1 &mdash; BGP VPNv4 summary on IGW</h4>
+<p class="expected-label">Expected on IGW (5 neighbors, all Established):</p>
+<pre class="cli">RP/0/RP0/CPU0:IGW# show bgp vpnv4 unicast summary
+
+BGP router identifier 10.200.0.9, local AS number 65000
+
+Neighbor        Spk  AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down  St/PfxRcd
+FC00:0:5::1       0 65000     18      18        6    0    0 00:02:10          1
+FC00:0:6::1       0 65000     18      18        6    0    0 00:02:08          1
+FC00:0:7::1       0 65000     18      18        6    0    0 00:02:06          1
+FC00:0:8::1       0 65000     18      18        6    0    0 00:02:04          1
+10.200.0.2        0 65000     14      14        6    0    0 00:01:52          1</pre>
+<p class="pass-fail pass">&#10003; Pass: all 5 neighbors Established with non-zero prefix count</p>
+
+<h4>13.2 &mdash; VPNv4 routes in IGW VRF CUST-A</h4>
+<p class="expected-label">Expected on IGW (routes from both domains visible):</p>
+<pre class="cli">RP/0/RP0/CPU0:IGW# show bgp vrf CUST-A ipv4 unicast
+
+BGP VRF CUST-A, state: Active
+BGP Route Distinguisher: 65000:100
+
+          Network            Next Hop           From       AS Path
+*>i 192.168.50.0/24  FC00:0:5::1        FC00:0:5::1    65000 i
+*>i 192.168.70.0/24  FC00:0:7::1        FC00:0:7::1    65000 i
+*>  10.200.100.0/24  10.200.0.2         10.200.0.2     65000 i</pre>
+<p>Routes <code>192.168.50.0/24</code> and <code>192.168.70.0/24</code> arrived with SRv6 SIDs (from PE5/PE7).
+Route <code>10.200.100.0/24</code> arrived with an MPLS label (from MPE1). Both coexist in the same VRF table on the IGW.</p>
+<p class="pass-fail pass">&#10003; Pass: routes from both transport domains visible in VRF CUST-A</p>
+
+<hr>
+
+<h2 id="step-14">Step 14 &mdash; Verify IGW SID and Label Allocation</h2>
+
+<p>After BGP converges, IGW allocates both an End.DT4 SID (for SRv6 peers) and an MPLS VPN label (for MPE1) for VRF CUST-A. This dual allocation is what makes it an IGW.</p>
+
+<h4>14.1 &mdash; End.DT4 SID on IGW (advertised to SRv6 PEs)</h4>
+<p class="expected-label">Expected on IGW:</p>
+<pre class="cli">RP/0/RP0/CPU0:IGW# show segment-routing srv6 sid
+
+*** Locator: 'MAIN' ***
+SID                         Behavior          Context              State  RW
+FCBB:BB00:9::               uN (PSP/USD)      'default':1          InUse  Y
+FCBB:BB00:9:E000::          End.DT4           'CUST-A'             InUse  Y</pre>
+<p class="pass-fail pass">&#10003; Pass: End.DT4 SID present for CUST-A — this is what SRv6 PEs send VPN traffic to</p>
+
+<h4>14.2 &mdash; MPLS VPN label on IGW (advertised to MPE1)</h4>
+<p class="expected-label">Expected on IGW:</p>
+<pre class="cli">RP/0/RP0/CPU0:IGW# show bgp vrf CUST-A ipv4 unicast labels
+
+          Network            Next Hop          In label    Out label
+*>  192.168.50.0/24  FC00:0:5::1      nolabel     FCBB:BB00:5:E000:: (SRv6)
+*>  10.200.100.0/24  10.200.0.2       16xxx        Pop (MPLS)
+
+Local VPN label: 16xxx    &lt;-- this label is advertised to MPE1</pre>
+<p>The <em>local VPN label</em> shown is what IGW allocates for CUST-A and sends to MPE1 in the VPNv4 update. When MPE1 sends VPN traffic, it pushes this label; IGW pops it and looks up the inner packet in VRF CUST-A.</p>
+
+<h4>14.3 &mdash; Confirm PE5 knows IGW&rsquo;s End.DT4 SID for CUST-A</h4>
+<p class="expected-label">Expected on PE5:</p>
+<pre class="cli">PE5# show ip cef vrf CUST-A 10.200.100.0/24 detail
+
+10.200.100.0/24, epoch 2
+  SRv6 Headend, dst FCBB:BB00:9:E000::
+  nexthop FC00:0:9::1 ... encap SRv6</pre>
+<p>PE5 reaches MPE1&rsquo;s CUST-A prefix (<code>10.200.100.0/24</code>) by sending an SRv6 outer packet addressed to IGW&rsquo;s End.DT4 SID. PE5 has no knowledge of MPLS labels at all.</p>
+<p class="pass-fail pass">&#10003; Pass: PE5 CEF shows SRv6 encapsulation toward IGW&rsquo;s End.DT4 SID</p>
+
+<hr>
+
+<h2 id="step-15">Step 15 &mdash; Proof Run: SRv6 PE to MPLS PE</h2>
+
+<h4>15.1 &mdash; Ping from PE5 (SRv6 domain) to MPE1 (MPLS domain) across VRF CUST-A</h4>
+<pre class="config">PE5# ping vrf CUST-A 10.200.100.1 source 192.168.50.1 repeat 10</pre>
+<p class="expected-label">Expected:</p>
+<pre class="cli">PE5# ping vrf CUST-A 10.200.100.1 source 192.168.50.1 repeat 10
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 10.200.100.1, timeout is 2 seconds:
+Packet sent with a source address of 192.168.50.1
+!!!!!!!!!!
+Success rate is 100 percent (10/10), round-trip min/avg/max = 2/4/9 ms</pre>
+<p class="pass-fail pass">&#10003; Pass: 10/10 — IPv4 VPN traffic traverses SRv6 domain, IGW translation, and MPLS domain end-to-end</p>
+
+<h4>15.2 &mdash; What the IGW actually did</h4>
+<p>The path for a single ICMP packet:</p>
+<ol>
+  <li><strong>PE5</strong> encapsulates IPv4 ICMP in SRv6 outer header &mdash; dst = <code>FCBB:BB00:9:E000::</code> (IGW End.DT4 for CUST-A)</li>
+  <li><strong>P1 &rarr; P3</strong> forward the outer IPv6 packet using IS-IS routes; no awareness of VPN</li>
+  <li><strong>IGW</strong> receives the SRv6 packet, matches End.DT4 SID, strips the outer IPv6 header, looks up inner IPv4 (<code>10.200.100.1</code>) in VRF CUST-A, and pushes the MPLS VPN label for MPE1</li>
+  <li><strong>MP1</strong> swaps/forwards the MPLS label stack toward MPE1</li>
+  <li><strong>MPE1</strong> pops the VPN label, looks up <code>10.200.100.1</code> in its VRF CUST-A, and delivers to Loopback100</li>
+</ol>
+
+<h4>15.3 &mdash; Reverse path: MPLS PE to SRv6 PE</h4>
+<pre class="config">RP/0/RP0/CPU0:MPE1# ping vrf CUST-A 192.168.50.1 source 10.200.100.1 repeat 10</pre>
+<p class="pass-fail pass">&#10003; Pass: 10/10 — symmetric path, IGW translates MPLS&rarr;SRv6 on the return</p>
+
+<hr>
+
+<h2 id="gotchas">Troubleshooting</h2>
+
+<h3>IGW BGP session to MPE1 stays Active</h3>
+<ul>
+  <li>IGW uses <code>Loopback1</code> (<code>10.200.0.9</code>) as update-source for the IPv4 session. Confirm OSPF has a route to <code>10.200.0.2</code> on the IGW: <code>show route ipv4 10.200.0.2/32</code></li>
+  <li>MP1 must forward packets between IGW and MPE1 — check <code>show mpls forwarding</code> on MP1 for labels 16009 and 16012.</li>
+</ul>
+
+<h3>End.DT4 SID not appearing on IGW</h3>
+<ul>
+  <li>Confirm <code>segment-routing srv6 locator MAIN alloc mode per-vrf</code> is present under <code>vrf CUST-A address-family ipv4 unicast</code> in the BGP config.</li>
+  <li>The SID is allocated only after the VRF BGP AF is active — check <code>show bgp vrf CUST-A ipv4 unicast</code> first.</li>
+</ul>
+
+<h3>MPLS VPN label not appearing on IGW</h3>
+<ul>
+  <li>Confirm <code>segment-routing mpls alloc mode per-vrf</code> is also present under the same VRF BGP AF.</li>
+  <li>This dual allocation (SRv6 SID + MPLS label) is the defining feature of the IGW. If only SRv6 is configured, MPE1 will not receive a usable label.</li>
+</ul>
+
+<h3>PE5 CEF shows IGW End.DT4 SID but ping fails</h3>
+<ul>
+  <li>Check that IGW can reach MPE1&rsquo;s VRF prefix: <code>show route vrf CUST-A</code> on IGW must include <code>10.200.100.0/24</code>.</li>
+  <li>Check the MPLS path: <code>ping 10.200.100.1 source 10.200.0.9</code> from the global table on IGW (non-VRF) to confirm the MPLS path is up before testing the VRF path.</li>
+</ul>
+
+<h3>IS-IS shows IGW as neighbor on P3 but SRv6 PEs can&rsquo;t reach fc00:0:9::1</h3>
+<ul>
+  <li>Verify P3&rsquo;s IS-IS config includes <code>interface GigabitEthernet0/0/0/5</code> with <code>point-to-point</code> and <code>address-family ipv6 unicast</code>.</li>
+  <li>The IS-IS NET on IGW must be unique: <code>49.0001.0000.0000.0009.00</code>.</li>
+</ul>
+
+<hr>
+
+<h2 id="appendix">Appendix &mdash; Full Configs (IGW, MP1, MPE1)</h2>
+
+<p>These are the complete configurations for the three new nodes. P1&ndash;P4 and PE5&ndash;PE8 are identical to the L3VPN solution (Part 2) except that PE5&ndash;PE8 add <code>fc00:0:9::1</code> as a fifth iBGP VPNv4 neighbor, and P3 adds one extra IS-IS interface (Gi0/0/0/5).</p>
+
+<h3>IGW &mdash; full config</h3>
+<pre class="config">hostname IGW
+!
+vrf CUST-A
+ address-family ipv4 unicast
+  import route-target 65000:100
+  export route-target 65000:100
+!
+interface Loopback0
+ description SRv6 domain loopback (IS-IS)
+ ipv6 address fc00:0:9::1/128
+ ipv6 address fe80:0:9::1 link-local
+!
+interface Loopback1
+ description MPLS domain loopback (OSPF)
+ ipv4 address 10.200.0.9 255.255.255.255
+!
+interface GigabitEthernet0/0/0/0
+ description to P3 (SRv6 domain)
+ ipv6 address 2001:39::9/64
+ no shutdown
+!
+interface GigabitEthernet0/0/0/1
+ description to MP1 (MPLS domain)
+ ipv4 address 10.200.1.1 255.255.255.252
+ no shutdown
+!
+segment-routing
+ global-block 16000 23999
+ srv6
+  encapsulation
+   source-address fc00:0:9::1
+  locators
+   locator MAIN
+    prefix fcbb:bb00:0009::/48
+    micro-segment behavior unode psp-usd
+!
+router isis 100
+ is-type level-2-only
+ net 49.0001.0000.0000.0009.00
+ address-family ipv6 unicast
+  metric-style wide
+  segment-routing srv6
+   locator MAIN
+ interface Loopback0
+  passive
+  address-family ipv6 unicast
+ interface GigabitEthernet0/0/0/0
+  point-to-point
+  address-family ipv6 unicast
+!
+router ospf 1
+ router-id 10.200.0.9
+ segment-routing mpls
+ area 0
+  interface Loopback1
+   passive
+   prefix-sid index 9
+  interface GigabitEthernet0/0/0/1
+!
+router bgp 65000
+ bgp router-id 10.200.0.9
+ !
+ neighbor fc00:0:5::1 remote-as 65000
+ neighbor fc00:0:5::1 update-source Loopback0
+ neighbor fc00:0:6::1 remote-as 65000
+ neighbor fc00:0:6::1 update-source Loopback0
+ neighbor fc00:0:7::1 remote-as 65000
+ neighbor fc00:0:7::1 update-source Loopback0
+ neighbor fc00:0:8::1 remote-as 65000
+ neighbor fc00:0:8::1 update-source Loopback0
+ neighbor 10.200.0.2 remote-as 65000
+ neighbor 10.200.0.2 update-source Loopback1
+ !
+ address-family vpnv4 unicast
+  retain route-target all
+  neighbor fc00:0:5::1 activate
+  neighbor fc00:0:5::1 send-community extended
+  neighbor fc00:0:6::1 activate
+  neighbor fc00:0:6::1 send-community extended
+  neighbor fc00:0:7::1 activate
+  neighbor fc00:0:7::1 send-community extended
+  neighbor fc00:0:8::1 activate
+  neighbor fc00:0:8::1 send-community extended
+  neighbor 10.200.0.2 activate
+  neighbor 10.200.0.2 send-community extended
+  segment-routing srv6
+   locator MAIN
+ !
+ vrf CUST-A
+  rd 65000:100
+  address-family ipv4 unicast
+   segment-routing srv6
+    locator MAIN
+    alloc mode per-vrf
+   segment-routing mpls
+    alloc mode per-vrf
+   import route-target 65000:100
+   export route-target 65000:100
+   redistribute connected
+!</pre>
+
+<h3>MP1 &mdash; full config</h3>
+<pre class="config">hostname MP1
+!
+interface Loopback0
+ ipv4 address 10.200.0.1 255.255.255.255
+!
+interface GigabitEthernet0/0/0/0
+ description to IGW
+ ipv4 address 10.200.1.2 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/0/0/1
+ description to MPE1
+ ipv4 address 10.200.2.1 255.255.255.252
+ no shutdown
+!
+segment-routing
+ global-block 16000 23999
+!
+router ospf 1
+ router-id 10.200.0.1
+ segment-routing mpls
+ area 0
+  interface Loopback0
+   passive
+   prefix-sid index 11
+  interface GigabitEthernet0/0/0/0
+  interface GigabitEthernet0/0/0/1
+!</pre>
+
+<h3>MPE1 &mdash; full config</h3>
+<pre class="config">hostname MPE1
+!
+vrf CUST-A
+ address-family ipv4 unicast
+  import route-target 65000:100
+  export route-target 65000:100
+!
+interface Loopback0
+ ipv4 address 10.200.0.2 255.255.255.255
+!
+interface Loopback100
+ description simulated MPLS-side customer prefix
+ vrf CUST-A
+ ipv4 address 10.200.100.1 255.255.255.0
+!
+interface GigabitEthernet0/0/0/0
+ description to MP1
+ ipv4 address 10.200.2.2 255.255.255.252
+ no shutdown
+!
+segment-routing
+ global-block 16000 23999
+!
+router ospf 1
+ router-id 10.200.0.2
+ segment-routing mpls
+ area 0
+  interface Loopback0
+   passive
+   prefix-sid index 12
+  interface GigabitEthernet0/0/0/0
+!
+router bgp 65000
+ bgp router-id 10.200.0.2
+ neighbor 10.200.0.9 remote-as 65000
+ neighbor 10.200.0.9 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor 10.200.0.9 activate
+  neighbor 10.200.0.9 send-community extended
+ !
+ vrf CUST-A
+  rd 65000:100
+  address-family ipv4 unicast
+   segment-routing mpls
+    alloc mode per-vrf
+   import route-target 65000:100
+   export route-target 65000:100
+   redistribute connected
+!</pre>
+
+<hr>
+
+<p class="footnote">
+  Part 5 of the Quisted SRv6 uSID Lab &middot;
+  IOS-XR iosxrv9000 (IGW, MP1, MPE1) + IOS-XE cat8000v (PE5&ndash;PE8) &middot;
+  SR-MPLS SRGB 16000&ndash;23999 &middot; SRv6 uSID F3216
+</p>
+
+</div>
+<script>
+(function () {
+  function escapeHtml(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function span(cls,html) { return '<span class="'+cls+'">'+html+"</span>"; }
+  function highlightTokens(e) {
+    return e.replace(/\bUp\b/g,span("cli-up","Up"))
+            .replace(/\b(InUse|Capable|Active|FULL)\b/g,span("cli-ok","$1"));
+  }
+  function highlightCliLine(line) {
+    var raw=line, e=escapeHtml(line);
+    if (/^(RP\/|[\w.-]+#)\s/.test(raw)) {
+      var m=raw.match(/^((?:RP\/[\w/.:-]+#|[\w.-]+#)\s*)(.*)$/);
+      if (m) return span("cli-prompt",escapeHtml(m[1]))+span("cli-cmd",escapeHtml(m[2]));
+    }
+    if (/^(BGP router identifier|IS-IS \d+|Neighbor ID)/.test(raw)) return span("cli-banner",e);
+    if (/^Success rate/.test(raw)) return span("cli-summary",e);
+    if (/^-{5,}/.test(raw)) return span("cli-sep",e);
+    if (/^(SID\s{2,}|Neighbor\s{2,}|Local\s+Outgoing|Network\s{2,})/.test(raw)) return span("cli-colhead",e);
+    return highlightTokens(e);
+  }
+  function highlightCliPre(pre) {
+    var text=pre.textContent.replace(/\r\n/g,"\n");
+    pre.innerHTML=text.split("\n").map(highlightCliLine).join("\n");
+  }
+  function copyText(text) {
+    if (navigator.clipboard&&window.isSecureContext) return navigator.clipboard.writeText(text);
+    var ta=document.createElement("textarea");
+    ta.value=text; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.left="-9999px";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } finally { document.body.removeChild(ta); }
+    return Promise.resolve();
+  }
+  document.querySelectorAll("pre.config, pre.cli, pre.topo").forEach(function(pre) {
+    var wrap=document.createElement("div"); wrap.className="code-wrap";
+    pre.parentNode.insertBefore(wrap,pre); wrap.appendChild(pre);
+    var btn=document.createElement("button"); btn.type="button"; btn.className="copy-btn";
+    btn.setAttribute("aria-label","Copy to clipboard"); btn.textContent="Copy";
+    wrap.insertBefore(btn,pre);
+    btn.addEventListener("click",function() {
+      copyText(pre.textContent.replace(/\r\n/g,"\n")).then(function() {
+        btn.textContent="Copied!"; btn.classList.add("copied");
+        setTimeout(function(){ btn.textContent="Copy"; btn.classList.remove("copied"); },1600);
+      });
+    });
+  });
+  document.querySelectorAll("pre.cli").forEach(highlightCliPre);
+})();
+</script>
+</body>
+</html>

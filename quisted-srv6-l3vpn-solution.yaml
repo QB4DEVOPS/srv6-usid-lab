@@ -167,7 +167,7 @@ annotations:
     color: '#222222'
     rotation: 0
     text_bold: true
-    text_content: 'Quisted SRv6 uSID Lab'
+    text_content: 'Quisted SRv6 uSID L3VPN Lab'
     text_font: 'Arial'
     text_italic: false
     text_size: 16
@@ -275,17 +275,22 @@ annotations:
 smart_annotations: []
 lab:
   description: |
-    Quisted 8-node MPLS-SR mesh adapted for SRv6 (IS-IS + uSID).
+    Quisted 8-node SRv6 uSID lab extended with L3VPN (Part 2).
+    CUST-A VPN: PE5 <-> PE7 (RD/RT 65000:100, Lo100 192.168.50/70.1/24)
+    CUST-B VPN: PE6 <-> PE8 (RD/RT 65000:200, Lo100 192.168.60/80.1/24)
     Based on https://www.quisted.net/index.php/2024/11/11/mpls-segment-routing-mpls-sr-lab/
   notes: |
     Import on CML 2.9 or 2.10. Requires iosxrv9000 and cat8000v node definitions.
-    PE7/PE8 use CAT 8000V instead of IOSv so the full domain supports SRv6 uSID.
-    CAT8000V day-0 includes license boot level network-advantage (reload once for SRv6).
-    Mgmt: ext-conn (System Bridge) -> mgmt-sw -> all nodes. Mgmt VRF + DHCP on XR MgmtEth and PE GigabitEthernet3.
-    P nodes: iosxrv9000. All nodes boot in parallel (no node staging).
+    This is the Part 2 L3VPN answer key. Load this AFTER completing Part 1 (srv6-usid-isis-lab.html)
+    OR use as a direct starting point for the L3VPN lab (srv6-usid-l3vpn-lab.html).
+    PE5/PE7 carry VRF CUST-A (iBGP AS 65000, SRv6 End.DT4, alloc per-vrf).
+    PE6/PE8 carry VRF CUST-B (iBGP AS 65000, SRv6 End.DT4, alloc per-vrf).
+    BGP router-id uses arbitrary IPv4 (5.5.5.5/6.6.6.6/7.7.7.7/8.8.8.8) -- no interface needed.
+    Loopback100 in each VRF simulates the customer CE prefix (no CE nodes required).
+    Mgmt: ext-conn (System Bridge) -> mgmt-sw -> all nodes.
   timestamp: 1784252880.562071
-  title: Quisted SRv6 uSID — Part 1 Solution
-  version: 0.3.1
+  title: Quisted SRv6 uSID L3VPN — Part 2 Solution
+  version: 0.1.0
 nodes:
   - id: n0
     label: P1
@@ -326,7 +331,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:1::1/128
        ipv6 address fe80:0:1::1 link-local
@@ -501,7 +506,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:2::1/128
        ipv6 address fe80:0:2::1 link-local
@@ -676,7 +681,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:3::1/128
        ipv6 address fe80:0:3::1 link-local
@@ -851,7 +856,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:4::1/128
        ipv6 address fe80:0:4::1 link-local
@@ -1005,10 +1010,23 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:5::1/128
        ipv6 address fe80:0:5::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-A
+       ip address 192.168.50.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P1
@@ -1066,6 +1084,36 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 5.5.5.5
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1106,10 +1154,23 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:6::1/128
        ipv6 address fe80:0:6::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-B
+       ip address 192.168.60.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P1
@@ -1167,6 +1228,36 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 6.6.6.6
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1207,10 +1298,23 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:7::1/128
        ipv6 address fe80:0:7::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-A
+       ip address 192.168.70.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P3
@@ -1268,6 +1372,36 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 7.7.7.7
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1308,10 +1442,23 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:8::1/128
        ipv6 address fe80:0:8::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-B
+       ip address 192.168.80.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P3
@@ -1369,6 +1516,36 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 8.8.8.8
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0

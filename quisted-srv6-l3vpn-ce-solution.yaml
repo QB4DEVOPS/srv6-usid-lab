@@ -35,228 +35,51 @@ annotations:
     x2: 160.0
     y2: 310.0
     z_index: -200
-  - type: rectangle
-    border_color: 'rgba(70, 130, 180, 0.90)'
-    border_radius: 8
-    border_style: ''
-    color: 'rgba(70, 130, 180, 0.90)'
-    rotation: 0
-    thickness: 1
-    x1: -320.0
-    y1: -198.0
-    x2: 160.0
-    y2: 26.0
-    z_index: -100
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#FFFFFF'
-    rotation: 0
-    text_bold: true
-    text_content: 'IOS-XE'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 13
-    text_unit: 'pt'
-    thickness: 1
-    x1: -285.0
-    y1: -192.0
-    z_index: -90
-  - type: rectangle
-    border_color: 'rgba(90, 80, 110, 0.90)'
-    border_radius: 8
-    border_style: ''
-    color: 'rgba(90, 80, 110, 0.90)'
-    rotation: 0
-    thickness: 1
-    x1: -80.0
-    y1: -198.0
-    x2: 360.0
-    y2: 26.0
-    z_index: -100
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#FFFFFF'
-    rotation: 0
-    text_bold: true
-    text_content: 'IOS-XR'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 13
-    text_unit: 'pt'
-    thickness: 1
-    x1: 70.0
-    y1: -192.0
-    z_index: -90
-  - type: rectangle
-    border_color: 'rgba(128, 0, 128, 0.85)'
-    border_radius: 8
-    border_style: ''
-    color: 'rgba(128, 0, 128, 0.85)'
-    rotation: 0
-    thickness: 1
-    x1: 360.0
-    y1: -198.0
-    x2: 160.0
-    y2: 26.0
-    z_index: -100
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#FFFFFF'
-    rotation: 0
-    text_bold: true
-    text_content: 'IOS-XE'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 13
-    text_unit: 'pt'
-    thickness: 1
-    x1: 405.0
-    y1: -192.0
-    z_index: -90
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#2F4F6F'
-    rotation: 0
-    text_bold: true
-    text_content: 'PE'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 20
-    text_unit: 'pt'
-    thickness: 1
-    x1: -270.0
-    y1: -148.0
-    z_index: -150
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#3A3345'
-    rotation: 0
-    text_bold: true
-    text_content: 'P'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 20
-    text_unit: 'pt'
-    thickness: 1
-    x1: 90.0
-    y1: -148.0
-    z_index: -150
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#5A2D6F'
-    rotation: 0
-    text_bold: true
-    text_content: 'PE'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 20
-    text_unit: 'pt'
-    thickness: 1
-    x1: 410.0
-    y1: -148.0
-    z_index: -150
   - type: text
     border_color: ''
     border_style: ''
     color: '#222222'
     rotation: 0
     text_bold: true
-    text_content: 'Quisted SRv6 uSID Lab'
+    text_content: 'Quisted SRv6 uSID L3VPN — CE (Part 4)'
     text_font: 'Arial'
     text_italic: false
     text_size: 16
     text_unit: 'pt'
     thickness: 1
-    x1: -40.0
+    x1: -60.0
     y1: -280.0
     z_index: 200
-  - type: rectangle
-    border_color: 'rgba(70, 130, 180, 0.90)'
-    border_radius: 10
-    border_style: ''
-    color: 'rgba(173, 216, 230, 0.30)'
-    rotation: 0
-    thickness: 2
-    x1: -345.0
-    y1: 210.0
-    x2: 210.0
-    y2: 36.0
-    z_index: 100
   - type: text
     border_color: ''
     border_style: ''
-    color: '#2F4F6F'
+    color: '#1a5c1a'
     rotation: 0
-    text_bold: false
-    text_content: 'PE Routers (Provider Edge)'
+    text_bold: true
+    text_content: 'eBGP CE-PE (Left)'
     text_font: 'Arial'
     text_italic: false
     text_size: 11
     text_unit: 'pt'
     thickness: 1
-    x1: -326.0
-    y1: 221.0
-    z_index: 110
-  - type: rectangle
-    border_color: 'rgba(90, 80, 110, 0.90)'
-    border_radius: 10
-    border_style: ''
-    color: 'rgba(120, 110, 140, 0.22)'
-    rotation: 0
-    thickness: 2
-    x1: -5.0
-    y1: 210.0
-    x2: 210.0
-    y2: 36.0
-    z_index: 100
+    x1: -540.0
+    y1: -200.0
+    z_index: 200
   - type: text
     border_color: ''
     border_style: ''
-    color: '#3A3345'
+    color: '#8B0000'
     rotation: 0
-    text_bold: false
-    text_content: 'P Routers (Provider)'
+    text_bold: true
+    text_content: 'Static / Non-Speaker (Right)'
     text_font: 'Arial'
     text_italic: false
     text_size: 11
     text_unit: 'pt'
     thickness: 1
-    x1: 34.0
-    y1: 221.0
-    z_index: 110
-  - type: rectangle
-    border_color: 'rgba(128, 0, 128, 0.85)'
-    border_radius: 10
-    border_style: ''
-    color: 'rgba(186, 140, 220, 0.30)'
-    rotation: 0
-    thickness: 2
-    x1: 335.0
-    y1: 210.0
-    x2: 210.0
-    y2: 36.0
-    z_index: 100
-  - type: text
-    border_color: ''
-    border_style: ''
-    color: '#5A2D6F'
-    rotation: 0
-    text_bold: false
-    text_content: 'PE Routers (Provider Edge)'
-    text_font: 'Arial'
-    text_italic: false
-    text_size: 11
-    text_unit: 'pt'
-    thickness: 1
-    x1: 354.0
-    y1: 221.0
-    z_index: 110
+    x1: 620.0
+    y1: -200.0
+    z_index: 200
   - type: text
     border_color: ''
     border_style: ''
@@ -275,17 +98,22 @@ annotations:
 smart_annotations: []
 lab:
   description: |
-    Quisted 8-node MPLS-SR mesh adapted for SRv6 (IS-IS + uSID).
-    Based on https://www.quisted.net/index.php/2024/11/11/mpls-segment-routing-mpls-sr-lab/
+    Part 4 — SRv6 L3VPN with CE routers, dual-homed, showing eBGP vs non-speaker (static) CE-PE.
+    Left  — CE9 (CUST-A AS 65100) and CE10 (CUST-B AS 65200) dual-homed to PE5+PE6 via eBGP.
+    Right — CE11 (CUST-A) and CE12 (CUST-B) dual-homed to PE7+PE8 via static routes only (no BGP).
+    All 4 PEs carry both CUST-A (RD/RT 65000:100) and CUST-B (RD/RT 65000:200).
+    CE routers are IOSv — no SRv6 config at all. SRv6 encap/decap is transparent at the PE boundary.
   notes: |
-    Import on CML 2.9 or 2.10. Requires iosxrv9000 and cat8000v node definitions.
-    PE7/PE8 use CAT 8000V instead of IOSv so the full domain supports SRv6 uSID.
-    CAT8000V day-0 includes license boot level network-advantage (reload once for SRv6).
-    Mgmt: ext-conn (System Bridge) -> mgmt-sw -> all nodes. Mgmt VRF + DHCP on XR MgmtEth and PE GigabitEthernet3.
-    P nodes: iosxrv9000. All nodes boot in parallel (no node staging).
+    Requires iosxrv9000, cat8000v, and iosv node definitions in CML 2.9 or 2.10.
+    Left-side CEs: eBGP between CE and PE inside VRF. CE advertises Lo0 prefix.
+    Right-side CEs: no routing protocol. CE has a static default route to PE.
+      PE7/PE8 have ip route vrf CUST-x for each CE prefix, redistributed into BGP.
+    This is the "non-speaker" pattern: the PE manages CE reachability via static+redistribute.
+    CE routers are accessed via CML console (no OOB management wired).
+    Loopback100 on each PE (from Part 2) is retained as a PE-local simulated prefix.
   timestamp: 1784252880.562071
-  title: Quisted SRv6 uSID — Part 1 Solution
-  version: 0.3.1
+  title: Quisted SRv6 uSID L3VPN — Part 4 CE Solution
+  version: 0.1.0
 nodes:
   - id: n0
     label: P1
@@ -326,7 +154,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:1::1/128
        ipv6 address fe80:0:1::1 link-local
@@ -501,7 +329,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:2::1/128
        ipv6 address fe80:0:2::1 link-local
@@ -676,7 +504,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:3::1/128
        ipv6 address fe80:0:3::1 link-local
@@ -851,7 +679,7 @@ nodes:
       !
       ssh server vrf Mgmt-intf
       !
-      
+
       interface Loopback0
        ipv6 address fc00:0:4::1/128
        ipv6 address fe80:0:4::1 link-local
@@ -1005,10 +833,31 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:5::1/128
        ipv6 address fe80:0:5::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-A
+       ip address 192.168.50.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P1
@@ -1033,6 +882,18 @@ nodes:
        vrf forwarding Mgmt-intf
        ip address dhcp
        no cdp enable
+       no shutdown
+      !
+      interface GigabitEthernet4
+       description to CE9 (CUST-A eBGP AS 65100)
+       vrf forwarding CUST-A
+       ip address 10.9.5.2 255.255.255.252
+       no shutdown
+      !
+      interface GigabitEthernet5
+       description to CE10 (CUST-B eBGP AS 65200)
+       vrf forwarding CUST-B
+       ip address 10.10.5.2 255.255.255.252
        no shutdown
       !
       no cdp run
@@ -1066,6 +927,46 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 5.5.5.5
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        neighbor 10.9.5.1 remote-as 65100
+        neighbor 10.9.5.1 activate
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        neighbor 10.10.5.1 remote-as 65200
+        neighbor 10.10.5.1 activate
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1083,6 +984,14 @@ nodes:
         label: GigabitEthernet3
         type: physical
         slot: 2
+      - id: i4
+        label: GigabitEthernet4
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet5
+        type: physical
+        slot: 4
     pyats:
       username: cisco
       password: cisco
@@ -1106,10 +1015,31 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:6::1/128
        ipv6 address fe80:0:6::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-B
+       ip address 192.168.60.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P1
@@ -1134,6 +1064,18 @@ nodes:
        vrf forwarding Mgmt-intf
        ip address dhcp
        no cdp enable
+       no shutdown
+      !
+      interface GigabitEthernet4
+       description to CE9 (CUST-A eBGP AS 65100)
+       vrf forwarding CUST-A
+       ip address 10.9.6.2 255.255.255.252
+       no shutdown
+      !
+      interface GigabitEthernet5
+       description to CE10 (CUST-B eBGP AS 65200)
+       vrf forwarding CUST-B
+       ip address 10.10.6.2 255.255.255.252
        no shutdown
       !
       no cdp run
@@ -1167,6 +1109,46 @@ nodes:
          locator MAIN
         !
        !
+      !
+      router bgp 65000
+       bgp router-id 6.6.6.6
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        neighbor 10.9.6.1 remote-as 65100
+        neighbor 10.9.6.1 activate
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        neighbor 10.10.6.1 remote-as 65200
+        neighbor 10.10.6.1 activate
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1184,6 +1166,14 @@ nodes:
         label: GigabitEthernet3
         type: physical
         slot: 2
+      - id: i4
+        label: GigabitEthernet4
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet5
+        type: physical
+        slot: 4
     pyats:
       username: cisco
       password: cisco
@@ -1207,10 +1197,31 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:7::1/128
        ipv6 address fe80:0:7::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-A
+       ip address 192.168.70.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P3
@@ -1235,6 +1246,18 @@ nodes:
        vrf forwarding Mgmt-intf
        ip address dhcp
        no cdp enable
+       no shutdown
+      !
+      interface GigabitEthernet4
+       description to CE11 (CUST-A static non-speaker)
+       vrf forwarding CUST-A
+       ip address 10.11.7.2 255.255.255.252
+       no shutdown
+      !
+      interface GigabitEthernet5
+       description to CE12 (CUST-B static non-speaker)
+       vrf forwarding CUST-B
+       ip address 10.12.7.2 255.255.255.252
        no shutdown
       !
       no cdp run
@@ -1268,6 +1291,47 @@ nodes:
          locator MAIN
         !
        !
+      !
+      ip route vrf CUST-A 10.11.0.1 255.255.255.255 10.11.7.1
+      ip route vrf CUST-B 10.12.0.1 255.255.255.255 10.12.7.1
+      !
+      router bgp 65000
+       bgp router-id 7.7.7.7
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:8::1 remote-as 65000
+       neighbor fc00:0:8::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:8::1 activate
+        neighbor fc00:0:8::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+        redistribute static
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+        redistribute static
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1285,6 +1349,14 @@ nodes:
         label: GigabitEthernet3
         type: physical
         slot: 2
+      - id: i4
+        label: GigabitEthernet4
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet5
+        type: physical
+        slot: 4
     pyats:
       username: cisco
       password: cisco
@@ -1308,10 +1380,31 @@ nodes:
        address-family ipv4
        exit-address-family
       !
+      vrf definition CUST-A
+       rd 65000:100
+       !
+       address-family ipv4
+        route-target export 65000:100
+        route-target import 65000:100
+       exit-address-family
+      !
+      vrf definition CUST-B
+       rd 65000:200
+       !
+       address-family ipv4
+        route-target export 65000:200
+        route-target import 65000:200
+       exit-address-family
+      !
       interface Loopback0
        ipv6 address fc00:0:8::1/128
        ipv6 address fe80:0:8::1 link-local
        ipv6 router isis 100
+      !
+      interface Loopback100
+       vrf forwarding CUST-B
+       ip address 192.168.80.1 255.255.255.0
+       no shutdown
       !
       interface GigabitEthernet1
        description to P3
@@ -1336,6 +1429,18 @@ nodes:
        vrf forwarding Mgmt-intf
        ip address dhcp
        no cdp enable
+       no shutdown
+      !
+      interface GigabitEthernet4
+       description to CE11 (CUST-A static non-speaker)
+       vrf forwarding CUST-A
+       ip address 10.11.8.2 255.255.255.252
+       no shutdown
+      !
+      interface GigabitEthernet5
+       description to CE12 (CUST-B static non-speaker)
+       vrf forwarding CUST-B
+       ip address 10.12.8.2 255.255.255.252
        no shutdown
       !
       no cdp run
@@ -1369,6 +1474,47 @@ nodes:
          locator MAIN
         !
        !
+      !
+      ip route vrf CUST-A 10.11.0.1 255.255.255.255 10.11.8.1
+      ip route vrf CUST-B 10.12.0.1 255.255.255.255 10.12.8.1
+      !
+      router bgp 65000
+       bgp router-id 8.8.8.8
+       bgp log-neighbor-changes
+       no bgp default ipv4-unicast
+       !
+       neighbor fc00:0:5::1 remote-as 65000
+       neighbor fc00:0:5::1 update-source Loopback0
+       neighbor fc00:0:6::1 remote-as 65000
+       neighbor fc00:0:6::1 update-source Loopback0
+       neighbor fc00:0:7::1 remote-as 65000
+       neighbor fc00:0:7::1 update-source Loopback0
+       !
+       address-family vpnv4 unicast
+        neighbor fc00:0:5::1 activate
+        neighbor fc00:0:5::1 send-community extended
+        neighbor fc00:0:6::1 activate
+        neighbor fc00:0:6::1 send-community extended
+        neighbor fc00:0:7::1 activate
+        neighbor fc00:0:7::1 send-community extended
+        segment-routing srv6
+        locator MAIN
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-A
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+        redistribute static
+       exit-address-family
+       !
+       address-family ipv4 vrf CUST-B
+        segment-routing srv6
+        alloc mode per-vrf
+        redistribute connected
+        redistribute static
+       exit-address-family
+      !
       end
     interfaces:
       - id: i0
@@ -1386,6 +1532,196 @@ nodes:
         label: GigabitEthernet3
         type: physical
         slot: 2
+      - id: i4
+        label: GigabitEthernet4
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet5
+        type: physical
+        slot: 4
+    pyats:
+      username: cisco
+      password: cisco
+      enable_password: cisco
+    tags: []
+  - id: n8
+    label: CE9
+    node_definition: iosv
+    x: -480
+    y: -150
+    configuration: |-
+      hostname CE9
+      no ip domain lookup
+      ip routing
+      !
+      interface Loopback0
+       ip address 10.9.0.1 255.255.255.255
+      !
+      interface GigabitEthernet0/0
+       description to PE5 (CUST-A primary)
+       ip address 10.9.5.1 255.255.255.252
+       no shutdown
+      !
+      interface GigabitEthernet0/1
+       description to PE6 (CUST-A secondary)
+       ip address 10.9.6.1 255.255.255.252
+       no shutdown
+      !
+      router bgp 65100
+       bgp router-id 10.9.0.1
+       bgp log-neighbor-changes
+       neighbor 10.9.5.2 remote-as 65000
+       neighbor 10.9.6.2 remote-as 65000
+       !
+       address-family ipv4
+        network 10.9.0.1 mask 255.255.255.255
+        neighbor 10.9.5.2 activate
+        neighbor 10.9.6.2 activate
+       exit-address-family
+      !
+      end
+    interfaces:
+      - id: i0
+        label: GigabitEthernet0/0
+        type: physical
+        slot: 0
+      - id: i1
+        label: GigabitEthernet0/1
+        type: physical
+        slot: 1
+    pyats:
+      username: cisco
+      password: cisco
+      enable_password: cisco
+    tags: []
+  - id: n9
+    label: CE10
+    node_definition: iosv
+    x: -480
+    y: 150
+    configuration: |-
+      hostname CE10
+      no ip domain lookup
+      ip routing
+      !
+      interface Loopback0
+       ip address 10.10.0.1 255.255.255.255
+      !
+      interface GigabitEthernet0/0
+       description to PE5 (CUST-B primary)
+       ip address 10.10.5.1 255.255.255.252
+       no shutdown
+      !
+      interface GigabitEthernet0/1
+       description to PE6 (CUST-B secondary)
+       ip address 10.10.6.1 255.255.255.252
+       no shutdown
+      !
+      router bgp 65200
+       bgp router-id 10.10.0.1
+       bgp log-neighbor-changes
+       neighbor 10.10.5.2 remote-as 65000
+       neighbor 10.10.6.2 remote-as 65000
+       !
+       address-family ipv4
+        network 10.10.0.1 mask 255.255.255.255
+        neighbor 10.10.5.2 activate
+        neighbor 10.10.6.2 activate
+       exit-address-family
+      !
+      end
+    interfaces:
+      - id: i0
+        label: GigabitEthernet0/0
+        type: physical
+        slot: 0
+      - id: i1
+        label: GigabitEthernet0/1
+        type: physical
+        slot: 1
+    pyats:
+      username: cisco
+      password: cisco
+      enable_password: cisco
+    tags: []
+  - id: n10
+    label: CE11
+    node_definition: iosv
+    x: 680
+    y: -150
+    configuration: |-
+      hostname CE11
+      no ip domain lookup
+      ip routing
+      !
+      interface Loopback0
+       ip address 10.11.0.1 255.255.255.255
+      !
+      interface GigabitEthernet0/0
+       description to PE7 (CUST-A primary -- no BGP)
+       ip address 10.11.7.1 255.255.255.252
+       no shutdown
+      !
+      interface GigabitEthernet0/1
+       description to PE8 (CUST-A secondary -- no BGP)
+       ip address 10.11.8.1 255.255.255.252
+       no shutdown
+      !
+      ip route 0.0.0.0 0.0.0.0 10.11.7.2
+      ip route 0.0.0.0 0.0.0.0 10.11.8.2 10
+      !
+      end
+    interfaces:
+      - id: i0
+        label: GigabitEthernet0/0
+        type: physical
+        slot: 0
+      - id: i1
+        label: GigabitEthernet0/1
+        type: physical
+        slot: 1
+    pyats:
+      username: cisco
+      password: cisco
+      enable_password: cisco
+    tags: []
+  - id: n11
+    label: CE12
+    node_definition: iosv
+    x: 680
+    y: 150
+    configuration: |-
+      hostname CE12
+      no ip domain lookup
+      ip routing
+      !
+      interface Loopback0
+       ip address 10.12.0.1 255.255.255.255
+      !
+      interface GigabitEthernet0/0
+       description to PE7 (CUST-B primary -- no BGP)
+       ip address 10.12.7.1 255.255.255.252
+       no shutdown
+      !
+      interface GigabitEthernet0/1
+       description to PE8 (CUST-B secondary -- no BGP)
+       ip address 10.12.8.1 255.255.255.252
+       no shutdown
+      !
+      ip route 0.0.0.0 0.0.0.0 10.12.7.2
+      ip route 0.0.0.0 0.0.0.0 10.12.8.2 10
+      !
+      end
+    interfaces:
+      - id: i0
+        label: GigabitEthernet0/0
+        type: physical
+        slot: 0
+      - id: i1
+        label: GigabitEthernet0/1
+        type: physical
+        slot: 1
     pyats:
       username: cisco
       password: cisco
@@ -1526,6 +1862,46 @@ links:
     i1: i8
     n2: n6
     i2: i2
+  - id: l14
+    n1: n4
+    i1: i4
+    n2: n8
+    i2: i0
+  - id: l15
+    n1: n5
+    i1: i4
+    n2: n8
+    i2: i1
+  - id: l16
+    n1: n4
+    i1: i5
+    n2: n9
+    i2: i0
+  - id: l17
+    n1: n5
+    i1: i5
+    n2: n9
+    i2: i1
+  - id: l18
+    n1: n6
+    i1: i4
+    n2: n10
+    i2: i0
+  - id: l19
+    n1: n7
+    i1: i4
+    n2: n10
+    i2: i1
+  - id: l20
+    n1: n6
+    i1: i5
+    n2: n11
+    i2: i0
+  - id: l21
+    n1: n7
+    i1: i5
+    n2: n11
+    i2: i1
   - id: lm0
     n1: n_ext
     i1: i0
