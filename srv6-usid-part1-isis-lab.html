@@ -1609,10 +1609,14 @@ This lab: IS-IS IPv6 routes + SRv6 SID table on P1.</p>
 
 <div class="callout">
   <strong>What we're proving &mdash; Step 4 (live-validated lab e5fd0d99)</strong>
+  <p style="margin:0.5rem 0 0"><strong>Platform syntax:</strong> IOS-XR uses <code>show cef ipv6 &lt;prefix&gt;</code>; IOS-XE uses <code>show ipv6 cef &lt;prefix&gt;</code>. On XR you may omit <code>/128</code> or <code>/48</code> &mdash; CEF resolves the longest match.</p>
   <table>
     <thead><tr><th>Node</th><th>Command</th><th>Look for</th></tr></thead>
     <tbody>
       <tr><td>P1</td><td><code>show isis ipv6 route fc00:0:7::1/128</code></td><td>ECMP via <strong>P3</strong> and <strong>P4</strong> (two next-hops)</td></tr>
+      <tr><td>P1</td><td><code>show cef ipv6 fc00:0:7::1</code></td><td>Two <code>remote adjacency</code> paths &mdash; Gi0/0/0/1 (P3) and Gi0/0/0/2 (P4); <strong>no MPLS label stack</strong></td></tr>
+      <tr><td>P1</td><td><code>show cef ipv6 fcbb:bb00:7::</code></td><td><code>fcbb:bb00:7::/48</code> &mdash; same ECMP adjacencies (locator FIB, not /128)</td></tr>
+      <tr><td>P1</td><td><code>show cef ipv6 fc00:0:2::1</code></td><td>Single <code>remote adjacency</code> via Gi0/0/0/0 toward P2 (direct neighbor)</td></tr>
     </tbody>
   </table>
 </div>
@@ -1621,7 +1625,9 @@ This lab: IS-IS IPv6 routes + SRv6 SID table on P1.</p>
 <pre class="config">show isis ipv6 route fc00:0:5::1/128
 show isis ipv6 route fc00:0:7::1/128
 show segment-routing srv6 sid
-show cef ipv6 fc00:0:2::1/128</pre>
+show cef ipv6 fc00:0:7::1
+show cef ipv6 fcbb:bb00:7::
+show cef ipv6 fc00:0:2::1</pre>
 <p>Full side-by-side: <a href="#p1-fib">P1 MPLS FIB &harr; SRv6 verification</a>.</p>
 
 <p><strong>Route to PE5 (direct):</strong></p>
@@ -1639,26 +1645,101 @@ L2 fc00:0:7::1/128 [30/115]
      via fe80:0:3::1, GigabitEthernet0/0/0/1, P3, Weight: 0</pre>
 <p class="pass-fail pass">&#10003; Pass: two next-hops via P3 and P4 (was dual MPLS labels to <code>7.7.7.7/32</code>)</p>
 
-<p><strong>CEF to P2 loopback (live):</strong></p>
-<pre class="cli">RP/0/RP0/CPU0:P1# show cef ipv6 fc00:0:2::1/128
+<p><strong>CEF to PE7 loopback (live, Jul 23 lab e5fd0d99):</strong></p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show cef ipv6 fc00:0:7::1
 
-fc00:0:2::1/128, version 316, internal ...
+fc00:0:7::1/128, version 83, internal 0x1000001 0x210 (ptr 0xf918c68) [1], 0x400 (0xfaaccd8), 0x0 (0x0)
+ Updated Jul 23 20:42:38.960
+ remote adjacency to GigabitEthernet0/0/0/2
+ Prefix Len 128, traffic index 0, precedence n/a, priority 1
+  gateway array (0xf945698) reference count 5, flags 0x0, source rib (7), 0 backups
+                [6 type 3 flags 0x8401 (0xf9e8d50) ext 0x0 (0x0)]
+  LW-LDI[type=3, refc=1, ptr=0xfaaccd8, sh-ldi=0xf9e8d50]
+  gateway array update type-time 1 Jul 23 20:41:24.788
+ LDI Update time Jul 23 20:41:24.848
+ LW-LDI-TS Jul 23 20:41:32.455
+ Accounting: Disabled
+   via fe80:0:4::1/128, GigabitEthernet0/0/0/2, 10 dependencies, weight 0, class 0 [flags 0x0]
+    path-idx 0 NHID 0x0 [0x10dbb298 0x0]
+    next hop fe80:0:4::1/128
+    remote adjacency
+   via fe80:0:3::1/128, GigabitEthernet0/0/0/1, 10 dependencies, weight 0, class 0 [flags 0x0]
+    path-idx 1 NHID 0x0 [0x10dbb1f0 0x0]
+    next hop fe80:0:3::1/128
+    remote adjacency
+
+    Load distribution: 0 1 (refcount 6)
+
+    Hash  OK  Interface                 Address
+    0     Y   GigabitEthernet0/0/0/2    remote
+    1     Y   GigabitEthernet0/0/0/1    remote</pre>
+<p class="pass-fail pass">&#10003; Pass: CEF ECMP matches IS-IS &mdash; two <code>remote adjacency</code> paths via P4 (Gi0/0/0/2) and P3 (Gi0/0/0/1); no MPLS labels</p>
+
+<p><strong>CEF to PE7 uSID locator (live):</strong></p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show cef ipv6 fcbb:bb00:7::
+
+fcbb:bb00:7::/48, version 116, internal 0x1000001 0x220 (ptr 0xf916e98) [1], 0x400 (0xfaad458), 0x0 (0x0)
+ Updated Jul 23 20:42:54.177
+ remote adjacency to GigabitEthernet0/0/0/2
+ Prefix Len 48, traffic index 0, precedence n/a, priority 2
+  gateway array (0xf945698) reference count 5, flags 0x0, source rib (7), 0 backups
+                [6 type 3 flags 0x8401 (0xf9e8d50) ext 0x0 (0x0)]
+  LW-LDI[type=3, refc=1, ptr=0xfaad458, sh-ldi=0xf9e8d50]
+  gateway array update type-time 1 Jul 23 20:41:24.787
+ LDI Update time Jul 23 20:41:24.847
+ LW-LDI-TS Jul 23 20:42:54.177
+ Accounting: Disabled
+   via fe80:0:4::1/128, GigabitEthernet0/0/0/2, 10 dependencies, weight 0, class 0 [flags 0x0]
+    path-idx 0 NHID 0x0 [0x10dbb298 0x0]
+    next hop fe80:0:4::1/128
+    remote adjacency
+   via fe80:0:3::1/128, GigabitEthernet0/0/0/1, 10 dependencies, weight 0, class 0 [flags 0x0]
+    path-idx 1 NHID 0x0 [0x10dbb1f0 0x0]
+    next hop fe80:0:3::1/128
+    remote adjacency
+
+    Load distribution: 0 1 (refcount 6)
+
+    Hash  OK  Interface                 Address
+    0     Y   GigabitEthernet0/0/0/2    remote
+    1     Y   GigabitEthernet0/0/0/1    remote</pre>
+<p class="pass-fail pass">&#10003; Pass: locator <code>/48</code> FIB uses same ECMP adjacencies as loopback &mdash; micro-SID <code>fcbb:bb00:7::</code> resolves inside this block</p>
+
+<p><strong>CEF to P2 loopback (live):</strong></p>
+<pre class="cli">RP/0/RP0/CPU0:P1# show cef ipv6 fc00:0:2::1
+
+fc00:0:2::1/128, version 72, internal 0x1000001 0x210 (ptr 0xf919650) [1], 0x400 (0xfaac9d8), 0x0 (0x0)
+ Updated Jul 23 20:42:38.960
  remote adjacency to GigabitEthernet0/0/0/0
-   via fe80:0:2::1/128, GigabitEthernet0/0/0/0
+ Prefix Len 128, traffic index 0, precedence n/a, priority 1
+  gateway array (0xf945598) reference count 2, flags 0x0, source rib (7), 0 backups
+                [3 type 3 flags 0x8401 (0xf9e8cf8) ext 0x0 (0x0)]
+  LW-LDI[type=3, refc=1, ptr=0xfaac9d8, sh-ldi=0xf9e8cf8]
+  gateway array update type-time 1 Jul 23 20:41:24.788
+ LDI Update time Jul 23 20:41:24.788
+ LW-LDI-TS Jul 23 20:41:24.788
+ Accounting: Disabled
+   via fe80:0:2::1/128, GigabitEthernet0/0/0/0, 14 dependencies, weight 0, class 0 [flags 0x0]
+    path-idx 0 NHID 0x0 [0x10dbb148 0x0]
     next hop fe80:0:2::1/128
     remote adjacency
 
+    Load distribution: 0 (refcount 3)
+
     Hash  OK  Interface                 Address
     0     Y   GigabitEthernet0/0/0/0    remote</pre>
-<p class="pass-fail pass">&#10003; Pass: IPv6 FIB adjacency &mdash; no MPLS label stack</p>
+<p class="pass-fail pass">&#10003; Pass: single IPv6 FIB adjacency to direct neighbor P2 &mdash; no MPLS label stack</p>
 
 <h3 class="section-sub" id="proof-run">Step 5 &mdash; Proof run (PE5 &rarr; PE7)</h3>
 
 <div class="callout">
   <strong>What we're proving &mdash; Step 5 (live-validated lab e5fd0d99)</strong>
+  <p style="margin:0.5rem 0 0"><strong>Platform syntax:</strong> IOS-XE PE nodes use <code>show ipv6 cef &lt;prefix&gt;</code> (not <code>show cef ipv6</code>). IOS-XR P nodes use <code>show cef ipv6</code>.</p>
   <table>
     <thead><tr><th>Node</th><th>Command</th><th>Look for</th></tr></thead>
     <tbody>
+      <tr><td>PE5</td><td><code>show ipv6 cef fc00:0:7::1</code></td><td>Two nexthops &mdash; Gi1 (P1) and Gi2 (P2); IGP loopback FIB before ping</td></tr>
+      <tr><td>PE5</td><td><code>show ipv6 cef fcbb:bb00:7::</code></td><td><code>FCBB:BB00:7::/48</code> &mdash; same ECMP nexthops (locator FIB for uSID ping)</td></tr>
       <tr><td>PE5</td><td><code>ping fc00:0:7::1 source fc00:0:5::1 repeat 5</code></td><td><strong>5/5</strong> success (IGP loopback)</td></tr>
       <tr><td>PE5</td><td><code>ping fcbb:bb00:7:: source fc00:0:5::1 repeat 10</code></td><td><strong>10/10</strong> success (uN endpoint-SID)</td></tr>
       <tr><td>PE7</td><td><code>show ipv6 route fcbb:bb00:7::</code></td><td><code>receive via SR0</code> (local uN, not Loopback0)</td></tr>
@@ -1676,9 +1757,27 @@ fc00:0:2::1/128, version 316, internal ...
 </table>
 
 <h4>1. Before ping &mdash; loopback (PE5)</h4>
-<p>Ping the <strong>IS-IS loopback</strong> first. Save terminal output &mdash; no PCAP yet. Proves underlay only, not uSID steering.</p>
-<pre class="config">ping fc00:0:7::1 source fc00:0:5::1 repeat 5
+<p>Ping the <strong>IS-IS loopback</strong> first. Confirm the FIB on PE5 with CEF <em>before</em> you ping &mdash; this is your &ldquo;sh ip cef&rdquo; proof on IOS-XE. Save terminal output; no PCAP yet. Proves underlay only, not uSID steering.</p>
+<pre class="config">show ipv6 cef fc00:0:7::1
+show ipv6 cef fcbb:bb00:7::
+ping fc00:0:7::1 source fc00:0:5::1 repeat 5
 traceroute fc00:0:7::1 source fc00:0:5::1</pre>
+
+<p><strong>CEF &mdash; PE7 loopback (live, Jul 23 lab e5fd0d99):</strong></p>
+<pre class="cli">PE5# show ipv6 cef fc00:0:7::1
+FC00:0:7::1/128
+  nexthop FE80:0:1::1 GigabitEthernet1
+  nexthop FE80:0:2::1 GigabitEthernet2</pre>
+<p class="pass-fail pass">&#10003; Pass: ECMP FIB toward PE7 loopback via Gi1 (P1) and Gi2 (P2)</p>
+
+<p><strong>CEF &mdash; PE7 uSID locator (live):</strong></p>
+<pre class="cli">PE5# show ipv6 cef fcbb:bb00:7::
+FCBB:BB00:7::/48
+  nexthop FE80:0:1::1 GigabitEthernet1
+  nexthop FE80:0:2::1 GigabitEthernet2</pre>
+<p class="pass-fail pass">&#10003; Pass: same ECMP nexthops for locator block &mdash; uSID ping in step 3 uses this FIB entry</p>
+
+<p><strong>Ping result:</strong></p>
 <pre class="cli">Sending 5, 100-byte ICMP Echos to FC00:0:7::1, timeout is 2 seconds:
 !!!!!
 Success rate is 100 percent (5/5), round-trip min/avg/max = 2/3/4 ms</pre>
@@ -2020,8 +2119,10 @@ show isis ipv6 route fc00:0:2::1/128    ! P2  (was 2.2.2.2)
 show isis ipv6 route fc00:0:5::1/128    ! PE5 (was 5.5.5.5)
 show isis ipv6 route fc00:0:7::1/128    ! PE7 ECMP (was 7.7.7.7)
 
-! "cef" equivalent
-show cef ipv6 fc00:0:2::1/128
+! "cef" equivalent (IOS-XR: show cef ipv6; IOS-XE: show ipv6 cef)
+show cef ipv6 fc00:0:2::1
+show cef ipv6 fc00:0:7::1
+show cef ipv6 fcbb:bb00:7::
 
 ! "ospf sid-database" equivalent
 show isis database verbose
