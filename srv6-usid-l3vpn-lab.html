@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SRv6 uSID L3VPN Lab — Part 2 (Quisted Topology on CML 2.10)</title>
+  <style>
+    :root {
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #d8d8d8;
+      --code-bg: #f4f4f4;
+      --cli-bg: #0a0a0a;
+      --cli-text: #f5f5f5;
+      --cli-prompt: #5ec4ff;
+      --cli-cmd: #5ec4ff;
+      --cli-colhead: #5ec4ff;
+      --cli-banner: #33dd33;
+      --cli-up: #33dd33;
+      --cli-summary: #ffb347;
+      --cli-ts: #e8e8e8;
+      --cli-sep: #4a9fd4;
+      --accent: #0073aa;
+      --accent-dark: #005177;
+      --callout-bg: #f0f6fa;
+      --callout-border: #0073aa;
+      --pass: #1a7f37;
+      --fail: #cf222e;
+      --pe-left: #add8e6;
+      --pe-left-table: #add8e6;
+      --p-core: #c8c0d0;
+      --pe-right: #d4b8e8;
+      --pe-right-table: #d4b8e8;
+      --table-head: #eef3f7;
+      --table-stripe: #f5f5f5;
+      --addr-low: #3d85c6;
+      --addr-high: #7b2d8e;
+      --addr-own: #a020a0;
+      --section-bg: #f9f5fc;
+      --section-border: #d8c8e8;
+      --section-accent: var(--addr-high);
+      --subsection-bg: #f5f0fa;
+      --max-width: 860px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text);
+      background: #fff;
+    }
+    .site-header {
+      background: #23282d;
+      color: #fff;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 4px solid var(--accent);
+    }
+    .site-header h1 {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .site-header .meta {
+      margin: 0.5rem 0 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.9rem;
+      color: #b0b8c0;
+    }
+    .site-header a { color: #7ec8ff; }
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+    h2 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding: 0.6rem 1rem;
+      background: var(--section-bg);
+      border: 1px solid var(--section-border);
+      border-left: 5px solid var(--section-accent);
+      border-radius: 4px;
+      color: var(--section-accent);
+    }
+    h2:first-of-type { margin-top: 0; }
+    h3 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 1.75rem 0 0.75rem;
+      color: var(--text);
+    }
+    h3.section-sub {
+      padding: 0.45rem 0.85rem;
+      background: var(--subsection-bg);
+      border-left: 4px solid var(--section-accent);
+      border-radius: 3px;
+      color: var(--section-accent);
+    }
+    h4 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 1.25rem 0 0.5rem;
+      color: var(--text);
+    }
+    p { margin: 0 0 1rem; }
+    a { color: var(--accent); }
+    ul, ol { margin: 0 0 1rem; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+    .toc {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0;
+      margin: 1rem 0 1.25rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.9rem;
+      overflow: hidden;
+    }
+    .toc details { margin: 0; }
+    .toc summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 1.1rem;
+      background: #f3f3f3;
+      border-bottom: 1px solid transparent;
+      user-select: none;
+    }
+    .toc details[open] summary {
+      border-bottom-color: var(--border);
+    }
+    .toc summary:hover .toc-title { color: var(--accent); }
+    .toc summary::-webkit-details-marker { display: none; }
+    .toc .toc-title { flex: 1; }
+    .toc .toc-toggle-icon {
+      flex: 0 0 auto;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+      width: 30px;
+      height: 26px;
+      padding: 5px 7px;
+      border: 1px solid #c8c8c8;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+    }
+    .toc .toc-toggle-icon span {
+      display: block;
+      height: 2px;
+      background: #666;
+      border-radius: 1px;
+    }
+    .toc details[open] .toc-toggle-icon span:nth-child(2) { opacity: 0.45; }
+    .toc ol {
+      margin: 0;
+      padding: 0.85rem 1.1rem 1rem 2.25rem;
+    }
+    .toc strong { display: block; margin-bottom: 0.5rem; }
+    .toc a { text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+    .callout {
+      background: var(--callout-bg);
+      border-left: 4px solid var(--section-accent);
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.95rem;
+    }
+    .callout > strong:first-child {
+      display: block;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--section-accent);
+      margin-bottom: 0.25rem;
+    }
+    .callout strong { color: var(--section-accent); }
+    .callout.prereq {
+      background: #f0fff4;
+      border-left-color: var(--pass);
+    }
+    .callout.prereq > strong:first-child { color: var(--pass); }
+    .callout.prereq strong { color: var(--pass); }
+    .callout.warn {
+      background: #fff8e6;
+      border-left-color: #c8880a;
+    }
+    .callout.warn > strong:first-child { color: #c8880a; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 1.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th {
+      background: var(--table-head);
+      color: var(--text);
+      font-weight: 700;
+    }
+    tbody tr:nth-child(even) td { background: var(--table-stripe); }
+    table.device-table tbody tr.row-pe-left td { background: var(--pe-left-table); }
+    table.device-table tbody tr.row-pe-right td { background: var(--pe-right-table); }
+    .role-pe-left { color: #3d85c6; font-weight: 600; }
+    .role-p-core { color: #4a4558; font-weight: 600; }
+    .role-pe-right { color: #7b2d8e; font-weight: 600; }
+    code, .cmd {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+    }
+    pre {
+      margin: 0;
+      padding: 1rem 1.1rem;
+      padding-top: 2.25rem;
+      overflow-x: auto;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+    .code-wrap {
+      position: relative;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 0.45rem;
+      right: 0.45rem;
+      z-index: 1;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 1;
+      padding: 0.35rem 0.55rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #e6e6e6;
+      cursor: pointer;
+    }
+    .code-wrap:has(pre.config) .copy-btn,
+    .code-wrap:has(pre.topo) .copy-btn {
+      border-color: var(--border);
+      background: #fff;
+      color: var(--muted);
+    }
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+    .code-wrap:has(pre.config) .copy-btn:hover,
+    .code-wrap:has(pre.topo) .copy-btn:hover {
+      background: var(--callout-bg);
+      color: var(--accent-dark);
+    }
+    .copy-btn.copied {
+      background: var(--pass);
+      border-color: var(--pass);
+      color: #fff;
+    }
+    pre.config {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      color: #222;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    pre.cli {
+      background: var(--cli-bg);
+      color: var(--cli-text);
+      font-family: Consolas, "Courier New", monospace;
+      border: none;
+      border-radius: 6px;
+    }
+    pre.cli .cli-prompt,
+    pre.cli .cli-cmd,
+    pre.cli .cli-colhead { color: var(--cli-colhead); }
+    pre.cli .cli-banner { color: var(--cli-banner); font-weight: 600; }
+    pre.cli .cli-up,
+    pre.cli .cli-ok { color: var(--cli-up); }
+    pre.cli .cli-summary { color: var(--cli-summary); font-weight: 600; }
+    pre.cli .cli-ts { color: var(--cli-ts); }
+    pre.cli .cli-sep { color: var(--cli-sep); }
+    pre.topo {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      font-family: Consolas, "Courier New", monospace;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .verify-block { margin: 1.25rem 0 2rem; }
+    .pass-fail {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+    }
+    .pass { color: var(--pass); }
+    .fail { color: var(--fail); }
+    .footnote {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .out-of-scope {
+      background: #fff8e6;
+      border: 1px solid #e6c200;
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .expected-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin: 0 0 0.1rem;
+    }
+    .series-nav {
+      background: #f3f3f3; border: 1px solid var(--border);
+      border-radius: 4px; padding: 0.75rem 1.1rem; margin: 0 0 1.5rem; font-size: 0.88rem;
+    }
+    .series-nav > strong:first-child { display: block; margin-bottom: 0.4rem; }
+    .series-nav table { margin: 0; font-size: 0.82rem; width: auto; }
+    .series-nav td, .series-nav th { padding: 0.3rem 0.6rem; }
+    .series-nav .current td { font-weight: 700; color: var(--section-accent); background: var(--section-bg); }
+    .series-nav .skipped td { color: var(--muted); font-style: italic; }
+    .series-note { margin: 0.4rem 0 0; color: var(--muted); font-style: italic; font-size: 0.82rem; }
+    @media (max-width: 700px) {
+      body { font-size: 16px; }
+      table { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>SRv6 uSID L3VPN Lab &mdash; Part 2</h1>
+  <p class="meta">
+    Continues from
+    <a href="srv6-usid-isis-lab.html">Part 1: SRv6 uSID IS-IS Lab</a>
+    &middot; Quisted Topology on CML 2.10 &middot; IOS-XE PE Routers (cat8000v 17.18)
+  </p>
+</header>
+
+<div class="wrap">
+
+<nav class="toc" aria-label="Table of contents">
+  <details>
+    <summary>
+      <span class="toc-title">Table of Contents</span>
+      <span class="toc-toggle-icon" aria-hidden="true" title="Click to expand or collapse">
+        <span></span><span></span><span></span>
+      </span>
+    </summary>
+    <ol>
+      <li><a href="#prereqs">Prerequisites</a></li>
+      <li><a href="#what-is-l3vpn">What is SRv6 L3VPN?</a></li>
+      <li><a href="#address-plan">L3VPN Address Plan</a></li>
+      <li><a href="#lab-configs">Lab Config Snippets</a></li>
+      <li><a href="#step-6">Step 6 &mdash; Configure VRFs on PE5&ndash;PE8</a></li>
+      <li><a href="#step-7">Step 7 &mdash; Configure iBGP between PEs</a></li>
+      <li><a href="#step-8">Step 8 &mdash; Bind SRv6 to VRF BGP</a></li>
+      <li><a href="#step-9">Step 9 &mdash; Verify L3VPN routes</a></li>
+      <li><a href="#step-10">Step 10 &mdash; Proof run (VPN ping)</a></li>
+      <li><a href="#gotchas">Troubleshooting / gotchas</a></li>
+      <li><a href="#appendix">Appendix &mdash; Full PE configs</a></li>
+    </ol>
+  </details>
+</nav>
+
+<div class="series-nav">
+  <strong>Lab series &mdash; where you are:</strong>
+  <table>
+    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
+    <tbody>
+      <tr><td><a href="srv6-usid-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-baseline.yaml</code></td><td>None</td></tr>
+      <tr class="current"><td>Part 2</td><td>SRv6 L3VPN (this guide)</td><td><code>quisted-srv6-l3vpn-solution.yaml</code></td><td>Part 1</td></tr>
+      <tr class="skipped"><td>Part 3</td><td>not published</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td><a href="srv6-usid-l3vpn-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-l3vpn-ce-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-l3vpn-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-l3vpn-igw-solution.yaml</code></td><td>Part 2</td></tr>
+    </tbody>
+  </table>
+  <p class="series-note">Parts are numbered by conceptual stage. Part 3 is not currently published.</p>
+</div>
+
+<hr>
+
+<h2 id="prereqs">Prerequisites</h2>
+
+<div class="callout prereq">
+  <strong>Complete Part 1 first &mdash; or import the solution YAML</strong>
+  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-solution.yaml</code> into CML to start with IS-IS and SRv6
+  locators already configured on all 8 nodes &mdash; this is the answer key for Part 1 and the correct starting
+  point for Part 2. If you completed Part 1 manually your running lab is equivalent.</p>
+  <p style="margin:0.5rem 0 0;font-size:0.9rem;color:var(--muted);font-style:italic;">Note: there is no Part 3 file. The series goes Part&nbsp;1 &rarr; Part&nbsp;2 &rarr; Part&nbsp;4 &rarr; Part&nbsp;5.</p>
+  <p style="margin:0.5rem 0 0">This lab picks up at <strong>Step 6</strong>. Before continuing, all five steps of
+  <a href="srv6-usid-isis-lab.html">Part 1 (SRv6 uSID IS-IS Lab)</a> must be complete and verified:</p>
+  <ul style="margin:0.5rem 0 0">
+    <li>Step 1 &mdash; Management SSH to all 8 routers: pass</li>
+    <li>Step 2 &mdash; IS-IS adjacencies up on all nodes: pass</li>
+    <li>Step 3 &mdash; SRv6 uSID locators configured and <code>Up</code> on PE5&ndash;PE8 and P1&ndash;P4</li>
+    <li>Step 4 &mdash; IS-IS SRv6 routes in FIB: pass</li>
+    <li>Step 5 &mdash; uSID ping <code>fcbb:bb00:7::</code> from PE5 succeeds</li>
+  </ul>
+  <p style="margin:0.5rem 0 0">Quick check &mdash; run this on PE5 before starting Part 2:</p>
+  <pre class="cli" style="margin:0.25rem 0 0; padding-top:0.75rem">PE5# show segment-routing srv6 locator MAIN
+Name                  State  Prefix                   Alloc/Blk  Auto-protect
+MAIN                  Up     FCBB:BB00:5::/48         16/16      Disabled</pre>
+  <p style="margin:0.5rem 0 0">If locator MAIN is <strong>not Up</strong>, finish Part 1 before continuing.</p>
+</div>
+
+<hr>
+
+<h2 id="what-is-l3vpn">What is SRv6 L3VPN?</h2>
+
+<p>
+  In MPLS L3VPN, the PE router pushes a <em>VPN label</em> (from an LDP/BGP label binding) plus a <em>transport label</em>
+  (from MPLS-SR or LDP) onto every customer packet. Two label operations per hop, two control planes to maintain.
+</p>
+<p>
+  SRv6 L3VPN removes this duality. The <strong>SRv6 VPN SID</strong>&mdash;a single IPv6 address allocated from the
+  egress PE&rsquo;s locator block&mdash;encodes both <em>&ldquo;deliver to this PE&rdquo;</em> and
+  <em>&ldquo;look up in this VRF&rdquo;</em> in one field. The core (P1&ndash;P4) forwards the outer IPv6 packet
+  normally using IS-IS routes; no label stack required.
+</p>
+
+<h3>End.DT4 &mdash; the VPN SID behavior</h3>
+<p>
+  The SID behavior assigned to a VPN SID is <strong>End.DT4</strong> (Endpoint with Decapsulation and Table lookup,
+  IPv4). When PE7 receives an outer IPv6 packet addressed to its End.DT4 SID:
+</p>
+<ol>
+  <li>The outer IPv6 header is stripped (decapsulated).</li>
+  <li>The inner IPv4 packet is looked up in the <strong>VRF bound to that SID</strong> (e.g., CUST-A).</li>
+  <li>The packet is forwarded out the appropriate VRF interface.</li>
+</ol>
+<p>
+  No MPLS label operations, no penultimate-hop popping decisions, no RSVP or LDP sessions needed.
+</p>
+
+<div class="callout">
+  <strong>SRv6 L3VPN vs MPLS L3VPN &mdash; control-plane comparison</strong>
+  <table style="margin:0.5rem 0 0">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>MPLS L3VPN</th>
+        <th>SRv6 L3VPN</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>VPN service identifier</td><td>VPN label (allocated per-prefix or per-VRF)</td><td>SRv6 SID (IPv6 address from PE locator)</td></tr>
+      <tr><td>Transport</td><td>MPLS label stack (transport + VPN label)</td><td>Single outer IPv6 header; SID = transport + VPN</td></tr>
+      <tr><td>P-router awareness of VPN</td><td>No (label swap only)</td><td>No (IPv6 forwarding only)</td></tr>
+      <tr><td>BGP address-family</td><td>VPNv4 / VPNv6 with MPLS next-hop</td><td>VPNv4 / VPNv6 with SRv6 SID as service label</td></tr>
+      <tr><td>SID behavior at egress PE</td><td>VPN label pop &rarr; VRF lookup</td><td>End.DT4 &rarr; decap + IPv4 VRF lookup</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>SRv6 Interworking Gateway (IGW)</h3>
+<p>
+  In this lab <strong>all four PE routers run SRv6</strong>, so the VPN SID travels end-to-end without translation.
+  In a real network where a remote PE does <em>not</em> support SRv6 (e.g., it only speaks SR-MPLS), a border device
+  called an <strong>SRv6 Interworking Gateway (IGW)</strong> is needed. The IGW translates the SRv6 VPN SID into an
+  MPLS VPN label (or vice versa) at the domain boundary&mdash;it is the SRv6 equivalent of an inter-AS Option&nbsp;B ASBR,
+  but for the data-plane translation. This lab does not include an IGW because all PEs are SRv6-capable.
+</p>
+
+<hr>
+
+<h2 id="address-plan">L3VPN Address Plan</h2>
+
+<p>No new CML nodes are required. Customer networks are simulated using <strong>Loopback100</strong> interfaces
+placed inside VRFs on the PE routers.
+For a refresher on the <code>fc00</code> / <code>fcbb</code> address patterns used throughout this series, see the
+<a href="srv6-usid-isis-lab.html#addr-cheatsheet">Part 1 address pattern quick reference</a>.</p>
+
+<h3>VRF / BGP design</h3>
+<table>
+  <thead>
+    <tr><th>VRF</th><th>PEs</th><th>RD</th><th>RT (import = export)</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>CUST-A</strong></td>
+      <td><span class="role-pe-left">PE5</span> &harr; <span class="role-pe-right">PE7</span></td>
+      <td><code>65000:100</code></td>
+      <td><code>65000:100</code></td>
+    </tr>
+    <tr>
+      <td><strong>CUST-B</strong></td>
+      <td><span class="role-pe-left">PE6</span> &harr; <span class="role-pe-right">PE8</span></td>
+      <td><code>65000:200</code></td>
+      <td><code>65000:200</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Loopback100 &mdash; simulated customer prefixes</h3>
+<table class="device-table">
+  <thead>
+    <tr><th>Node</th><th>VRF</th><th>Loopback100 (in-VRF)</th><th>BGP router-id (configured value)</th></tr>
+  </thead>
+  <tbody>
+    <tr class="row-pe-left">
+      <td><strong>PE5</strong></td><td>CUST-A</td>
+      <td><code>192.168.50.1/24</code></td>
+      <td><code>5.5.5.5</code></td>
+    </tr>
+    <tr class="row-pe-left">
+      <td><strong>PE6</strong></td><td>CUST-B</td>
+      <td><code>192.168.60.1/24</code></td>
+      <td><code>6.6.6.6</code></td>
+    </tr>
+    <tr class="row-pe-right">
+      <td><strong>PE7</strong></td><td>CUST-A</td>
+      <td><code>192.168.70.1/24</code></td>
+      <td><code>7.7.7.7</code></td>
+    </tr>
+    <tr class="row-pe-right">
+      <td><strong>PE8</strong></td><td>CUST-B</td>
+      <td><code>192.168.80.1/24</code></td>
+      <td><code>8.8.8.8</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>BGP router-id in an IPv6-only environment</strong>
+  <p style="margin:0.5rem 0 0">IOS-XE requires an IPv4 BGP router-id (dotted-decimal format), but
+  <code>bgp router-id X.X.X.X</code> accepts any arbitrary IPv4 value&mdash;it does not need to be
+  configured on any interface. No IPv4 address needs to be added to Loopback0. The router-id is purely
+  a BGP identifier sent in OPEN messages; it never needs to be reachable.</p>
+</div>
+
+<h3>BGP sessions</h3>
+<p>Full-mesh iBGP AS&nbsp;65000 between PE5&ndash;PE6&ndash;PE7&ndash;PE8 only.
+P routers carry no BGP. Sessions use <strong>IPv6 loopback addresses</strong> as source and neighbor
+(the same <code>fc00:0:N::1</code> addresses IS-IS already routes).</p>
+
+<pre class="topo">
+Left PEs                 SRv6 Core                  Right PEs
+─────────────            ─────────────────────      ─────────────
+
+ PE5 (CUST-A)                                        PE7 (CUST-A)
+ Lo0: fc00:0:5::1   ═══ iBGP fc00:0:5::1 ↔ fc00:0:7::1 ═══   Lo0: fc00:0:7::1
+ Lo100: 192.168.50.1/24    (SRv6 encap, End.DT4)              Lo100: 192.168.70.1/24
+
+ PE6 (CUST-B)                                        PE8 (CUST-B)
+ Lo0: fc00:0:6::1   ═══ iBGP fc00:0:6::1 ↔ fc00:0:8::1 ═══   Lo0: fc00:0:8::1
+ Lo100: 192.168.60.1/24    (SRv6 encap, End.DT4)              Lo100: 192.168.80.1/24
+
+                      P1 ─────────── P3
+                      │               │        (P routers forward
+                      │               │         SRv6 IPv6 packets;
+                      P2 ─────────── P4         no BGP, no VRF)
+</pre>
+
+<hr>
+
+<h2 id="lab-configs">Lab Config Snippets</h2>
+
+<p>These are the three config blocks each PE needs. Steps 6&ndash;8 walk through them in order.
+Full per-device configs (copy-paste ready) are in the <a href="#appendix">Appendix</a>.</p>
+
+<h4>Block A &mdash; VRF definition (Step 6)</h4>
+<p>IOS-XE syntax; adapt the addresses for each PE per the table above.</p>
+<pre class="config">! VRF definition
+vrf definition CUST-A                      ! PE6/PE8: CUST-B  RD/RT: 65000:200
+ rd 65000:100
+ !
+ address-family ipv4
+  route-target export 65000:100
+  route-target import 65000:100
+ exit-address-family
+!
+! Simulated customer prefix — Loopback100 in the VRF
+interface Loopback100
+ vrf forwarding CUST-A
+ ip address 192.168.50.1 255.255.255.0     ! see address table above for each PE
+ no shutdown
+!</pre>
+
+<h4>Block B &mdash; iBGP full mesh + VPNv4 AF (Step 7)</h4>
+<p>PE5 example; each PE lists the other three as neighbors.</p>
+<pre class="config">router bgp 65000
+ bgp router-id 5.5.5.5                     ! arbitrary IPv4 — no interface needed
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ !
+ neighbor fc00:0:6::1 remote-as 65000
+ neighbor fc00:0:6::1 update-source Loopback0
+ neighbor fc00:0:7::1 remote-as 65000
+ neighbor fc00:0:7::1 update-source Loopback0
+ neighbor fc00:0:8::1 remote-as 65000
+ neighbor fc00:0:8::1 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor fc00:0:6::1 activate
+  neighbor fc00:0:6::1 send-community extended
+  neighbor fc00:0:7::1 activate
+  neighbor fc00:0:7::1 send-community extended
+  neighbor fc00:0:8::1 activate
+  neighbor fc00:0:8::1 send-community extended
+ exit-address-family
+!</pre>
+
+<h4>Block C &mdash; SRv6 binding in VRF BGP address-family (Step 8)</h4>
+<pre class="config">router bgp 65000
+ !
+ address-family vpnv4 unicast
+  segment-routing srv6
+  locator MAIN
+ exit-address-family
+ !
+ address-family ipv4 vrf CUST-A            ! PE6/PE8: vrf CUST-B
+  segment-routing srv6
+  alloc mode per-vrf
+  redistribute connected
+ exit-address-family
+!</pre>
+
+<hr>
+
+<h2 id="lab-procedure">Lab Procedure &mdash; Steps 6&ndash;10</h2>
+
+<h3 class="section-sub" id="step-6">Step 6 &mdash; Configure VRFs on PE5&ndash;PE8</h3>
+
+<p>Paste <strong>Block A</strong> on each PE, adapting the addresses. CUST-A lives on PE5 and PE7; CUST-B on PE6 and PE8.</p>
+
+<h4>PE5</h4>
+<pre class="config">vrf definition CUST-A
+ rd 65000:100
+ !
+ address-family ipv4
+  route-target export 65000:100
+  route-target import 65000:100
+ exit-address-family
+!
+interface Loopback100
+ vrf forwarding CUST-A
+ ip address 192.168.50.1 255.255.255.0
+ no shutdown
+!</pre>
+
+<h4>PE6</h4>
+<pre class="config">vrf definition CUST-B
+ rd 65000:200
+ !
+ address-family ipv4
+  route-target export 65000:200
+  route-target import 65000:200
+ exit-address-family
+!
+interface Loopback100
+ vrf forwarding CUST-B
+ ip address 192.168.60.1 255.255.255.0
+ no shutdown
+!</pre>
+
+<h4>PE7</h4>
+<pre class="config">vrf definition CUST-A
+ rd 65000:100
+ !
+ address-family ipv4
+  route-target export 65000:100
+  route-target import 65000:100
+ exit-address-family
+!
+interface Loopback100
+ vrf forwarding CUST-A
+ ip address 192.168.70.1 255.255.255.0
+ no shutdown
+!</pre>
+
+<h4>PE8</h4>
+<pre class="config">vrf definition CUST-B
+ rd 65000:200
+ !
+ address-family ipv4
+  route-target export 65000:200
+  route-target import 65000:200
+ exit-address-family
+!
+interface Loopback100
+ vrf forwarding CUST-B
+ ip address 192.168.80.1 255.255.255.0
+ no shutdown
+!</pre>
+
+<div class="verify-block">
+  <h4>Step 6 verification &mdash; VRF and Loopback100 up</h4>
+  <p class="expected-label">Expected output on PE5:</p>
+  <pre class="cli">PE5# show vrf detail CUST-A | include State
+  State: Up
+PE5# show ip interface brief vrf CUST-A
+Interface              IP-Address      OK? Method Status   Protocol
+Loopback100            192.168.50.1    YES manual up       up</pre>
+  <p class="pass-fail pass">&#10003; Pass: VRF Up, Loopback100 in VRF is up/up on all four PEs</p>
+</div>
+
+<hr>
+
+<h3 class="section-sub" id="step-7">Step 7 &mdash; Configure iBGP between PEs</h3>
+
+<p>Configure <strong>Block B</strong> on each PE. Each router lists the other three as IPv6 iBGP neighbors.
+Do <em>not</em> paste Block C yet &mdash; confirm sessions come up first.</p>
+
+<h4>PE5</h4>
+<pre class="config">router bgp 65000
+ bgp router-id 5.5.5.5
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ !
+ neighbor fc00:0:6::1 remote-as 65000
+ neighbor fc00:0:6::1 update-source Loopback0
+ neighbor fc00:0:7::1 remote-as 65000
+ neighbor fc00:0:7::1 update-source Loopback0
+ neighbor fc00:0:8::1 remote-as 65000
+ neighbor fc00:0:8::1 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor fc00:0:6::1 activate
+  neighbor fc00:0:6::1 send-community extended
+  neighbor fc00:0:7::1 activate
+  neighbor fc00:0:7::1 send-community extended
+  neighbor fc00:0:8::1 activate
+  neighbor fc00:0:8::1 send-community extended
+ exit-address-family
+!</pre>
+
+<h4>PE6</h4>
+<pre class="config">router bgp 65000
+ bgp router-id 6.6.6.6
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ !
+ neighbor fc00:0:5::1 remote-as 65000
+ neighbor fc00:0:5::1 update-source Loopback0
+ neighbor fc00:0:7::1 remote-as 65000
+ neighbor fc00:0:7::1 update-source Loopback0
+ neighbor fc00:0:8::1 remote-as 65000
+ neighbor fc00:0:8::1 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor fc00:0:5::1 activate
+  neighbor fc00:0:5::1 send-community extended
+  neighbor fc00:0:7::1 activate
+  neighbor fc00:0:7::1 send-community extended
+  neighbor fc00:0:8::1 activate
+  neighbor fc00:0:8::1 send-community extended
+ exit-address-family
+!</pre>
+
+<h4>PE7</h4>
+<pre class="config">router bgp 65000
+ bgp router-id 7.7.7.7
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ !
+ neighbor fc00:0:5::1 remote-as 65000
+ neighbor fc00:0:5::1 update-source Loopback0
+ neighbor fc00:0:6::1 remote-as 65000
+ neighbor fc00:0:6::1 update-source Loopback0
+ neighbor fc00:0:8::1 remote-as 65000
+ neighbor fc00:0:8::1 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor fc00:0:5::1 activate
+  neighbor fc00:0:5::1 send-community extended
+  neighbor fc00:0:6::1 activate
+  neighbor fc00:0:6::1 send-community extended
+  neighbor fc00:0:8::1 activate
+  neighbor fc00:0:8::1 send-community extended
+ exit-address-family
+!</pre>
+
+<h4>PE8</h4>
+<pre class="config">router bgp 65000
+ bgp router-id 8.8.8.8
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ !
+ neighbor fc00:0:5::1 remote-as 65000
+ neighbor fc00:0:5::1 update-source Loopback0
+ neighbor fc00:0:6::1 remote-as 65000
+ neighbor fc00:0:6::1 update-source Loopback0
+ neighbor fc00:0:7::1 remote-as 65000
+ neighbor fc00:0:7::1 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor fc00:0:5::1 activate
+  neighbor fc00:0:5::1 send-community extended
+  neighbor fc00:0:6::1 activate
+  neighbor fc00:0:6::1 send-community extended
+  neighbor fc00:0:7::1 activate
+  neighbor fc00:0:7::1 send-community extended
+ exit-address-family
+!</pre>
+
+<div class="verify-block">
+  <h4>Step 7 verification &mdash; BGP sessions Established</h4>
+  <p>Allow 30&ndash;60 seconds for sessions to converge after pasting configs on all four PEs.</p>
+  <p class="expected-label">Expected output on PE5 (3 neighbors, all Established):</p>
+  <pre class="cli">PE5# show bgp vpnv4 unicast all summary
+
+BGP router identifier 5.5.5.5, local AS number 65000
+BGP table version is 1, main routing table version 1
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+FC00:0:6::1     4        65000      12      12        1    0    0 00:00:45         0
+FC00:0:7::1     4        65000      12      12        1    0    0 00:00:43         0
+FC00:0:8::1     4        65000      12      12        1    0    0 00:00:41         0</pre>
+  <p class="pass-fail pass">&#10003; Pass: all 3 neighbors show numeric prefix count (not Idle/Active)</p>
+  <p class="pass-fail fail">&#10007; If a session stays <strong>Active</strong>: the IPv6 next-hop is not reachable. Confirm
+  <code>ping fc00:0:7::1</code> succeeds from PE5 before BGP will connect. This means IS-IS or SRv6 locators from Part 1 are incomplete.</p>
+</div>
+
+<hr>
+
+<h3 class="section-sub" id="step-8">Step 8 &mdash; Bind SRv6 to VRF BGP</h3>
+
+<p>Paste <strong>Block C</strong> on each PE. This tells BGP to:
+<ul>
+  <li>Use SRv6 as the transport for VPNv4 routes (locator MAIN)</li>
+  <li>Allocate one End.DT4 SID per VRF from that locator (<code>alloc mode per-vrf</code>)</li>
+  <li>Redistribute the connected Loopback100 prefix into the VRF BGP table</li>
+</ul>
+</p>
+
+<h4>PE5 and PE7 (CUST-A)</h4>
+<pre class="config">router bgp 65000
+ !
+ address-family vpnv4 unicast
+  segment-routing srv6
+  locator MAIN
+ exit-address-family
+ !
+ address-family ipv4 vrf CUST-A
+  segment-routing srv6
+  alloc mode per-vrf
+  redistribute connected
+ exit-address-family
+!</pre>
+
+<h4>PE6 and PE8 (CUST-B)</h4>
+<pre class="config">router bgp 65000
+ !
+ address-family vpnv4 unicast
+  segment-routing srv6
+  locator MAIN
+ exit-address-family
+ !
+ address-family ipv4 vrf CUST-B
+  segment-routing srv6
+  alloc mode per-vrf
+  redistribute connected
+ exit-address-family
+!</pre>
+
+<div class="callout warn">
+  <strong>IOS-XE version note</strong>
+  <p style="margin:0.5rem 0 0">The commands <code>segment-routing srv6</code>, <code>locator MAIN</code>, and
+  <code>alloc mode per-vrf</code> under BGP address-families were introduced progressively across IOS-XE 17.x
+  releases. On cat8000v 17.18, these are expected to be available. If IOS-XE rejects
+  <code>segment-routing srv6</code> under <code>address-family vpnv4 unicast</code>, try placing the
+  <code>segment-routing srv6 locator MAIN</code> command directly under <code>address-family ipv4 vrf
+  CUST-A</code> instead, without the global VPNv4-level block.</p>
+</div>
+
+<hr>
+
+<h2 id="step-9">Step 9 &mdash; Verify L3VPN Routes</h2>
+
+<p>After Step 8, four things should appear. Check them in order.</p>
+
+<h3>9.1 &mdash; End.DT4 SIDs in the SRv6 SID table</h3>
+<p>After SRv6 is bound to the VRF, each PE allocates a new SID for its VRF from the locator.
+The behavior column should show <strong>End.DT4</strong>.</p>
+<p class="expected-label">Expected on PE5 (End.DT4 SID for CUST-A now present):</p>
+<pre class="cli">PE5# show segment-routing srv6 sid
+
+Codes: B1 - Base  B2 - Default
+SID                         Behavior          Context                          State  RW
+--------------------------------------------------------------------------------------------
+FCBB:BB00:5::               uN (PSP/USD)      'default':1                      InUse  Y
+FCBB:BB00:5:E000::          uA (PSP/USD)      [Gi1, Link-Local]:1              InUse  Y
+FCBB:BB00:5:E001::          uA (PSP/USD)      [Gi2, Link-Local]:1              InUse  Y
+FCBB:BB00:5:E002::          End.DT4           'CUST-A'                         InUse  Y</pre>
+<p>The exact SID suffix (e.g., <code>E002</code>) is dynamically allocated by IOS-XE; the value will vary.
+Note it down &mdash; it is PE5&rsquo;s CUST-A VPN SID.</p>
+<p class="pass-fail pass">&#10003; Pass: at least one End.DT4 SID is present for each configured VRF</p>
+
+<h3>9.2 &mdash; VPNv4 routes exchanged</h3>
+<p class="expected-label">Expected on PE5 (remote prefix 192.168.70.0/24 from PE7 visible):</p>
+<pre class="cli">PE5# show bgp vpnv4 unicast all
+
+BGP table version is 5, local router ID is 5.5.5.5
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+          Network          Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 65000:100 (default for vrf CUST-A)
+ *>   192.168.50.0/24   ::                       0         32768 ?
+ *>i  192.168.70.0/24   FC00:0:7::1              0    100      0 ?</pre>
+<p>The <code>*>i</code> route for <code>192.168.70.0/24</code> with next-hop <code>FC00:0:7::1</code> (PE7&rsquo;s
+loopback) confirms the VPNv4 update arrived with an SRv6 SID encoded as the service label.</p>
+<p class="pass-fail pass">&#10003; Pass: PE5 sees 192.168.70.0/24 via FC00:0:7::1 as a valid best iBGP route</p>
+<p class="pass-fail pass">&#10003; Pass: PE7 sees 192.168.50.0/24 via FC00:0:5::1 (check symmetrically)</p>
+
+<h3>9.3 &mdash; VRF routing table populated</h3>
+<p class="expected-label">Expected on PE5:</p>
+<pre class="cli">PE5# show ip route vrf CUST-A
+
+Routing Table: CUST-A
+      192.168.50.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.50.0/24 is directly connected, Loopback100
+L        192.168.50.1/32 is directly connected, Loopback100
+B     192.168.70.0/24 [200/0] via FC00:0:7::1 (SRv6), 00:01:10</pre>
+<p class="pass-fail pass">&#10003; Pass: B (BGP) route for 192.168.70.0/24 present in VRF CUST-A routing table</p>
+
+<h3>9.4 &mdash; CEF VRF entry shows SRv6 SID</h3>
+<p>Confirm the forwarding entry resolves to the remote PE&rsquo;s End.DT4 SID in CEF.</p>
+<p class="expected-label">Expected on PE5:</p>
+<pre class="cli">PE5# show ip cef vrf CUST-A 192.168.70.0/24 detail
+
+192.168.70.0/24, epoch 2, flags [...]
+  SRv6 Headend, dst FCBB:BB00:7:E002::
+  nexthop FC00:0:5::1 Loopback0
+    encap SRv6 label FCBB:BB00:7:E002::</pre>
+<p>The <code>FCBB:BB00:7:E002::</code> value is PE7&rsquo;s End.DT4 SID for CUST-A (the suffix will match
+what you noted in Step 9.1 on PE7). This is the outer IPv6 destination that P1&ndash;P4 will forward
+using normal IS-IS IPv6 routes&mdash;no label lookup involved.</p>
+<p class="pass-fail pass">&#10003; Pass: CEF resolves 192.168.70.0/24 to PE7&rsquo;s End.DT4 SID</p>
+
+<hr>
+
+<h2 id="step-10">Step 10 &mdash; Proof Run (VPN Ping)</h2>
+
+<h3>10.1 &mdash; VPN ping PE5 &rarr; PE7</h3>
+<p>Ping the remote VRF prefix from within CUST-A on PE5. This exercises the full SRv6 L3VPN path:
+PE5 encapsulates the IPv4 ICMP packet in an SRv6 outer header with dst = PE7&rsquo;s End.DT4 SID;
+P1&ndash;P4 forward it transparently; PE7 decapsulates and looks up in CUST-A.</p>
+<pre class="config">PE5# ping vrf CUST-A 192.168.70.1 source 192.168.50.1 repeat 10</pre>
+<p class="expected-label">Expected:</p>
+<pre class="cli">PE5# ping vrf CUST-A 192.168.70.1 source 192.168.50.1 repeat 10
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 192.168.70.1, timeout is 2 seconds:
+Packet sent with a source address of 192.168.50.1
+!!!!!!!!!!
+Success rate is 100 percent (10/10), round-trip min/avg/max = 1/2/5 ms</pre>
+<p class="pass-fail pass">&#10003; Pass: 10/10, 100% success</p>
+
+<h3>10.2 &mdash; VPN traceroute &mdash; see the SRv6 core hops</h3>
+<p class="expected-label">Expected on PE5 (two hops through the SRv6 core to PE7):</p>
+<pre class="cli">PE5# traceroute vrf CUST-A 192.168.70.1 source 192.168.50.1
+Type escape sequence to abort.
+Tracing the route to 192.168.70.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 2001:15::1 1 msec 1 msec 1 msec
+  2 2001:37::7 2 msec
+    2001:47::7 2 msec 2 msec</pre>
+<p>Hop 1 is the P1 link address (<code>2001:15::1</code> &mdash; PE5-facing side of P1). Hop 2 reaches PE7 via
+P3 (<code>2001:37::7</code>) or P4 (<code>2001:47::7</code>) depending on ECMP hashing. The SRv6 outer header is
+transparent to <code>traceroute</code>; what you see are the IPv6 link addresses of intermediate hops.</p>
+
+<h3>10.3 &mdash; Confirm VPN isolation: CUST-A cannot reach CUST-B</h3>
+<pre class="config">PE5# ping vrf CUST-A 192.168.60.1 source 192.168.50.1</pre>
+<p class="expected-label">Expected:</p>
+<pre class="cli">PE5# ping vrf CUST-A 192.168.60.1 source 192.168.50.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.60.1, timeout is 2 seconds:
+Packet sent with a source address of 192.168.50.1
+.....
+Success rate is 0 percent (0/5)</pre>
+<p class="pass-fail pass">&#10003; Pass: 0% &mdash; CUST-A cannot reach CUST-B (correct VPN isolation)</p>
+
+<h3>10.4 &mdash; Repeat for CUST-B</h3>
+<pre class="config">PE6# ping vrf CUST-B 192.168.80.1 source 192.168.60.1 repeat 10</pre>
+<p class="pass-fail pass">&#10003; Pass: 10/10, 100% success on the CUST-B VPN</p>
+
+<hr>
+
+<h2 id="gotchas">Troubleshooting / Gotchas</h2>
+
+<h3>BGP session stays Active / Idle</h3>
+<ul>
+  <li><strong>Root cause:</strong> IS-IS does not have a route for the neighbor&rsquo;s IPv6 loopback, or the SRv6 locator is not Up.</li>
+  <li>Verify: <code>ping fc00:0:7::1 source fc00:0:5::1</code> from PE5. If this fails, go back to Part 1 Steps 3&ndash;4.</li>
+  <li>Check: <code>show ipv6 route fc00:0:7::1/128</code> on PE5 must show an IS-IS route.</li>
+  <li>Check: <code>update-source Loopback0</code> is configured &mdash; BGP must source from <code>fc00:0:5::1</code>, which IS-IS knows about.</li>
+</ul>
+
+<h3>BGP session up but no VPNv4 routes received</h3>
+<ul>
+  <li>Check <code>send-community extended</code> is configured on all neighbors &mdash; extended communities carry the Route Target.</li>
+  <li>Check that both ends have the same RD/RT values. A typo in the RT means the importing PE will not install the route.</li>
+  <li>Check: <code>show bgp vpnv4 unicast all neighbors fc00:0:7::1 received-routes</code> &mdash; routes arriving but not installed may indicate an RT mismatch.</li>
+</ul>
+
+<h3>End.DT4 SID does not appear in <code>show segment-routing srv6 sid</code></h3>
+<ul>
+  <li>Step 8 (Block C) may not be fully applied. Check <code>show running-config | section router bgp</code>
+  and confirm <code>segment-routing srv6</code> and <code>alloc mode per-vrf</code> are present under
+  <code>address-family ipv4 vrf CUST-A</code>.</li>
+  <li>If <code>segment-routing srv6</code> under <code>address-family vpnv4 unicast</code> is not accepted by
+  your IOS-XE version, omit that block and only keep the per-VRF stanza; SID allocation still works from the
+  per-VRF binding alone.</li>
+  <li>Confirm the locator name exactly matches: <code>locator MAIN</code> (case-sensitive on IOS-XE).</li>
+</ul>
+
+<h3>VRF route installed but ping fails</h3>
+<ul>
+  <li>Check CEF: <code>show ip cef vrf CUST-A 192.168.70.0/24 detail</code>. The SRv6 headend entry must show the remote End.DT4 SID.</li>
+  <li>If CEF shows the route but ping fails, confirm the P-router IS-IS route for <code>fcbb:bb00:0007::/48</code> is
+  present: <code>show ipv6 route fcbb:bb00:7::</code> on P1.</li>
+  <li>If CEF is missing entirely after BGP installs the route, try <code>clear ip bgp * soft</code> or
+  <code>clear ip cef vrf CUST-A</code> to force re-resolution.</li>
+</ul>
+
+<h3>Traceroute shows <code>* * *</code> for intermediate hops</h3>
+<p>This is normal for SRv6 transit. P routers may not reply to TTL-exceeded messages in the SRv6 outer header
+depending on platform configuration. The absence of intermediate hop replies does not indicate a forwarding fault
+as long as the destination ping succeeds.</p>
+
+<h3>IOS-XE BGP router-id warning</h3>
+<p>If you see <code>%BGP-4-NOTIFRCV: VRF default: Neighbor ... sent NOTIFICATION</code> after adding the BGP
+config, check that <code>bgp router-id X.X.X.X</code> is explicitly present in your <code>router bgp 65000</code>
+stanza. If it is omitted, IOS-XE tries to auto-select a router-id from a locally configured IPv4 address; since
+Loopback0 is IPv6-only in this lab, no candidate exists and BGP will fail to start.</p>
+
+<hr>
+
+<h2 id="appendix">Appendix &mdash; Full PE Configs (L3VPN additions only)</h2>
+
+<p>These are the complete Step 6&ndash;8 additions for each PE. They assume Part 1
+(<code>quisted-srv6-baseline.yaml</code> + IS-IS + SRv6 locators) is already running.
+Paste these on top of the existing config &mdash; no existing lines need to be removed.</p>
+
+<h3>PE5 &mdash; full L3VPN config</h3>
+<pre class="config">vrf definition CUST-A
+ rd 65000:100
+ !
+ address-family ipv4
+  route-target export 65000:100
+  route-target import 65000:100
+ exit-address-family
+!
+interface Loopback100
+ vrf forwarding CUST-A
+ ip address 192.168.50.1 255.255.255.0
+ no shutdown
+!
+router bgp 65000
+ bgp router-id 5.5.5.5
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ !
+ neighbor fc00:0:6::1 remote-as 65000
+ neighbor fc00:0:6::1 update-source Loopback0
+ neighbor fc00:0:7::1 remote-as 65000
+ neighbor fc00:0:7::1 update-source Loopback0
+ neighbor fc00:0:8::1 remote-as 65000
+ neighbor fc00:0:8::1 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor fc00:0:6::1 activate
+  neighbor fc00:0:6::1 send-community extended
+  neighbor fc00:0:7::1 activate
+  neighbor fc00:0:7::1 send-community extended
+  neighbor fc00:0:8::1 activate
+  neighbor fc00:0:8::1 send-community extended
+  segment-routing srv6
+  locator MAIN
+ exit-address-family
+ !
+ address-family ipv4 vrf CUST-A
+  segment-routing srv6
+  alloc mode per-vrf
+  redistribute connected
+ exit-address-family
+!</pre>
+
+<h3>PE6 &mdash; full L3VPN config</h3>
+<pre class="config">vrf definition CUST-B
+ rd 65000:200
+ !
+ address-family ipv4
+  route-target export 65000:200
+  route-target import 65000:200
+ exit-address-family
+!
+interface Loopback100
+ vrf forwarding CUST-B
+ ip address 192.168.60.1 255.255.255.0
+ no shutdown
+!
+router bgp 65000
+ bgp router-id 6.6.6.6
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ !
+ neighbor fc00:0:5::1 remote-as 65000
+ neighbor fc00:0:5::1 update-source Loopback0
+ neighbor fc00:0:7::1 remote-as 65000
+ neighbor fc00:0:7::1 update-source Loopback0
+ neighbor fc00:0:8::1 remote-as 65000
+ neighbor fc00:0:8::1 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor fc00:0:5::1 activate
+  neighbor fc00:0:5::1 send-community extended
+  neighbor fc00:0:7::1 activate
+  neighbor fc00:0:7::1 send-community extended
+  neighbor fc00:0:8::1 activate
+  neighbor fc00:0:8::1 send-community extended
+  segment-routing srv6
+  locator MAIN
+ exit-address-family
+ !
+ address-family ipv4 vrf CUST-B
+  segment-routing srv6
+  alloc mode per-vrf
+  redistribute connected
+ exit-address-family
+!</pre>
+
+<h3>PE7 &mdash; full L3VPN config</h3>
+<pre class="config">vrf definition CUST-A
+ rd 65000:100
+ !
+ address-family ipv4
+  route-target export 65000:100
+  route-target import 65000:100
+ exit-address-family
+!
+interface Loopback100
+ vrf forwarding CUST-A
+ ip address 192.168.70.1 255.255.255.0
+ no shutdown
+!
+router bgp 65000
+ bgp router-id 7.7.7.7
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ !
+ neighbor fc00:0:5::1 remote-as 65000
+ neighbor fc00:0:5::1 update-source Loopback0
+ neighbor fc00:0:6::1 remote-as 65000
+ neighbor fc00:0:6::1 update-source Loopback0
+ neighbor fc00:0:8::1 remote-as 65000
+ neighbor fc00:0:8::1 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor fc00:0:5::1 activate
+  neighbor fc00:0:5::1 send-community extended
+  neighbor fc00:0:6::1 activate
+  neighbor fc00:0:6::1 send-community extended
+  neighbor fc00:0:8::1 activate
+  neighbor fc00:0:8::1 send-community extended
+  segment-routing srv6
+  locator MAIN
+ exit-address-family
+ !
+ address-family ipv4 vrf CUST-A
+  segment-routing srv6
+  alloc mode per-vrf
+  redistribute connected
+ exit-address-family
+!</pre>
+
+<h3>PE8 &mdash; full L3VPN config</h3>
+<pre class="config">vrf definition CUST-B
+ rd 65000:200
+ !
+ address-family ipv4
+  route-target export 65000:200
+  route-target import 65000:200
+ exit-address-family
+!
+interface Loopback100
+ vrf forwarding CUST-B
+ ip address 192.168.80.1 255.255.255.0
+ no shutdown
+!
+router bgp 65000
+ bgp router-id 8.8.8.8
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ !
+ neighbor fc00:0:5::1 remote-as 65000
+ neighbor fc00:0:5::1 update-source Loopback0
+ neighbor fc00:0:6::1 remote-as 65000
+ neighbor fc00:0:6::1 update-source Loopback0
+ neighbor fc00:0:7::1 remote-as 65000
+ neighbor fc00:0:7::1 update-source Loopback0
+ !
+ address-family vpnv4 unicast
+  neighbor fc00:0:5::1 activate
+  neighbor fc00:0:5::1 send-community extended
+  neighbor fc00:0:6::1 activate
+  neighbor fc00:0:6::1 send-community extended
+  neighbor fc00:0:7::1 activate
+  neighbor fc00:0:7::1 send-community extended
+  segment-routing srv6
+  locator MAIN
+ exit-address-family
+ !
+ address-family ipv4 vrf CUST-B
+  segment-routing srv6
+  alloc mode per-vrf
+  redistribute connected
+ exit-address-family
+!</pre>
+
+<hr>
+
+<p class="footnote">
+  Part 2 of the Quisted SRv6 uSID Lab &middot;
+  Reference: <code>srv6-usid-isis-lab.html</code> (Part 1), <code>quisted-srv6-solution.yaml</code> (Part 1 answer key) &middot;
+  IOS-XE 17.18 (cat8000v) &middot; SRv6 uSID F3216 format
+</p>
+
+</div>
+<script>
+(function () {
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function span(cls, html) {
+    return '<span class="' + cls + '">' + html + "</span>";
+  }
+
+  function highlightTokens(lineHtml) {
+    return lineHtml
+      .replace(/\bUp\b/g, span("cli-up", "Up"))
+      .replace(/\b(InUse|Capable|Active|Established)\b/g, span("cli-ok", "$1"))
+      .replace(/(\*PtoP\*|\s\*\s)/g, function (m) { return span("cli-ok", m); });
+  }
+
+  function highlightCliLine(line) {
+    var raw = line;
+    var e = escapeHtml(line);
+
+    if (/^(RP\/|PE\d#|[\w.-]+#)\s/.test(raw)) {
+      var m = raw.match(/^((?:RP\/[\w/.:-]+#|PE\d#|[\w.-]+#)\s*)(.*)$/);
+      if (m) {
+        return span("cli-prompt", escapeHtml(m[1])) + span("cli-cmd", escapeHtml(m[2]));
+      }
+    }
+
+    if (/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+\w+\s+\d+\s+\d+:\d+:\d+\.\d+\s+UTC/.test(raw)) {
+      return span("cli-ts", e);
+    }
+
+    if (/^\*\*\*/.test(raw) || /^BGP router identifier/.test(raw) || /^Routing Table:/.test(raw)) {
+      return span("cli-banner", e);
+    }
+
+    if (/^Total /.test(raw) || /^Success rate/.test(raw)) {
+      return span("cli-summary", e);
+    }
+
+    if (/^-{5,}/.test(raw)) {
+      return span("cli-sep", e);
+    }
+
+    if (/^(SID\s{2,}|Neighbor\s{2,}|Interface\s{2,}|Network\s{2,}|State\s{2,})/.test(raw)) {
+      return span("cli-colhead", e);
+    }
+
+    return highlightTokens(e);
+  }
+
+  function highlightCliPre(pre) {
+    var text = pre.textContent.replace(/\r\n/g, "\n");
+    pre.innerHTML = text.split("\n").map(highlightCliLine).join("\n");
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+    } finally {
+      document.body.removeChild(ta);
+    }
+    return Promise.resolve();
+  }
+
+  document.querySelectorAll("pre.config, pre.cli, pre.topo").forEach(function (pre) {
+    var wrap = document.createElement("div");
+    wrap.className = "code-wrap";
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.setAttribute("aria-label", "Copy to clipboard");
+    btn.textContent = "Copy";
+    wrap.insertBefore(btn, pre);
+
+    btn.addEventListener("click", function () {
+      var text = pre.textContent.replace(/\r\n/g, "\n");
+      copyText(text).then(function () {
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+        setTimeout(function () {
+          btn.textContent = "Copy";
+          btn.classList.remove("copied");
+        }, 1600);
+      });
+    });
+  });
+
+  document.querySelectorAll("pre.cli").forEach(highlightCliPre);
+})();
+</script>
+</body>
+</html>

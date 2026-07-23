@@ -435,6 +435,21 @@
       padding: 1rem 1.25rem;
       margin: 1rem 0;
     }
+    .series-nav {
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.75rem 1.1rem;
+      margin: 0 0 1.5rem;
+      font-size: 0.88rem;
+    }
+    .series-nav > strong:first-child { display: block; margin-bottom: 0.4rem; }
+    .series-nav table { margin: 0; font-size: 0.82rem; width: auto; }
+    .series-nav td, .series-nav th { padding: 0.3rem 0.6rem; }
+    .series-nav .current td { font-weight: 700; color: var(--section-accent); background: var(--section-bg); }
+    .series-nav .skipped td { color: var(--muted); font-style: italic; }
+    .series-note { margin: 0.4rem 0 0; color: var(--muted); font-style: italic; font-size: 0.82rem; }
+    .addr-cheatsheet { margin: 0.5rem 0 0; }
     @media (max-width: 700px) {
       body { font-size: 16px; }
       table { font-size: 0.75rem; }
@@ -484,6 +499,21 @@
     </ol>
   </details>
 </nav>
+
+<div class="series-nav">
+  <strong>Lab series &mdash; where you are:</strong>
+  <table>
+    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
+    <tbody>
+      <tr class="current"><td>Part 1</td><td>SRv6 uSID IS-IS (this guide)</td><td><code>quisted-srv6-baseline.yaml</code></td><td>None</td></tr>
+      <tr><td><a href="srv6-usid-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-l3vpn-solution.yaml</code></td><td>Part 1</td></tr>
+      <tr class="skipped"><td>Part 3</td><td>not published</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td><a href="srv6-usid-l3vpn-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-l3vpn-ce-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-l3vpn-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-l3vpn-igw-solution.yaml</code></td><td>Part 2</td></tr>
+    </tbody>
+  </table>
+  <p class="series-note">Parts are numbered by conceptual stage. Part 3 is not currently published.</p>
+</div>
 
 <div class="side-by-side-hint">
   <strong>Side-by-side workflow:</strong> Keep Quisted&rsquo;s MPLS-SR post open on the left for topology and teaching flow.
@@ -1081,6 +1111,7 @@ XR <code>show ip interface brief | include MgmtEth</code>; XE <code>show ip inte
     <tr class="row-pe-left"><td>PE5&ndash;PE8</td><td><code>GigabitEthernet3</code></td><td><code>cisco</code></td><td><code>cisco</code></td></tr>
   </tbody>
 </table>
+<p style="font-size:0.85rem;color:var(--muted);">&#9888; Lab-only credentials &mdash; do not reuse in any production environment.</p>
 
 <div class="callout">
   <strong>OOB SSH day-0 config</strong>
@@ -1280,6 +1311,21 @@ Quisted&rsquo;s proof arc is neighbor &rarr; segment &rarr; FIB &rarr; easy ping
     <li><strong>Arm debug</strong> &mdash; CML PCAP on P1&ndash;P4; PE7 (IOS-XE): <code>terminal monitor</code>, <code>logging monitor debugging</code>, <code>debug ipv6 icmp</code>, <code>debug ipv6 packet detail</code></li>
     <li><strong>Then ping</strong> &mdash; uSID ping on PE5 while capture + debug run</li>
   </ol>
+</div>
+
+<div class="callout" id="addr-cheatsheet">
+  <strong>Address pattern quick reference &mdash; keep this open as you work</strong>
+  <p style="margin:0.5rem 0 0">Four <code>fc00</code> / <code>fcbb</code> patterns appear throughout the lab. They look similar but mean different things:</p>
+  <table class="addr-cheatsheet">
+    <thead><tr><th>Pattern</th><th>Example (node 7 / PE7)</th><th>What it is</th><th>When you use it</th></tr></thead>
+    <tbody>
+      <tr><td><code>fc00:0:N::1/128</code></td><td><code>fc00:0:7::1</code></td><td>IS-IS loopback (reachability)</td><td>Step 5.1 &mdash; the &ldquo;before&rdquo; ping</td></tr>
+      <tr><td><code>fcbb:bb00:00NN::/48</code></td><td><code>fcbb:bb00:0007::/48</code></td><td>SRv6 locator block</td><td><code>show segment-routing srv6 locator MAIN</code></td></tr>
+      <tr><td><code>fcbb:bb00:N::</code></td><td><code>fcbb:bb00:7::</code></td><td>uN micro-SID (node SID)</td><td>Step 5.3 &mdash; the &ldquo;after&rdquo; ping; destination in PCAP</td></tr>
+      <tr><td><code>fcbb:bb00:N:Exxx::</code></td><td><code>fcbb:bb00:5:E000::</code></td><td>uA SID (adjacency SID)</td><td>CEF detail output; optional SR-TE section</td></tr>
+      <tr><td><code>192.168.X0.1/24</code></td><td><code>192.168.70.1/24</code></td><td>VRF customer prefix (Loopback100)</td><td>VPN ping in Parts 2 / 4 / 5</td></tr>
+    </tbody>
+  </table>
 </div>
 
 <h3 class="section-sub">Step 1 &mdash; Mgmt reachability</h3>
@@ -1976,10 +2022,13 @@ All nodes &mdash; ext-conn, mgmt-sw, P1&ndash;P4, and PE5&ndash;PE8 &mdash; <str
 
 <h2 id="appendix-c">Appendix B &mdash; Future: L3VPN over SRv6 (out of scope)</h2>
 
-<div class="out-of-scope">
-  <p>Quisted&rsquo;s original lab progressed to L3VPN / BGP over MPLS-SR. <strong>This lab stops at SRv6 uSID underlay reachability.</strong>
-  A future Part 3 could add VRFs, BGP VPNv4/VPNv6 with SRv6 encapsulation, and CE connectivity &mdash; not required here.</p>
-</div>
+<p>The continuation labs are published. Pick up where this lab leaves off:</p>
+<ul>
+  <li><a href="srv6-usid-l3vpn-lab.html"><strong>Part 2 &mdash; SRv6 L3VPN</strong></a>: VRFs, BGP VPNv4, End.DT4 SID allocation, VPN ping PE5&rarr;PE7</li>
+  <li><a href="srv6-usid-l3vpn-ce-lab.html"><strong>Part 4 &mdash; CE Routers</strong></a>: dual-homed eBGP CE vs static non-speaker CE; both on the same SRv6 backbone</li>
+  <li><a href="srv6-usid-l3vpn-igw-lab.html"><strong>Part 5 &mdash; IGW</strong></a>: SRv6 &harr; SR-MPLS interworking gateway; dual End.DT4 SID + MPLS VPN label allocation</li>
+</ul>
+<p class="footnote">Note: Part 3 is not currently published. Parts are numbered by conceptual stage, not sequentially.</p>
 
 <hr>
 
@@ -1990,7 +2039,7 @@ Loopbacks and links use IPv6; mgmt (<code>Mgmt-intf</code> VRF) may use IPv4 DHC
 <p>Reference: <code>quisted-srv6-baseline.yaml</code> (student start) and <code>quisted-srv6-solution.yaml</code> (answer key).
 P2&ndash;P4 and PE6&ndash;PE8 follow the same patterns as P1 and PE5 in the config snippets above.</p>
 
-<h3>P1 &mdash; full config (<code>configs/p1.cfg</code>)</h3>
+<h3>P1 &mdash; full config</h3>
 <pre class="config">hostname P1
 logging console disable
 service timestamps log datetime msec
@@ -2120,7 +2169,7 @@ router isis 100
 !
 end</pre>
 
-<h3>PE5 &mdash; full config (<code>configs/pe5.cfg</code>)</h3>
+<h3>PE5 &mdash; full config</h3>
 <pre class="config">hostname PE5
 no service config
 no logging console
@@ -2197,10 +2246,9 @@ router isis 100
 end</pre>
 
 <h3>Remaining nodes</h3>
-<ul>
-  <li><code>configs/p2.cfg</code> &hellip; <code>p4.cfg</code> &mdash; IOS-XR P routers</li>
-  <li><code>configs/pe6.cfg</code> &hellip; <code>pe8.cfg</code> &mdash; IOS-XE PE routers</li>
-</ul>
+<p>P2&ndash;P4 follow the same IS-IS and SRv6 pattern as P1 above (different NET and locator prefix per node).
+PE6&ndash;PE8 follow the same IOS-XE pattern as PE5 (different loopback and locator prefix).
+Full configs for all nodes are in <code>quisted-srv6-solution.yaml</code> &mdash; paste each node&rsquo;s <code>configuration</code> block to see the complete running config.</p>
 
 <hr>
 
