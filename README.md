@@ -13,11 +13,11 @@ proof arc: neighbour → segment → FIB → easy ping → endpoint-SID ping →
 |------|-------|--------------|-------------|-------------|
 | **1** | SRv6 uSID IS-IS underlay | [srv6-usid-part1-isis-lab.html](srv6-usid-part1-isis-lab.html) | `quisted-srv6-part1-baseline.yaml` | None |
 | **2** | SRv6 L3VPN — VRFs, VPNv4, End.DT4 SID | [srv6-usid-part2-l3vpn-lab.html](srv6-usid-part2-l3vpn-lab.html) | `quisted-srv6-part2-solution.yaml` | Part 1 |
-| **3** | SR-TE uSID Traffic Engineering *(placeholder)* | [srv6-usid-part3-srte-lab.html](srv6-usid-part3-srte-lab.html) | — | Part 1 |
+| **3** | SR-TE uSID Traffic Engineering | [srv6-usid-part3-srte-lab.html](srv6-usid-part3-srte-lab.html) | `quisted-srv6-part3-solution.yaml` | Part 1 |
 | **4** | CE Routers — dual-homed eBGP vs static non-speaker | [srv6-usid-part4-ce-lab.html](srv6-usid-part4-ce-lab.html) | `quisted-srv6-part4-solution.yaml` | Part 2 |
 | **5** | SRv6 ↔ SR-MPLS Interworking Gateway (IGW) | [srv6-usid-part5-igw-lab.html](srv6-usid-part5-igw-lab.html) | `quisted-srv6-part5-solution.yaml` | Part 2 |
 
-Parts are numbered by conceptual stage. Part 3 is a placeholder — lab content coming.
+Parts 3 and 2 are parallel extensions of Part 1 — either can be done after Part 1 without the other.
 
 ---
 
@@ -42,7 +42,8 @@ Parts are numbered by conceptual stage. Part 3 is a placeholder — lab content 
 | `quisted-srv6-part5-solution.yaml` | Part 5 answer key — IGW + MPLS domain added |
 | `srv6-usid-part1-isis-lab.html` | Part 1 student guide |
 | `srv6-usid-part2-l3vpn-lab.html` | Part 2 student guide |
-| `srv6-usid-part3-srte-lab.html` | Part 3 placeholder |
+| `quisted-srv6-part3-solution.yaml` | Part 3 answer key — SR-TE policy on P1 |
+| `srv6-usid-part3-srte-lab.html` | Part 3 student guide |
 | `srv6-usid-part4-ce-lab.html` | Part 4 student guide |
 | `srv6-usid-part5-igw-lab.html` | Part 5 student guide |
 
