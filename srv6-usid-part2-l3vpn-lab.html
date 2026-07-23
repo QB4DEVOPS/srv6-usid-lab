@@ -397,16 +397,16 @@
 <div class="series-nav">
   <strong>Lab series &mdash; where you are:</strong>
   <table>
-    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
+    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>CML lab title</th><th>Prerequisite</th></tr></thead>
     <tbody>
-      <tr><td><a href="srv6-usid-part1-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>None</td></tr>
-      <tr class="current"><td>Part 2</td><td>SRv6 L3VPN (this guide)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Part 1</td></tr>
-      <tr class="skipped"><td><a href="srv6-usid-part3-srte-lab.html">Part 3</a></td><td>SR-TE uSID Traffic Engineering (placeholder)</td><td>&mdash;</td><td>&mdash;</td></tr>
-      <tr><td><a href="srv6-usid-part4-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Part 2</td></tr>
-      <tr><td><a href="srv6-usid-part5-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part1-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 1 Baseline (IS-IS only)</td><td>None</td></tr>
+      <tr class="current"><td>Part 2</td><td>SRv6 L3VPN (this guide)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 2 L3VPN Solution</td><td>Part 1</td></tr>
+      <tr><td><a href="srv6-usid-part3-srte-lab.html">Part 3</a></td><td>SR-TE uSID Traffic Engineering</td><td><code>quisted-srv6-part3-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 3 SR-TE Solution</td><td>Part 1</td></tr>
+      <tr><td><a href="srv6-usid-part4-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 4 CE Solution</td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part5-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 5 IGW Solution</td><td>Part 2</td></tr>
     </tbody>
   </table>
-  <p class="series-note">Parts are numbered by conceptual stage. Part 3 is not currently published.</p>
+  <p class="series-note">Parts 2 and 3 are parallel branches off Part 1 (do either first); Parts 4 and 5 build on Part 2.</p>
 </div>
 
 <hr>
@@ -415,10 +415,10 @@
 
 <div class="callout prereq">
   <strong>Complete Part 1 first &mdash; or import the solution YAML</strong>
-  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-part1-solution.yaml</code> into CML to start with IS-IS and SRv6
+  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-part1-solution.yaml</code> into CML (lab title: <em>Quisted SRv6 uSID &mdash; Part 1 Solution</em>) to start with IS-IS and SRv6
   locators already configured on all 8 nodes &mdash; this is the answer key for Part 1 and the correct starting
   point for Part 2. If you completed Part 1 manually your running lab is equivalent.</p>
-  <p style="margin:0.5rem 0 0;font-size:0.9rem;color:var(--muted);font-style:italic;">Note: there is no Part 3 file. The series goes Part&nbsp;1 &rarr; Part&nbsp;2 &rarr; Part&nbsp;4 &rarr; Part&nbsp;5.</p>
+  <p style="margin:0.5rem 0 0;font-size:0.9rem;color:var(--muted);font-style:italic;">Note: <a href="srv6-usid-part3-srte-lab.html">Part 3 (SR-TE)</a> is a parallel branch off Part 1 &mdash; it can be done before or after this Part 2.</p>
   <p style="margin:0.5rem 0 0">This lab picks up at <strong>Step 6</strong>. Before continuing, all five steps of
   <a href="srv6-usid-part1-isis-lab.html">Part 1 (SRv6 uSID IS-IS Lab)</a> must be complete and verified:</p>
   <ul style="margin:0.5rem 0 0">
@@ -1245,6 +1245,7 @@ router bgp 65000
 <p class="footnote">
   Part 2 of the Quisted SRv6 uSID Lab &middot;
   Reference: <code>srv6-usid-part1-isis-lab.html</code> (Part 1), <code>quisted-srv6-part1-solution.yaml</code> (Part 1 answer key) &middot;
+  <code>quisted-srv6-part2-solution.yaml</code> (Part 2 answer key; CML title: <em>Quisted SRv6 uSID &mdash; Part 2 L3VPN Solution</em>) &middot;
   IOS-XE 17.18 (cat8000v) &middot; SRv6 uSID F3216 format
 </p>
 

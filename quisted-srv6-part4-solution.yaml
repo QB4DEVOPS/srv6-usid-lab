@@ -35,21 +35,201 @@ annotations:
     x2: 160.0
     y2: 310.0
     z_index: -200
+  - type: rectangle
+    border_color: 'rgba(70, 130, 180, 0.90)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(70, 130, 180, 0.90)'
+    rotation: 0
+    thickness: 1
+    x1: -320.0
+    y1: -198.0
+    x2: 160.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: -285.0
+    y1: -192.0
+    z_index: -90
+  - type: rectangle
+    border_color: 'rgba(90, 80, 110, 0.90)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(90, 80, 110, 0.90)'
+    rotation: 0
+    thickness: 1
+    x1: -80.0
+    y1: -198.0
+    x2: 360.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XR'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: 70.0
+    y1: -192.0
+    z_index: -90
+  - type: rectangle
+    border_color: 'rgba(128, 0, 128, 0.85)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(128, 0, 128, 0.85)'
+    rotation: 0
+    thickness: 1
+    x1: 360.0
+    y1: -198.0
+    x2: 160.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: 405.0
+    y1: -192.0
+    z_index: -90
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#2F4F6F'
+    rotation: 0
+    text_bold: true
+    text_content: 'PE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: -270.0
+    y1: -148.0
+    z_index: -150
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#3A3345'
+    rotation: 0
+    text_bold: true
+    text_content: 'P'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 90.0
+    y1: -148.0
+    z_index: -150
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#5A2D6F'
+    rotation: 0
+    text_bold: true
+    text_content: 'PE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 410.0
+    y1: -148.0
+    z_index: -150
   - type: text
     border_color: ''
     border_style: ''
     color: '#222222'
     rotation: 0
     text_bold: true
-    text_content: 'Quisted SRv6 uSID L3VPN — CE (Part 4)'
+    text_content: 'Quisted SRv6 uSID — Part 4 CE Solution'
     text_font: 'Arial'
     text_italic: false
     text_size: 16
     text_unit: 'pt'
     thickness: 1
-    x1: -60.0
+    x1: -40.0
     y1: -280.0
     z_index: 200
+  - type: rectangle
+    border_color: 'rgba(26, 92, 26, 0.90)'
+    border_radius: 16
+    border_style: ''
+    color: 'rgba(144, 216, 144, 0.28)'
+    rotation: 0
+    thickness: 2
+    x1: -580.0
+    y1: -175.0
+    x2: 190.0
+    y2: 345.0
+    z_index: -200
+  - type: rectangle
+    border_color: 'rgba(26, 92, 26, 0.90)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(26, 92, 26, 0.90)'
+    rotation: 0
+    thickness: 1
+    x1: -580.0
+    y1: -198.0
+    x2: 190.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOSv'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: -545.0
+    y1: -192.0
+    z_index: -90
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#1a5c1a'
+    rotation: 0
+    text_bold: true
+    text_content: 'CE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: -510.0
+    y1: -148.0
+    z_index: -150
   - type: text
     border_color: ''
     border_style: ''
@@ -59,12 +239,66 @@ annotations:
     text_content: 'eBGP CE-PE (Left)'
     text_font: 'Arial'
     text_italic: false
-    text_size: 11
+    text_size: 13
     text_unit: 'pt'
     thickness: 1
-    x1: -540.0
-    y1: -200.0
+    x1: -530.0
+    y1: -218.0
     z_index: 200
+  - type: rectangle
+    border_color: 'rgba(139, 0, 0, 0.90)'
+    border_radius: 16
+    border_style: ''
+    color: 'rgba(255, 160, 160, 0.22)'
+    rotation: 0
+    thickness: 2
+    x1: 570.0
+    y1: -175.0
+    x2: 200.0
+    y2: 345.0
+    z_index: -200
+  - type: rectangle
+    border_color: 'rgba(139, 0, 0, 0.90)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(139, 0, 0, 0.90)'
+    rotation: 0
+    thickness: 1
+    x1: 570.0
+    y1: -198.0
+    x2: 200.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOSv'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: 615.0
+    y1: -192.0
+    z_index: -90
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#8B0000'
+    rotation: 0
+    text_bold: true
+    text_content: 'CE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 650.0
+    y1: -148.0
+    z_index: -150
   - type: text
     border_color: ''
     border_style: ''
@@ -74,12 +308,147 @@ annotations:
     text_content: 'Static / Non-Speaker (Right)'
     text_font: 'Arial'
     text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: 555.0
+    y1: -218.0
+    z_index: 200
+  - type: rectangle
+    border_color: 'rgba(70, 130, 180, 0.90)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(173, 216, 230, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: -345.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#2F4F6F'
+    rotation: 0
+    text_bold: false
+    text_content: 'PE Routers (Provider Edge)'
+    text_font: 'Arial'
+    text_italic: false
     text_size: 11
     text_unit: 'pt'
     thickness: 1
-    x1: 620.0
-    y1: -200.0
-    z_index: 200
+    x1: -326.0
+    y1: 221.0
+    z_index: 110
+  - type: rectangle
+    border_color: 'rgba(90, 80, 110, 0.90)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(120, 110, 140, 0.22)'
+    rotation: 0
+    thickness: 2
+    x1: -5.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#3A3345'
+    rotation: 0
+    text_bold: false
+    text_content: 'P Routers (Provider)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: 34.0
+    y1: 221.0
+    z_index: 110
+  - type: rectangle
+    border_color: 'rgba(128, 0, 128, 0.85)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(186, 140, 220, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: 335.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#5A2D6F'
+    rotation: 0
+    text_bold: false
+    text_content: 'PE Routers (Provider Edge)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: 354.0
+    y1: 221.0
+    z_index: 110
+  - type: rectangle
+    border_color: 'rgba(26, 92, 26, 0.90)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(144, 216, 144, 0.28)'
+    rotation: 0
+    thickness: 2
+    x1: -575.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#1a5c1a'
+    rotation: 0
+    text_bold: false
+    text_content: 'CE Routers (eBGP)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: -556.0
+    y1: 221.0
+    z_index: 110
+  - type: rectangle
+    border_color: 'rgba(139, 0, 0, 0.90)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(255, 160, 160, 0.22)'
+    rotation: 0
+    thickness: 2
+    x1: 560.0
+    y1: 210.0
+    x2: 290.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#8B0000'
+    rotation: 0
+    text_bold: false
+    text_content: 'CE Routers (Static / Non-Speaker)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: 585.0
+    y1: 221.0
+    z_index: 110
   - type: text
     border_color: ''
     border_style: ''
@@ -112,7 +481,7 @@ lab:
     CE routers are accessed via CML console (no OOB management wired).
     Loopback100 on each PE (from Part 2) is retained as a PE-local simulated prefix.
   timestamp: 1784252880.562071
-  title: Quisted SRv6 uSID L3VPN — Part 4 CE Solution
+  title: Quisted SRv6 uSID — Part 4 CE Solution
   version: 0.1.0
 nodes:
   - id: n0
@@ -1549,7 +1918,7 @@ nodes:
     label: CE9
     node_definition: iosv
     x: -480
-    y: -150
+    y: -100
     configuration: |-
       hostname CE9
       no ip domain lookup
@@ -1599,7 +1968,7 @@ nodes:
     label: CE10
     node_definition: iosv
     x: -480
-    y: 150
+    y: 100
     configuration: |-
       hostname CE10
       no ip domain lookup
@@ -1649,7 +2018,7 @@ nodes:
     label: CE11
     node_definition: iosv
     x: 680
-    y: -150
+    y: -100
     configuration: |-
       hostname CE11
       no ip domain lookup
@@ -1690,7 +2059,7 @@ nodes:
     label: CE12
     node_definition: iosv
     x: 680
-    y: 150
+    y: 100
     configuration: |-
       hostname CE12
       no ip domain lookup

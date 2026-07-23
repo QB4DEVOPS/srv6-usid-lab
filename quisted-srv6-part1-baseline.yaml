@@ -167,7 +167,7 @@ annotations:
     color: '#222222'
     rotation: 0
     text_bold: true
-    text_content: 'Quisted SRv6 uSID Lab'
+    text_content: 'Quisted SRv6 uSID — Part 1 Baseline (IS-IS only)'
     text_font: 'Arial'
     text_italic: false
     text_size: 16
@@ -285,7 +285,7 @@ lab:
     All nodes boot in parallel (no node staging).
     IS-IS + IPv6 only. No SRv6 configs — student starting point.
   timestamp: 1784399497.7921314
-  title: Quisted SRv6 Lab — Baseline (IS-IS only)
+  title: Quisted SRv6 uSID — Part 1 Baseline (IS-IS only)
   version: 0.1.0
 nodes:
   - id: n0

@@ -484,7 +484,7 @@
       <li><a href="#lab-download">Lab download &amp; import</a></li>
       <li><a href="#lab-setup">SRv6 Lab Setup (Baseline)</a></li>
       <li><a href="#lab-configs">Lab configs (snippets)</a></li>
-      <li><a href="#lab-procedure">Lab procedure &mdash; configure and verify</a></li>
+      <li><a href="#lab-procedure">Lab procedure &mdash; configure and verify</a> (<a href="#lab-path">baseline vs blank routing</a>)</li>
       <li><a href="#lab-verification">Lab verification &mdash; proof run (Steps 1&ndash;5)</a></li>
       <li><a href="#proof-run">Step 5 &mdash; Proof run (before CLI &rarr; arm debug &rarr; ping)</a></li>
       <li><a href="#srv6-path-walk">Step 5 &sect;4 &mdash; Walk the path (SRv6 show commands)</a></li>
@@ -503,16 +503,16 @@
 <div class="series-nav">
   <strong>Lab series &mdash; where you are:</strong>
   <table>
-    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
+    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>CML lab title</th><th>Prerequisite</th></tr></thead>
     <tbody>
-      <tr class="current"><td>Part 1</td><td>SRv6 uSID IS-IS (this guide)</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>None</td></tr>
-      <tr><td><a href="srv6-usid-part2-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Part 1</td></tr>
-      <tr class="skipped"><td><a href="srv6-usid-part3-srte-lab.html">Part 3</a></td><td>SR-TE uSID Traffic Engineering (placeholder)</td><td>&mdash;</td><td>&mdash;</td></tr>
-      <tr><td><a href="srv6-usid-part4-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Part 2</td></tr>
-      <tr><td><a href="srv6-usid-part5-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr class="current"><td>Part 1</td><td>SRv6 uSID IS-IS (this guide)</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 1 Baseline (IS-IS only)</td><td>None</td></tr>
+      <tr><td><a href="srv6-usid-part2-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 2 L3VPN Solution</td><td>Part 1</td></tr>
+      <tr><td><a href="srv6-usid-part3-srte-lab.html">Part 3</a></td><td>SR-TE uSID Traffic Engineering</td><td><code>quisted-srv6-part3-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 3 SR-TE Solution</td><td>Part 1</td></tr>
+      <tr><td><a href="srv6-usid-part4-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 4 CE Solution</td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part5-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 5 IGW Solution</td><td>Part 2</td></tr>
     </tbody>
   </table>
-  <p class="series-note">Parts are numbered by conceptual stage. Part 3 is not currently published.</p>
+  <p class="series-note">Parts 2 and 3 are parallel branches off Part 1 (do either first); Parts 4 and 5 build on Part 2.</p>
 </div>
 
 <div class="side-by-side-hint">
@@ -738,8 +738,9 @@
     <p class="download-title">Lab download</p>
     <p style="margin:0 0 0.5rem">Import on CML 2.10:</p>
     <ol>
-      <li><strong>Baseline</strong> &mdash; <code>quisted-srv6-part1-baseline.yaml</code> (IS-IS + IPv6; add SRv6 in the lab).</li>
-      <li><strong>Solution</strong> &mdash; <code>quisted-srv6-part1-solution.yaml</code> (full SRv6 uSID configured; answer key).</li>
+      <li><strong>Baseline</strong> &mdash; <code>quisted-srv6-part1-baseline.yaml</code> &mdash; CML lab title: <em>Quisted SRv6 uSID &mdash; Part 1 Baseline (IS-IS only)</em> (IS-IS + IPv6; add SRv6 in the lab).</li>
+      <li><strong>Solution</strong> &mdash; <code>quisted-srv6-part1-solution.yaml</code> &mdash; CML lab title: <em>Quisted SRv6 uSID &mdash; Part 1 Solution</em> (full SRv6 uSID configured; answer key).</li>
+      <li><strong>Blank routing (alt start)</strong> &mdash; <code>quisted-srv6-part1-blank-routing.yaml</code> &mdash; CML lab title: <em>Quisted SRv6 uSID &mdash; Part 1 Blank Routing</em> (addressing only; build IS-IS from scratch).</li>
     </ol>
   </div>
 </div>
@@ -1132,10 +1133,15 @@ line vty 0 15
 <h3 class="section-sub">Import steps</h3>
 <ol>
   <li>Confirm IOS XRv 9000 and CAT 8000V under <strong>Tools &rarr; Node and Image Definitions</strong>.</li>
-  <li><strong>Import Lab</strong> &rarr; <code>quisted-srv6-part1-baseline.yaml</code>.</li>
+  <li><strong>Import Lab</strong> &mdash; pick one start path:
+    <ul>
+      <li><strong>Baseline</strong> (verify IS-IS, add SRv6) &mdash; <code>quisted-srv6-part1-baseline.yaml</code> &mdash; CML lab title: <em>Quisted SRv6 uSID &mdash; Part 1 Baseline (IS-IS only)</em></li>
+      <li><strong>Blank routing</strong> (build from scratch) &mdash; <code>quisted-srv6-part1-blank-routing.yaml</code> &mdash; CML lab title: <em>Quisted SRv6 uSID &mdash; Part 1 Blank Routing</em> (addressing + mgmt only; you configure IS-IS in Step 2 and SRv6 in Step 3)</li>
+    </ul>
+  </li>
   <li><strong>Start</strong> the lab (all 8 routers boot in parallel).</li>
-  <li>Wait for all eight routers <strong>BOOTED</strong> (XR cold boot ~15&ndash;20 min each).</li>
-  <li>First boot: XR setup wizard, PE license reload, IS-IS converge (~2&ndash;3 min).</li>
+  <li>Wait for all eight routers <strong>BOOTED</strong> (XR cold boot ~15&ndash;20 min each). XR may accept CLI while CML still shows <strong>Booting</strong> &mdash; if SSH responds, proceed; do not block on UI state alone.</li>
+  <li>First boot: XR setup wizard, PE license reload. IS-IS converge (~2&ndash;3 min) after Step 2 config on blank routing; baseline IS-IS is pre-loaded.</li>
 </ol>
 
 <hr>
@@ -1143,7 +1149,7 @@ line vty 0 15
 <!-- ===== LAB CONFIGS ===== -->
 <h2 id="lab-configs">Lab configs (snippets)</h2>
 
-<p>Configs ship in the CML import (<code>quisted-srv6-part1-baseline.yaml</code>). Full per-node reference configs are in <a href="#appendix-d">Appendix C</a>; the solution YAML is the answer key.</p>
+<p>Configs ship in the CML import. <strong>Baseline</strong> pre-loads IS-IS; <strong>blank routing</strong> ships addressing only &mdash; paste IS-IS from the snippets below in Step 2. Full per-node reference configs are in <a href="#appendix-d">Appendix C</a>; the solution YAML is the answer key.</p>
 
 <h3>Per-node variables</h3>
 <table class="device-table">
@@ -1163,7 +1169,7 @@ line vty 0 15
 
 <h3>IS-IS underlay (P router &mdash; P1)</h3>
 <p>Every data interface is <code>point-to-point</code> under IS-IS. Level-2 only, wide metrics, <strong>IPv6 unicast only</strong> on the data plane (no <code>address-family ipv4</code> under <code>router isis</code>).
-<strong>Pre-loaded</strong> in <code>quisted-srv6-part1-baseline.yaml</code> &mdash; verify in Step 2, do not paste.</p>
+<strong>Pre-loaded</strong> in baseline import &mdash; verify in Step 2, do not paste. On <strong>blank routing</strong>, paste this block on every P router in Step 2.</p>
 
 <pre class="config">router isis 100
  is-type level-2-only
@@ -1219,7 +1225,7 @@ line vty 0 15
 </table>
 
 <h3>IS-IS underlay (PE router &mdash; PE5)</h3>
-<p>IOS-XE syntax for the same IS-IS domain. <code>ipv6 router isis 100</code> on data interfaces only &mdash; not Gi3 (mgmt). Also pre-loaded; verify in Step 2.</p>
+<p>IOS-XE syntax for the same IS-IS domain. <code>ipv6 router isis 100</code> on data interfaces only &mdash; not Gi3 (mgmt). Pre-loaded on baseline; on blank routing, paste on every PE in Step 2.</p>
 
 <pre class="config">interface GigabitEthernet1
  isis network point-to-point
@@ -1301,6 +1307,18 @@ PE6&ndash;PE8: same PE pattern; PE first boot may require license + <code>reload
 <p>Work through the steps below on a <strong>booted</strong> lab. SSH to each router via mgmt (see <a href="#management-access">Management access</a>).
 Quisted&rsquo;s proof arc is neighbor &rarr; segment &rarr; FIB &rarr; easy ping &rarr; endpoint-SID ping &rarr; path walk &rarr; capture &mdash; same order here with SRv6 commands.</p>
 
+<div class="callout" id="lab-path">
+  <strong>Which YAML did you import?</strong>
+  <table>
+    <thead><tr><th>Import</th><th>CML lab title</th><th>Step 2</th><th>Step 3</th></tr></thead>
+    <tbody>
+      <tr><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>Part 1 Baseline (IS-IS only)</td><td>Verify IS-IS (pre-loaded)</td><td>Configure SRv6 locators</td></tr>
+      <tr><td><code>quisted-srv6-part1-blank-routing.yaml</code></td><td>Part 1 Blank Routing</td><td><strong>Configure</strong> IS-IS on all 8 nodes</td><td>Configure SRv6 locators</td></tr>
+    </tbody>
+  </table>
+  <p style="margin:0.5rem 0 0">On IOS-XR, <code>commit</code> after each config block when pasting manually. PyATS / MCP push may auto-commit; pasted CLI from this guide still needs an explicit <code>commit</code> on XR.</p>
+</div>
+
 <!-- ===== LAB VERIFICATION ===== -->
 <h2 id="lab-verification">Lab verification &mdash; proof run (Steps 1&ndash;5)</h2>
 
@@ -1334,13 +1352,45 @@ Quisted&rsquo;s proof arc is neighbor &rarr; segment &rarr; FIB &rarr; easy ping
 show clock</pre>
 <p class="pass-fail pass">&#10003; Pass: 8/8 SSH sessions (P1&ndash;P4 + PE5&ndash;PE8)</p>
 
+<div class="callout">
+  <strong>Blank routing only &mdash; Step 1 sanity (PE5)</strong>
+  <p style="margin:0.5rem 0 0">Before Step 2 config, confirm addressing is up but routing is absent:</p>
+  <table>
+    <thead><tr><th>What we're proving</th><th>Command</th><th>Look for</th></tr></thead>
+    <tbody>
+      <tr><td>No IS-IS yet</td><td><code>show isis neighbors</code></td><td>Empty (no adjacencies)</td></tr>
+      <tr><td>No SRv6 yet</td><td><code>show segment-routing srv6 locator</code></td><td>Empty (IOS-XE)</td></tr>
+      <tr><td>Interfaces up</td><td><code>show ipv6 interface brief</code></td><td>Loopback0 + Gi1/Gi2 <strong>up/up</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+
 <h3 class="section-sub">Step 2 &mdash; IS-IS underlay</h3>
 <p><strong>IPv6-only data plane</strong> &mdash; <code>address-family ipv6 unicast</code> only under <code>router isis</code>; no <code>ip router isis</code> on PE data interfaces. Mgmt VRF IPv4 is OOB only.
 Config snippets: <a href="#lab-configs">IS-IS underlay (P1 / PE5)</a> &mdash; see the <strong>Required vs lab choice</strong> table there.</p>
-<p><strong>Already on the box</strong> from baseline import. Your job in Step 2 is verify neighbors and LSPs, not paste new IS-IS config.</p>
+
+<div class="callout">
+  <strong>Baseline vs blank routing</strong>
+  <ul style="margin:0.5rem 0 0">
+    <li><strong>Baseline</strong> (<code>quisted-srv6-part1-baseline.yaml</code>) &mdash; IS-IS is already on the box. Step 2 is <strong>verify only</strong>; do not paste new IS-IS config.</li>
+    <li><strong>Blank routing</strong> (<code>quisted-srv6-part1-blank-routing.yaml</code>) &mdash; only addressing is pre-loaded. Paste the IS-IS snippets from <a href="#lab-configs">Lab configs</a> onto <strong>all eight</strong> routers in Step 2, then verify. SRv6 locators come in Step 3.</li>
+  </ul>
+</div>
 
 <p><strong>Quisted equivalent:</strong> <code>show ospf database</code> (8 routers) + <code>show mpls interfaces</code> (LDP on links).
 This lab: <code>show isis database</code> on P1 + <code>show isis neighbors</code> on every node.</p>
+
+<div class="callout">
+  <strong>What we're proving &mdash; Step 2 (live-validated lab e5fd0d99)</strong>
+  <table>
+    <thead><tr><th>Node</th><th>Command</th><th>Look for</th></tr></thead>
+    <tbody>
+      <tr><td>P1</td><td><code>show isis neighbors</code></td><td><strong>5</strong> adjacencies <strong>Up</strong> (P2, P3, P4, PE5, PE6)</td></tr>
+      <tr><td>P1</td><td><code>show isis database</code></td><td><strong>Total Level-2 LSP count: 8</strong></td></tr>
+      <tr><td>PE5 (IOS-XE)</td><td><code>show isis neighbors</code></td><td>P1 and P2 <strong>UP</strong> on Gi1 and Gi2</td></tr>
+    </tbody>
+  </table>
+</div>
 
 <h4>Verify &mdash; run on each router</h4>
 <pre class="config">show isis neighbors</pre>
@@ -1410,7 +1460,19 @@ P2              L2   Gi2           2001:25::2      UP    29       00</pre>
 <h3 class="section-sub">Step 3 &mdash; SRv6 uSID locators</h3>
 <p><strong>Quisted equivalent:</strong> per-router <strong>Label Ranges</strong> + prefix-SID blocks.
 This lab: each router owns a locator <code>/48</code> plus local uN/uA SIDs.
-Config snippets: <a href="#lab-configs">SRv6 uSID locator (P1 / PE5)</a>.</p>
+Config snippets: <a href="#lab-configs">SRv6 uSID locator (P1 / PE5)</a>. Apply on <strong>all eight</strong> routers (both baseline and blank routing start here with SRv6).</p>
+
+<div class="callout">
+  <strong>What we're proving &mdash; Step 3 (live-validated lab e5fd0d99)</strong>
+  <table>
+    <thead><tr><th>Node</th><th>Command</th><th>Look for</th></tr></thead>
+    <tbody>
+      <tr><td>P1 (IOS-XR)</td><td><code>show segment-routing srv6 locators</code></td><td>MAIN <code>fcbb:bb00:1::/48</code> <strong>Up</strong></td></tr>
+      <tr><td>PE5 (IOS-XE)</td><td><code>show segment-routing srv6 locator</code></td><td><code>FCBB:BB00:5::/48</code> <strong>usid-f3216</strong> <strong>Up</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="margin:0.5rem 0 0">On IOS-XE PE nodes, <code>show segment-routing srv6 locators</code> (plural) is not valid &mdash; use singular <code>locator</code> or <code>show segment-routing srv6 sid</code>.</p>
+</div>
 
 <div class="callout">
   <strong>Live lab (validated Jul 15&ndash;16):</strong> All nodes use F3216 locator <code>fcbb:bb00:000N::/48</code>
@@ -1523,6 +1585,16 @@ FCBB:BB00:5:E003::                   MAIN            uA (PSP/USD)         Gi2 FE
 <p><strong>Quisted equivalent:</strong> <code>show mpls forwarding</code> + <code>show cef</code> for core prefixes.
 This lab: IS-IS IPv6 routes + SRv6 SID table on P1.</p>
 
+<div class="callout">
+  <strong>What we're proving &mdash; Step 4 (live-validated lab e5fd0d99)</strong>
+  <table>
+    <thead><tr><th>Node</th><th>Command</th><th>Look for</th></tr></thead>
+    <tbody>
+      <tr><td>P1</td><td><code>show route ipv6 fc00:0:7::1</code></td><td>ECMP via <strong>P3</strong> and <strong>P4</strong> (two next-hops)</td></tr>
+    </tbody>
+  </table>
+</div>
+
 <h4>Verify &mdash; P1</h4>
 <pre class="config">show isis ipv6 route fc00:0:5::1/128
 show isis ipv6 route fc00:0:7::1/128
@@ -1559,6 +1631,19 @@ fc00:0:2::1/128, version 316, internal ...
 <p class="pass-fail pass">&#10003; Pass: IPv6 FIB adjacency &mdash; no MPLS label stack</p>
 
 <h3 class="section-sub" id="proof-run">Step 5 &mdash; Proof run (PE5 &rarr; PE7)</h3>
+
+<div class="callout">
+  <strong>What we're proving &mdash; Step 5 (live-validated lab e5fd0d99)</strong>
+  <table>
+    <thead><tr><th>Node</th><th>Command</th><th>Look for</th></tr></thead>
+    <tbody>
+      <tr><td>PE5</td><td><code>ping fc00:0:7::1 source fc00:0:5::1 repeat 5</code></td><td><strong>5/5</strong> success (IGP loopback)</td></tr>
+      <tr><td>PE5</td><td><code>ping fcbb:bb00:7:: source fc00:0:5::1 repeat 10</code></td><td><strong>10/10</strong> success (uN endpoint-SID)</td></tr>
+      <tr><td>PE7</td><td><code>show ipv6 route fcbb:bb00:7::</code></td><td><code>receive via SR0</code> (local uN, not Loopback0)</td></tr>
+    </tbody>
+  </table>
+  <p style="margin:0.5rem 0 0"><strong>Traceroute note:</strong> uSID traceroute from PE5 may take <code>PE5 &rarr; P2 &rarr; P4/P3 &rarr; PE7</code> (ECMP), not always via P1. Both paths are valid when IGP metrics are equal.</p>
+</div>
 
 <table>
   <thead><tr><th>Address</th><th>Role</th></tr></thead>
@@ -1709,7 +1794,7 @@ Routing entry for FCBB:BB00:7::/128
   receive via SR0</pre>
 <p class="pass-fail pass">&#10003; Pass: local uN; <strong>receive via SR0</strong> (endpoint processing)</p>
 
-<p><strong>Data-plane tie-in</strong> (step 5.3 traceroute): hop 1 <code>2001:15::1</code> (P1) &rarr; hop 2 P3/P4 ECMP &rarr; hop 3 PE7. Control plane and traceroute must agree.</p>
+<p><strong>Data-plane tie-in</strong> (step 5.3 traceroute): first core hop may be P1 (<code>2001:15::1</code>) or P2 (<code>2001:25::2</code>) from PE5 &rarr; then P3/P4 ECMP &rarr; PE7. Control plane and traceroute must agree on reachability; ECMP path choice varies per run.</p>
 
 <h3 class="section-sub" id="usid-forwarding">Step 5 reference &mdash; loopback vs uSID</h3>
 <div class="callout">
@@ -1959,14 +2044,24 @@ show segment-routing srv6 locator</pre>
 
 <h3>Platform &amp; CML</h3>
 <ol>
-  <li><strong>XR cold boot</strong> &mdash; ~15&ndash;20 min per IOS XRv 9000 node on first start. All nodes boot in parallel (no staging in the YAML).</li>
+  <li><strong>XR cold boot</strong> &mdash; P1&ndash;P4 (<code>iosxrv9000</code>) take ~15&ndash;20 min each on cold boot; PE cat8000v boot in ~2 min. Do not verify until <strong>all</strong> XR nodes show <strong>BOOTED</strong> in CML. All nodes boot in parallel (no staging in the YAML).</li>
+  <li><strong>CML &ldquo;Booting&rdquo; vs CLI</strong> &mdash; IOS-XR may accept SSH and respond to <code>show</code> while CML still displays <strong>Booting</strong>. If the CLI responds, proceed with verification; do not block solely on UI state.</li>
+  <li><strong>XR startup config not loaded</strong> &mdash; IOS XRv can reach a prompt with factory hostname <code>ios</code> and no IS-IS. Fix: stop &rarr; wipe &rarr; restart, or confirm startup config in the CML node config editor before boot. Quick check: <code>show running-config hostname</code> must show <code>hostname P1</code>, not <code>ios</code>.</li>
+  <li><strong>XR commit</strong> &mdash; pasted config on IOS-XR requires <code>commit</code>. PyATS / MCP push may auto-commit; manual paste from this guide does not.</li>
   <li><strong>CAT 8000V license</strong> &mdash; <code>license boot level network-advantage addon dna-advantage</code> + reload once.</li>
   <li><strong>XR setup wizard</strong> &mdash; dismiss at the console on first boot if SSH is blocked.</li>
   <li><strong>PE SSH disabled</strong> &mdash; XE needs RSA key, <code>ip ssh source-interface GigabitEthernet3</code>, and <code>line vty</code> &rarr; <code>login local</code>. If <code>show ip ssh</code> says <strong>SSH Disabled</strong>, port 22 on the PE mgmt IP stays closed. See <a href="#management-access">Management access</a>.</li>
 </ol>
+<table>
+  <thead><tr><th>Check</th><th>Command / UI</th><th>Pass</th></tr></thead>
+  <tbody>
+    <tr><td>XR boot complete</td><td>CML UI: P1&ndash;P4 = <strong>BOOTED</strong></td><td>~15&ndash;20 min per XR node on cold boot</td></tr>
+    <tr><td>Startup config loaded</td><td><code>show running-config hostname</code> on P1</td><td><code>hostname P1</code> (not <code>ios</code>)</td></tr>
+  </tbody>
+</table>
 
 <h3>IS-IS</h3>
-<ol start="5">
+<ol start="6">
   <li><strong>Unique NET per node</strong> &mdash; duplicate NET prevents adjacencies.</li>
   <li><strong>Level mismatch</strong> &mdash; all nodes must be <code>level-2-only</code>.</li>
   <li><strong>IOS XE multi-topology</strong> &mdash; required when IS-IS carries <strong>both</strong> IPv4 and IPv6; this lab&rsquo;s data-plane IS-IS is IPv6-only.</li>
@@ -1974,10 +2069,12 @@ show segment-routing srv6 locator</pre>
 </ol>
 
 <h3>SRv6 &amp; wiring</h3>
-<ol start="9">
+<ol start="10">
+  <li><strong>PE locator CLI</strong> &mdash; <code>show segment-routing srv6 locators</code> is not valid on cat8000v (IOS-XE). Use <code>show isis ipv6 route fcbb:bb00:N::</code> or <code>show segment-routing srv6 sid</code> on PE nodes; P routers use <code>show segment-routing srv6 locator</code> (IOS-XR).</li>
   <li><strong>PE locator overlap</strong> &mdash; all SRv6 locators must use <code>fcbb:bb00:…</code>, not <code>fc00:0:N::/48</code> (loopback space only).</li>
   <li><strong>Reachability vs locator</strong> &mdash; IGP tests use <code>fc00:0:N::1</code> loopbacks.
   uSID endpoint tests use PE uN SIDs (e.g. <code>fcbb:bb00:7::</code>). See <a href="#proof-run">Step 5 proof run</a>.</li>
+  <li><strong>uSID traceroute ECMP</strong> &mdash; <code>traceroute fcbb:bb00:7::</code> from PE5 may show P2 as the first core hop and ECMP via P3/P4, not always P1. Valid when metrics are equal.</li>
   <li><strong>PE8 Gi1/Gi2</strong> &mdash; Gi1&rarr;P3 (<code>10.3.8.8</code>), Gi2&rarr;P4 (<code>10.4.8.8</code>). Swapping breaks IS-IS.</li>
   <li><strong>XR interface indices</strong> &mdash; Gi0/0/0/0&ndash;/4 in this lab (not /1&ndash;/5 from Quisted&rsquo;s post).</li>
 </ol>
@@ -2025,10 +2122,11 @@ All nodes &mdash; ext-conn, mgmt-sw, P1&ndash;P4, and PE5&ndash;PE8 &mdash; <str
 <p>The continuation labs are published. Pick up where this lab leaves off:</p>
 <ul>
   <li><a href="srv6-usid-part2-l3vpn-lab.html"><strong>Part 2 &mdash; SRv6 L3VPN</strong></a>: VRFs, BGP VPNv4, End.DT4 SID allocation, VPN ping PE5&rarr;PE7</li>
+  <li><a href="srv6-usid-part3-srte-lab.html"><strong>Part 3 &mdash; SR-TE uSID</strong></a>: 2-hop compressed SID <code>fcbb:bb00:4:7::</code>, pointer-shift PCAP, SR-TE policy + break-fix (parallel branch off Part 1)</li>
   <li><a href="srv6-usid-part4-ce-lab.html"><strong>Part 4 &mdash; CE Routers</strong></a>: dual-homed eBGP CE vs static non-speaker CE; both on the same SRv6 backbone</li>
   <li><a href="srv6-usid-part5-igw-lab.html"><strong>Part 5 &mdash; IGW</strong></a>: SRv6 &harr; SR-MPLS interworking gateway; dual End.DT4 SID + MPLS VPN label allocation</li>
 </ul>
-<p class="footnote">Note: Part 3 is not currently published. Parts are numbered by conceptual stage, not sequentially.</p>
+<p class="footnote">Note: Part 3 (SR-TE) branches directly off Part 1 and does not require Part 2. Parts are numbered by conceptual stage, not strictly sequentially.</p>
 
 <hr>
 

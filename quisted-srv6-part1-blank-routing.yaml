@@ -167,7 +167,7 @@ annotations:
   color: '#222222'
   rotation: 0
   text_bold: true
-  text_content: Quisted SRv6 uSID Lab
+  text_content: Quisted SRv6 uSID — Part 1 Blank Routing
   text_font: Arial
   text_italic: false
   text_size: 16
@@ -285,7 +285,7 @@ lab:
     All nodes boot in parallel (no node staging).
     Pair with srv6-usid-isis-lab guide Step 2 (IS-IS) or quisted-srv6-solution.yaml as answer key.
   timestamp: 1784434873.526222
-  title: Quisted SRv6 Lab — Blank routing (student IS-IS)
+  title: Quisted SRv6 uSID — Part 1 Blank Routing
   version: 0.1.0
 nodes:
 - id: n0

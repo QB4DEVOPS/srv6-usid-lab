@@ -111,6 +111,7 @@
       <li><a href="#what-part3-proves">What Part 3 proves</a></li>
       <li><a href="#how-compression-works">How uSID compression works</a></li>
       <li><a href="#address-plan">Address plan &amp; the compressed SID</a></li>
+      <li><a href="#preflight">Pre-flight checks</a></li>
       <li><a href="#part-a">Part A &mdash; Manual uSID compression proof (Steps 1&ndash;4)</a></li>
       <li><a href="#step-1">Step 1 &mdash; Verify ECMP baseline</a></li>
       <li><a href="#step-2">Step 2 &mdash; Arm PCAP on both links</a></li>
@@ -129,13 +130,13 @@
 <div class="series-nav">
   <strong>Lab series &mdash; where you are:</strong>
   <table>
-    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
+    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>CML lab title</th><th>Prerequisite</th></tr></thead>
     <tbody>
-      <tr><td><a href="srv6-usid-part1-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>None</td></tr>
-      <tr><td><a href="srv6-usid-part2-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Part 1</td></tr>
-      <tr class="current"><td>Part 3</td><td>SR-TE uSID Traffic Engineering (this guide)</td><td><code>quisted-srv6-part3-solution.yaml</code></td><td>Part 1</td></tr>
-      <tr><td><a href="srv6-usid-part4-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Part 2</td></tr>
-      <tr><td><a href="srv6-usid-part5-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part1-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 1 Baseline (IS-IS only)</td><td>None</td></tr>
+      <tr><td><a href="srv6-usid-part2-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 2 L3VPN Solution</td><td>Part 1</td></tr>
+      <tr class="current"><td>Part 3</td><td>SR-TE uSID Traffic Engineering (this guide)</td><td><code>quisted-srv6-part3-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 3 SR-TE Solution</td><td>Part 1</td></tr>
+      <tr><td><a href="srv6-usid-part4-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 4 CE Solution</td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part5-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Quisted SRv6 uSID &mdash; Part 5 IGW Solution</td><td>Part 2</td></tr>
     </tbody>
   </table>
   <p class="series-note">Part 3 branches from Part 1 — L3VPN (Part 2) is not required.</p>
@@ -147,7 +148,7 @@
 
 <div class="callout prereq">
   <strong>Load the Part 3 solution YAML</strong>
-  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-part3-solution.yaml</code> into CML.
+  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-part3-solution.yaml</code> into CML (lab title: <em>Quisted SRv6 uSID &mdash; Part 3 SR-TE Solution</em>).
   This is Part 1 solution + SR-TE policy already configured on P1. Boot the lab and work
   through the steps below to understand and verify what is running.</p>
   <p style="margin:0.5rem 0 0">Part 2 (L3VPN) is <strong>not required</strong>. Part 3 branches
@@ -241,6 +242,46 @@ PCAP comparison:
   IPv6 drops leading zeros in each group: <code>fcbb:bb00:4:7::</code>.
   This address lives inside P4&rsquo;s locator block <code>fcbb:bb00:0004::/48</code>,
   which is why P4 processes it &mdash; P4 owns the /48 that this address falls under.</p>
+</div>
+
+<hr>
+
+<h2 id="preflight">Pre-flight Checks</h2>
+
+<p>Run this checklist after starting the Part 3 lab and <strong>before</strong> Part A Step 1.
+On a cold start, four IOS XRv 9000 nodes (P1&ndash;P4) boot in parallel &mdash; allow
+~15&ndash;20 minutes <em>each</em> (~30&ndash;90 minutes wall-clock). PE cat8000v nodes
+typically boot in ~2 minutes. Do not run verification commands until <strong>all</strong>
+P1&ndash;P4 show <strong>BOOTED</strong> in the CML Workbench UI.</p>
+
+<div class="callout">
+  <strong>XR startup config gotcha</strong>
+  <p style="margin:0.5rem 0 0">An IOS XRv node can reach a console prompt while startup config
+  never loaded &mdash; hostname stays at the factory default <code>ios</code> and IS-IS is absent.
+  Fix: stop the node, <strong>wipe</strong> it, and restart; or open the CML node configuration
+  editor and confirm startup config is present before boot. See also
+  <a href="srv6-usid-part1-isis-lab.html#gotchas">Part 1 troubleshooting</a>.</p>
+</div>
+
+<table>
+  <thead><tr><th>Step</th><th>Command</th><th>What to look for</th></tr></thead>
+  <tbody>
+    <tr><td>Wait for XR boot</td><td>CML UI: P1&ndash;P4 = <strong>BOOTED</strong></td><td>~15&ndash;20 min per XR node on cold boot</td></tr>
+    <tr><td>Config loaded</td><td><code>show running-config hostname</code> on P1</td><td><code>hostname P1</code> &mdash; not factory <code>ios</code></td></tr>
+    <tr><td>IS-IS up</td><td><code>show isis neighbors</code> on P1</td><td>5 adjacencies Up</td></tr>
+    <tr><td>SRv6 locators</td><td><code>show segment-routing srv6 locators</code> on P1</td><td>MAIN locator <code>fcbb:bb00:0001::/48</code></td></tr>
+    <tr><td>SR-TE policy</td><td><code>show segment-routing traffic-eng policy name to-pe7-via-p4</code> on P1</td><td>Admin/Oper up; candidate-path valid</td></tr>
+    <tr><td>Underlay ready</td><td><code>show isis ipv6 route fcbb:bb00:4::</code> on PE5</td><td>Route via P1</td></tr>
+    <tr><td>Compression proof</td><td><code>ping ipv6 fcbb:bb00:4:7:: source fc00:0:5::1</code> on PE5</td><td>100% success</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>cat8000v CLI note</strong>
+  <p style="margin:0.5rem 0 0"><code>show segment-routing srv6 locators</code> is not valid on PE nodes
+  (IOS-XE cat8000v). On PE5&ndash;PE8, confirm locator reachability with
+  <code>show isis ipv6 route fcbb:bb00:7::</code> (or the target node&rsquo;s uN SID) instead.
+  P1&ndash;P4 (IOS-XR) accept the locators command above.</p>
 </div>
 
 <hr>
@@ -479,6 +520,16 @@ commit</pre>
 
 <h2 id="gotchas">Troubleshooting</h2>
 
+<h3>Platform &amp; CML</h3>
+<ul>
+  <li><strong>XR cold boot</strong> &mdash; P1&ndash;P4 take ~15&ndash;20 min each on cold start; PE cat8000v ~2 min.
+  Wait for all XR nodes = <strong>BOOTED</strong> before verifying. See <a href="#preflight">Pre-flight checks</a>.</li>
+  <li><strong>Startup config not loaded</strong> &mdash; P1 at prompt but <code>show running-config hostname</code>
+  shows <code>ios</code> (no IS-IS). Stop &rarr; wipe &rarr; restart, or verify config in CML before boot.</li>
+  <li><strong>PE locator CLI</strong> &mdash; <code>show segment-routing srv6 locators</code> fails on cat8000v.
+  Use <code>show isis ipv6 route fcbb:bb00:N::</code> on PE nodes instead.</li>
+</ul>
+
 <h3>Ping to <code>fcbb:bb00:4:7::</code> fails from PE5</h3>
 <ul>
   <li>Verify IS-IS has a route for <code>fcbb:bb00:0004::/48</code> on PE5:
@@ -557,7 +608,7 @@ the Part 1 solution.</p>
 <p class="footnote">
   Part 3 of the Quisted SRv6 uSID Lab &middot;
   IOS-XR P1 head-end (iosxrv9000) &middot; F3216 uSID format &middot; CML 2.10 &middot;
-  Reference: <code>quisted-srv6-part3-solution.yaml</code>
+  Reference: <code>quisted-srv6-part3-solution.yaml</code> (CML title: <em>Quisted SRv6 uSID &mdash; Part 3 SR-TE Solution</em>)
 </p>
 
 </div>

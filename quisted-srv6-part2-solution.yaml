@@ -167,7 +167,7 @@ annotations:
     color: '#222222'
     rotation: 0
     text_bold: true
-    text_content: 'Quisted SRv6 uSID L3VPN Lab'
+    text_content: 'Quisted SRv6 uSID — Part 2 L3VPN Solution'
     text_font: 'Arial'
     text_italic: false
     text_size: 16
@@ -289,7 +289,7 @@ lab:
     Loopback100 in each VRF simulates the customer CE prefix (no CE nodes required).
     Mgmt: ext-conn (System Bridge) -> mgmt-sw -> all nodes.
   timestamp: 1784252880.562071
-  title: Quisted SRv6 uSID L3VPN — Part 2 Solution
+  title: Quisted SRv6 uSID — Part 2 L3VPN Solution
   version: 0.1.0
 nodes:
   - id: n0

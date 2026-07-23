@@ -1,23 +1,185 @@
 annotations:
+  - type: rectangle
+    border_color: 'rgba(70, 130, 180, 0.90)'
+    border_radius: 16
+    border_style: ''
+    color: 'rgba(173, 216, 230, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: -320.0
+    y1: -165.0
+    x2: 160.0
+    y2: 310.0
+    z_index: -200
+  - type: rectangle
+    border_color: 'rgba(90, 80, 110, 0.90)'
+    border_radius: 16
+    border_style: ''
+    color: 'rgba(120, 110, 140, 0.22)'
+    rotation: 0
+    thickness: 2
+    x1: -80.0
+    y1: -165.0
+    x2: 360.0
+    y2: 310.0
+    z_index: -200
+  - type: rectangle
+    border_color: 'rgba(128, 0, 128, 0.85)'
+    border_radius: 16
+    border_style: ''
+    color: 'rgba(186, 140, 220, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: 360.0
+    y1: -165.0
+    x2: 160.0
+    y2: 310.0
+    z_index: -200
+  - type: rectangle
+    border_color: 'rgba(70, 130, 180, 0.90)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(70, 130, 180, 0.90)'
+    rotation: 0
+    thickness: 1
+    x1: -320.0
+    y1: -198.0
+    x2: 160.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: -285.0
+    y1: -192.0
+    z_index: -90
+  - type: rectangle
+    border_color: 'rgba(90, 80, 110, 0.90)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(90, 80, 110, 0.90)'
+    rotation: 0
+    thickness: 1
+    x1: -80.0
+    y1: -198.0
+    x2: 360.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XR'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: 70.0
+    y1: -192.0
+    z_index: -90
+  - type: rectangle
+    border_color: 'rgba(128, 0, 128, 0.85)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(128, 0, 128, 0.85)'
+    rotation: 0
+    thickness: 1
+    x1: 360.0
+    y1: -198.0
+    x2: 160.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: 405.0
+    y1: -192.0
+    z_index: -90
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#2F4F6F'
+    rotation: 0
+    text_bold: true
+    text_content: 'PE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: -270.0
+    y1: -148.0
+    z_index: -150
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#3A3345'
+    rotation: 0
+    text_bold: true
+    text_content: 'P'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 90.0
+    y1: -148.0
+    z_index: -150
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#5A2D6F'
+    rotation: 0
+    text_bold: true
+    text_content: 'PE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 410.0
+    y1: -148.0
+    z_index: -150
   - type: text
     border_color: ''
     border_style: ''
     color: '#222222'
     rotation: 0
     text_bold: true
-    text_content: 'Quisted SRv6 uSID L3VPN — Part 5 IGW Solution'
+    text_content: 'Quisted SRv6 uSID — Part 5 IGW Solution'
     text_font: 'Arial'
     text_italic: false
     text_size: 16
     text_unit: 'pt'
     thickness: 1
-    x1: -60.0
+    x1: -40.0
     y1: -280.0
     z_index: 200
   - type: text
     border_color: ''
     border_style: ''
-    color: '#2F4F6F'
+    color: '#3A3345'
     rotation: 0
     text_bold: true
     text_content: 'SRv6 Domain'
@@ -26,9 +188,93 @@ annotations:
     text_size: 13
     text_unit: 'pt'
     thickness: 1
-    x1: -270.0
-    y1: -195.0
+    x1: 395.0
+    y1: -218.0
     z_index: 200
+  - type: rectangle
+    border_color: 'rgba(123, 63, 0, 0.85)'
+    border_radius: 16
+    border_style: ''
+    color: 'rgba(210, 140, 60, 0.22)'
+    rotation: 0
+    thickness: 2
+    x1: 575.0
+    y1: -165.0
+    x2: 545.0
+    y2: 310.0
+    z_index: -200
+  - type: rectangle
+    border_color: 'rgba(123, 63, 0, 0.85)'
+    border_radius: 8
+    border_style: ''
+    color: 'rgba(123, 63, 0, 0.85)'
+    rotation: 0
+    thickness: 1
+    x1: 575.0
+    y1: -198.0
+    x2: 545.0
+    y2: 26.0
+    z_index: -100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#FFFFFF'
+    rotation: 0
+    text_bold: true
+    text_content: 'IOS-XR'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 13
+    text_unit: 'pt'
+    thickness: 1
+    x1: 805.0
+    y1: -192.0
+    z_index: -90
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#7B3F00'
+    rotation: 0
+    text_bold: true
+    text_content: 'IGW'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 610.0
+    y1: -148.0
+    z_index: -150
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#7B3F00'
+    rotation: 0
+    text_bold: true
+    text_content: 'P'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 830.0
+    y1: -148.0
+    z_index: -150
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#7B3F00'
+    rotation: 0
+    text_bold: true
+    text_content: 'MPLS PE'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 20
+    text_unit: 'pt'
+    thickness: 1
+    x1: 990.0
+    y1: -148.0
+    z_index: -150
   - type: text
     border_color: ''
     border_style: ''
@@ -41,8 +287,8 @@ annotations:
     text_size: 13
     text_unit: 'pt'
     thickness: 1
-    x1: 780.0
-    y1: -130.0
+    x1: 805.0
+    y1: -218.0
     z_index: 200
   - type: text
     border_color: ''
@@ -56,9 +302,117 @@ annotations:
     text_size: 10
     text_unit: 'pt'
     thickness: 1
-    x1: 540.0
-    y1: 60.0
+    x1: 620.0
+    y1: 155.0
     z_index: 200
+  - type: rectangle
+    border_color: 'rgba(70, 130, 180, 0.90)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(173, 216, 230, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: -345.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#2F4F6F'
+    rotation: 0
+    text_bold: false
+    text_content: 'PE Routers (Provider Edge)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: -326.0
+    y1: 221.0
+    z_index: 110
+  - type: rectangle
+    border_color: 'rgba(90, 80, 110, 0.90)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(120, 110, 140, 0.22)'
+    rotation: 0
+    thickness: 2
+    x1: -5.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#3A3345'
+    rotation: 0
+    text_bold: false
+    text_content: 'P Routers (Provider)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: 34.0
+    y1: 221.0
+    z_index: 110
+  - type: rectangle
+    border_color: 'rgba(128, 0, 128, 0.85)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(186, 140, 220, 0.30)'
+    rotation: 0
+    thickness: 2
+    x1: 335.0
+    y1: 210.0
+    x2: 210.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#5A2D6F'
+    rotation: 0
+    text_bold: false
+    text_content: 'PE Routers (Provider Edge)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: 354.0
+    y1: 221.0
+    z_index: 110
+  - type: rectangle
+    border_color: 'rgba(123, 63, 0, 0.85)'
+    border_radius: 10
+    border_style: ''
+    color: 'rgba(210, 140, 60, 0.22)'
+    rotation: 0
+    thickness: 2
+    x1: 703.0
+    y1: 210.0
+    x2: 290.0
+    y2: 36.0
+    z_index: 100
+  - type: text
+    border_color: ''
+    border_style: ''
+    color: '#7B3F00'
+    rotation: 0
+    text_bold: false
+    text_content: 'MPLS Domain (OSPF + SR-MPLS)'
+    text_font: 'Arial'
+    text_italic: false
+    text_size: 11
+    text_unit: 'pt'
+    thickness: 1
+    x1: 728.0
+    y1: 221.0
+    z_index: 110
   - type: text
     border_color: ''
     border_style: ''
@@ -96,7 +450,7 @@ lab:
             show mpls forwarding on IGW (VPN label for CUST-A present)
             show bgp vpnv4 unicast vrf CUST-A on IGW (routes from both domains visible)
   timestamp: 1784252880.562071
-  title: Quisted SRv6 uSID L3VPN — Part 5 IGW Solution
+  title: Quisted SRv6 uSID — Part 5 IGW Solution
   version: 0.1.0
 nodes:
   - id: n0

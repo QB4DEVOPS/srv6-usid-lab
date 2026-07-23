@@ -2,20 +2,22 @@
 
 A five-part lab curriculum that teaches SRv6 micro-SID (uSID) by re-implementing
 [Quisted's MPLS Segment Routing lab](https://www.quisted.net/index.php/2024/11/11/mpls-segment-routing-mpls-sr-lab/)
-on an IPv6-only data plane. Each part builds on the previous, following Quisted's
-proof arc: neighbour → segment → FIB → easy ping → endpoint-SID ping → path walk → capture.
+on an IPv6-only data plane. The parts follow Quisted's proof arc — neighbour →
+segment → FIB → easy ping → endpoint-SID ping → path walk → capture. Part 1 is the
+foundation; Parts 2 and 3 are parallel branches off it, and Parts 4 and 5 build on
+Part 2 (see the Prerequisite column below).
 
 ---
 
 ## Lab Series
 
-| Part | Topic | Student Guide | YAML to Load | Prerequisite |
-|------|-------|--------------|-------------|-------------|
-| **1** | SRv6 uSID IS-IS underlay | [srv6-usid-part1-isis-lab.html](srv6-usid-part1-isis-lab.html) | `quisted-srv6-part1-baseline.yaml` | None |
-| **2** | SRv6 L3VPN — VRFs, VPNv4, End.DT4 SID | [srv6-usid-part2-l3vpn-lab.html](srv6-usid-part2-l3vpn-lab.html) | `quisted-srv6-part2-solution.yaml` | Part 1 |
-| **3** | SR-TE uSID Traffic Engineering | [srv6-usid-part3-srte-lab.html](srv6-usid-part3-srte-lab.html) | `quisted-srv6-part3-solution.yaml` | Part 1 |
-| **4** | CE Routers — dual-homed eBGP vs static non-speaker | [srv6-usid-part4-ce-lab.html](srv6-usid-part4-ce-lab.html) | `quisted-srv6-part4-solution.yaml` | Part 2 |
-| **5** | SRv6 ↔ SR-MPLS Interworking Gateway (IGW) | [srv6-usid-part5-igw-lab.html](srv6-usid-part5-igw-lab.html) | `quisted-srv6-part5-solution.yaml` | Part 2 |
+| Part | Topic | Student Guide | YAML to Load | CML Lab Title | Prerequisite |
+|------|-------|--------------|-------------|---------------|-------------|
+| **1** | SRv6 uSID IS-IS underlay | [srv6-usid-part1-isis-lab.html](srv6-usid-part1-isis-lab.html) | `quisted-srv6-part1-baseline.yaml` | Quisted SRv6 uSID — Part 1 Baseline (IS-IS only) | None |
+| **2** | SRv6 L3VPN — VRFs, VPNv4, End.DT4 SID | [srv6-usid-part2-l3vpn-lab.html](srv6-usid-part2-l3vpn-lab.html) | `quisted-srv6-part2-solution.yaml` | Quisted SRv6 uSID — Part 2 L3VPN Solution | Part 1 |
+| **3** | SR-TE uSID Traffic Engineering | [srv6-usid-part3-srte-lab.html](srv6-usid-part3-srte-lab.html) | `quisted-srv6-part3-solution.yaml` | Quisted SRv6 uSID — Part 3 SR-TE Solution | Part 1 |
+| **4** | CE Routers — dual-homed eBGP vs static non-speaker | [srv6-usid-part4-ce-lab.html](srv6-usid-part4-ce-lab.html) | `quisted-srv6-part4-solution.yaml` | Quisted SRv6 uSID — Part 4 CE Solution | Part 2 |
+| **5** | SRv6 ↔ SR-MPLS Interworking Gateway (IGW) | [srv6-usid-part5-igw-lab.html](srv6-usid-part5-igw-lab.html) | `quisted-srv6-part5-solution.yaml` | Quisted SRv6 uSID — Part 5 IGW Solution | Part 2 |
 
 Parts 3 and 2 are parallel extensions of Part 1 — either can be done after Part 1 without the other.
 
@@ -24,7 +26,7 @@ Parts 3 and 2 are parallel extensions of Part 1 — either can be done after Par
 ## Quick Start
 
 1. Import the YAML for the part you want into CML (Workbench → Import Lab).
-2. Start the lab and wait for all nodes to reach their prompts (~3–5 min for XR nodes).
+2. Start the lab and wait for all nodes to reach their prompts. The first cold boot of the IOS XRv 9000 nodes (P1–P4, plus IGW/MP1/MPE1 in Part 5) can take ~15–20 min each; later boots are faster.
 3. Open the corresponding HTML student guide in a browser and follow the steps.
 4. The solution YAML for each part is the answer key — load it if you get stuck.
 
@@ -32,20 +34,20 @@ Parts 3 and 2 are parallel extensions of Part 1 — either can be done after Par
 
 ## What's in This Repo
 
-| File | Purpose |
-|------|---------|
-| `quisted-srv6-part1-baseline.yaml` | Part 1 student start — IS-IS pre-configured, no SRv6 |
-| `quisted-srv6-part1-blank-routing.yaml` | Alt Part 1 start — addressing only, build IS-IS from scratch |
-| `quisted-srv6-part1-solution.yaml` | Part 1 answer key — IS-IS + SRv6 uSID complete |
-| `quisted-srv6-part2-solution.yaml` | Part 2 answer key — L3VPN added |
-| `quisted-srv6-part4-solution.yaml` | Part 4 answer key — CE routers added |
-| `quisted-srv6-part5-solution.yaml` | Part 5 answer key — IGW + MPLS domain added |
-| `srv6-usid-part1-isis-lab.html` | Part 1 student guide |
-| `srv6-usid-part2-l3vpn-lab.html` | Part 2 student guide |
-| `quisted-srv6-part3-solution.yaml` | Part 3 answer key — SR-TE policy on P1 |
-| `srv6-usid-part3-srte-lab.html` | Part 3 student guide |
-| `srv6-usid-part4-ce-lab.html` | Part 4 student guide |
-| `srv6-usid-part5-igw-lab.html` | Part 5 student guide |
+| File | CML Lab Title | Purpose |
+|------|---------------|---------|
+| `quisted-srv6-part1-baseline.yaml` | Quisted SRv6 uSID — Part 1 Baseline (IS-IS only) | Part 1 student start — IS-IS pre-configured, no SRv6 |
+| `quisted-srv6-part1-blank-routing.yaml` | Quisted SRv6 uSID — Part 1 Blank Routing | Alt Part 1 start — addressing only, build IS-IS from scratch |
+| `quisted-srv6-part1-solution.yaml` | Quisted SRv6 uSID — Part 1 Solution | Part 1 answer key — IS-IS + SRv6 uSID complete |
+| `quisted-srv6-part2-solution.yaml` | Quisted SRv6 uSID — Part 2 L3VPN Solution | Part 2 answer key — L3VPN added |
+| `quisted-srv6-part3-solution.yaml` | Quisted SRv6 uSID — Part 3 SR-TE Solution | Part 3 answer key — SR-TE policy on P1 |
+| `quisted-srv6-part4-solution.yaml` | Quisted SRv6 uSID — Part 4 CE Solution | Part 4 answer key — CE routers added |
+| `quisted-srv6-part5-solution.yaml` | Quisted SRv6 uSID — Part 5 IGW Solution | Part 5 answer key — IGW + MPLS domain added |
+| `srv6-usid-part1-isis-lab.html` | — | Part 1 student guide |
+| `srv6-usid-part2-l3vpn-lab.html` | — | Part 2 student guide |
+| `srv6-usid-part3-srte-lab.html` | — | Part 3 student guide |
+| `srv6-usid-part4-ce-lab.html` | — | Part 4 student guide |
+| `srv6-usid-part5-igw-lab.html` | — | Part 5 student guide |
 
 ---
 
