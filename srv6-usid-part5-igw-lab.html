@@ -179,7 +179,7 @@
 <header class="site-header">
   <h1>SRv6 uSID IGW Lab &mdash; Part 5</h1>
   <p class="meta">
-    Continues from <a href="srv6-usid-l3vpn-lab.html">Part 2: L3VPN</a>
+    Continues from <a href="srv6-usid-part2-l3vpn-lab.html">Part 2: L3VPN</a>
     &middot; SRv6 &harr; SR-MPLS Interworking Gateway &middot; CML 2.10
   </p>
 </header>
@@ -213,11 +213,11 @@
   <table>
     <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
     <tbody>
-      <tr><td><a href="srv6-usid-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-baseline.yaml</code></td><td>None</td></tr>
-      <tr><td><a href="srv6-usid-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-l3vpn-solution.yaml</code></td><td>Part 1</td></tr>
-      <tr class="skipped"><td>Part 3</td><td>not published</td><td>&mdash;</td><td>&mdash;</td></tr>
-      <tr><td><a href="srv6-usid-l3vpn-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-l3vpn-ce-solution.yaml</code></td><td>Part 2</td></tr>
-      <tr class="current"><td>Part 5</td><td>SRv6 &harr; SR-MPLS IGW (this guide)</td><td><code>quisted-srv6-l3vpn-igw-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part1-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>None</td></tr>
+      <tr><td><a href="srv6-usid-part2-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Part 1</td></tr>
+      <tr class="skipped"><td><a href="srv6-usid-part3-srte-lab.html">Part 3</a></td><td>SR-TE uSID Traffic Engineering (placeholder)</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td><a href="srv6-usid-part4-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr class="current"><td>Part 5</td><td>SRv6 &harr; SR-MPLS IGW (this guide)</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Part 2</td></tr>
     </tbody>
   </table>
   <p class="series-note">Parts are numbered by conceptual stage. Part 3 is not currently published.</p>
@@ -229,7 +229,7 @@
 
 <div class="callout prereq">
   <strong>Load the Part 5 CML file</strong>
-  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-l3vpn-igw-solution.yaml</code> into CML.
+  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-part5-solution.yaml</code> into CML.
   This file already contains the complete solution. Use it as your running lab, then follow
   Steps 11&ndash;15 to understand what each piece does and verify that it works.</p>
   <p style="margin:0.5rem 0 0">Parts 1&ndash;4 are not required to load separately &mdash; the IGW YAML is self-contained.</p>

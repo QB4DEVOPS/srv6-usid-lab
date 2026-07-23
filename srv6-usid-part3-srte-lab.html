@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SRv6 uSID SR-TE Lab — Part 3 (Coming Soon)</title>
+  <style>
+    :root {
+      --text: #1a1a1a; --muted: #555; --border: #d8d8d8; --code-bg: #f4f4f4;
+      --accent: #0073aa; --accent-dark: #005177;
+      --section-bg: #f9f5fc; --section-border: #d8c8e8; --section-accent: #7b2d8e;
+      --pass: #1a7f37; --max-width: 860px;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; font-size:17px; line-height:1.65; color:var(--text); background:#fff; }
+    .site-header { background:#23282d; color:#fff; padding:1.25rem 1.5rem; border-bottom:4px solid var(--accent); }
+    .site-header h1 { margin:0; font-size:1.75rem; font-weight:600; line-height:1.3; }
+    .site-header .meta { margin:0.5rem 0 0; font-size:0.9rem; color:#b0b8c0; }
+    .site-header a { color:#7ec8ff; }
+    .wrap { max-width:var(--max-width); margin:0 auto; padding:2rem 1.5rem 4rem; }
+    h2 { font-size:1.65rem; font-weight:700; margin:2.5rem 0 1rem; padding:0.6rem 1rem; background:var(--section-bg); border:1px solid var(--section-border); border-left:5px solid var(--section-accent); border-radius:4px; color:var(--section-accent); }
+    h2:first-of-type { margin-top:0; }
+    h3 { font-size:1.15rem; font-weight:700; margin:1.75rem 0 0.75rem; }
+    p { margin:0 0 1rem; }
+    a { color:var(--accent); }
+    ul,ol { margin:0 0 1rem; padding-left:1.5rem; }
+    li { margin-bottom:0.35rem; }
+    hr { border:none; border-top:1px solid var(--border); margin:2rem 0; }
+    code { font-family:Consolas,"Courier New",monospace; font-size:0.88em; background:var(--code-bg); padding:0.1em 0.35em; border-radius:3px; }
+    .series-nav { background:#f3f3f3; border:1px solid var(--border); border-radius:4px; padding:0.75rem 1.1rem; margin:0 0 1.5rem; font-size:0.88rem; }
+    .series-nav > strong:first-child { display:block; margin-bottom:0.4rem; }
+    .series-nav table { margin:0; font-size:0.82rem; width:auto; }
+    .series-nav td, .series-nav th { padding:0.3rem 0.6rem; border:1px solid var(--border); }
+    .series-nav .current td { font-weight:700; color:var(--section-accent); background:var(--section-bg); }
+    .series-note { margin:0.4rem 0 0; color:var(--muted); font-style:italic; font-size:0.82rem; }
+    .coming-soon {
+      text-align:center; padding:3rem 2rem;
+      background:var(--section-bg); border:2px dashed var(--section-border);
+      border-radius:8px; margin:2rem 0;
+    }
+    .coming-soon .icon { font-size:3rem; margin-bottom:1rem; }
+    .coming-soon h3 { font-size:1.5rem; color:var(--section-accent); margin:0 0 0.75rem; }
+    .coming-soon p { max-width:520px; margin:0 auto 1rem; color:var(--muted); }
+    .nav-links { display:flex; gap:1rem; justify-content:center; margin-top:2rem; flex-wrap:wrap; }
+    .nav-links a { display:inline-block; padding:0.6rem 1.25rem; border-radius:4px; text-decoration:none; font-weight:600; font-size:0.95rem; }
+    .nav-prev { background:#f0f6fa; border:1px solid var(--accent); color:var(--accent); }
+    .nav-next { background:var(--section-accent); color:#fff; }
+    .nav-prev:hover { background:var(--accent); color:#fff; }
+    .nav-next:hover { background:#6020a0; }
+    .preview-box { background:#f8f8f8; border:1px solid var(--border); border-radius:6px; padding:1.25rem 1.5rem; margin:1.5rem 0; }
+    .preview-box h4 { margin:0 0 0.5rem; color:var(--section-accent); }
+    .footnote { font-size:0.9rem; color:var(--muted); font-style:italic; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>SRv6 uSID SR-TE Lab &mdash; Part 3</h1>
+  <p class="meta">
+    Quisted Topology on CML 2.10
+    &middot; SR-TE uSID Traffic Engineering
+    &middot; <strong style="color:#ffb347;">Coming Soon</strong>
+  </p>
+</header>
+
+<div class="wrap">
+
+<div class="series-nav">
+  <strong>Lab series &mdash; where you are:</strong>
+  <table>
+    <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
+    <tbody>
+      <tr><td><a href="srv6-usid-part1-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>None</td></tr>
+      <tr><td><a href="srv6-usid-part2-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Part 1</td></tr>
+      <tr class="current"><td>Part 3</td><td>SR-TE uSID Traffic Engineering (this page)</td><td><em>coming soon</em></td><td>Part 1</td></tr>
+      <tr><td><a href="srv6-usid-part4-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part5-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Part 2</td></tr>
+    </tbody>
+  </table>
+  <p class="series-note">Parts are numbered by conceptual stage.</p>
+</div>
+
+<hr>
+
+<div class="coming-soon">
+  <div class="icon">&#9881;</div>
+  <h3>Part 3 &mdash; SR-TE uSID Traffic Engineering</h3>
+  <p>This lab guide is under development. It will cover explicit path steering using SRv6
+  uSID segment lists, color-based ODN policies, and verifying steered traffic with PCAP
+  on the same Quisted 8-router topology.</p>
+  <p>Part 1 already includes an optional SR-TE preview &mdash; see the
+  <a href="srv6-usid-part1-isis-lab.html#srte-usid-advanced">SR-TE uSID policy section</a>
+  in the Part 1 guide for a working single-policy example while Part 3 is being written.</p>
+</div>
+
+<hr>
+
+<h2 id="what-part3-covers">What Part 3 Will Cover</h2>
+
+<p>After Parts 1 and 2 you have:</p>
+<ul>
+  <li>An IPv6-only IS-IS underlay with SRv6 uSID locators on all 8 nodes</li>
+  <li>L3VPN services using End.DT4 SIDs carried over the shortest IGP path</li>
+</ul>
+
+<p>Part 3 adds <strong>explicit path control</strong> &mdash; steering VPN or raw traffic along
+a specific sequence of nodes regardless of the IGP shortest path. That is SR-TE (Traffic Engineering)
+with uSID segment lists.</p>
+
+<div class="preview-box">
+  <h4>Planned lab content</h4>
+  <ul>
+    <li><strong>Step 1 &mdash; Explicit segment list:</strong> configure a uSID segment list forcing traffic via P4 then PE7 instead of the ECMP default</li>
+    <li><strong>Step 2 &mdash; SR-TE policy:</strong> bind the segment list to a color + endpoint, verify with <code>show segment-routing traffic-eng policy</code></li>
+    <li><strong>Step 3 &mdash; Steer VPN traffic:</strong> attach an ODN color to a VPNv4 route; confirm PE5 encapsulates with the explicit SID stack in the PCAP</li>
+    <li><strong>Step 4 &mdash; Proof run:</strong> traceroute from PE5 showing the forced path (not the ECMP path); before/after PCAP comparison showing segment list in the IPv6 destination</li>
+    <li><strong>Step 5 &mdash; Failure test:</strong> bring down a link in the forced path; confirm the policy falls back or goes down, traffic reverts to IGP path</li>
+  </ul>
+</div>
+
+<div class="preview-box">
+  <h4>Key concepts this lab will make concrete</h4>
+  <ul>
+    <li><strong>uSID segment compression:</strong> multiple hops encoded in one 128-bit IPv6 address — the feature that makes SRv6 uSID efficient compared to classic SRH stacks</li>
+    <li><strong>Binding SID:</strong> a single local SID that represents an entire SR-TE policy — other PEs just push the binding SID</li>
+    <li><strong>ODN (On-Demand Next-hop):</strong> dynamic policy instantiation triggered by BGP color extended community — no manual policy per-prefix</li>
+    <li><strong>Platform differences:</strong> IOS-XR <code>traffic-eng</code> stanza vs IOS-XE equivalent for the head-end PE</li>
+  </ul>
+</div>
+
+<hr>
+
+<h2 id="preview">Preview &mdash; Try It Now in Part 1</h2>
+
+<p>The <a href="srv6-usid-part1-isis-lab.html#srte-usid-advanced">Optional: SR-TE uSID policy</a>
+section in Part 1 already contains a working single-policy example on P1 (IOS-XR).
+It forces traffic from PE5 via P4 to PE7 using an explicit uSID segment list.
+That section is a preview of Part 3 &mdash; the full lab will extend it to IOS-XE head-ends,
+L3VPN color steering, and failure scenarios.</p>
+
+<div class="nav-links">
+  <a href="srv6-usid-part2-l3vpn-lab.html" class="nav-prev">&larr; Part 2: L3VPN</a>
+  <a href="srv6-usid-part4-ce-lab.html" class="nav-next">Part 4: CE Routers &rarr;</a>
+</div>
+
+<hr>
+
+<p class="footnote">
+  Part 3 placeholder &middot; Quisted SRv6 uSID Lab Series &middot; CML 2.10
+</p>
+
+</div>
+</body>
+</html>

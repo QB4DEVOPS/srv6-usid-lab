@@ -100,7 +100,7 @@
 <header class="site-header">
   <h1>SRv6 uSID L3VPN CE Lab &mdash; Part 4</h1>
   <p class="meta">
-    Continues from <a href="srv6-usid-l3vpn-lab.html">Part 2: L3VPN</a>
+    Continues from <a href="srv6-usid-part2-l3vpn-lab.html">Part 2: L3VPN</a>
     &middot; Dual-homed CE routers &middot; eBGP vs static (non-speaker) PE-CE routing &middot; CML 2.10
   </p>
 </header>
@@ -135,11 +135,11 @@
   <table>
     <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
     <tbody>
-      <tr><td><a href="srv6-usid-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-baseline.yaml</code></td><td>None</td></tr>
-      <tr><td><a href="srv6-usid-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-l3vpn-solution.yaml</code></td><td>Part 1</td></tr>
-      <tr class="skipped"><td>Part 3</td><td>not published</td><td>&mdash;</td><td>&mdash;</td></tr>
-      <tr class="current"><td>Part 4</td><td>CE Routers (this guide)</td><td><code>quisted-srv6-l3vpn-ce-solution.yaml</code></td><td>Part 2</td></tr>
-      <tr><td><a href="srv6-usid-l3vpn-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-l3vpn-igw-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part1-isis-lab.html">Part 1</a></td><td>SRv6 uSID IS-IS</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>None</td></tr>
+      <tr><td><a href="srv6-usid-part2-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Part 1</td></tr>
+      <tr class="skipped"><td><a href="srv6-usid-part3-srte-lab.html">Part 3</a></td><td>SR-TE uSID Traffic Engineering (placeholder)</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr class="current"><td>Part 4</td><td>CE Routers (this guide)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part5-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Part 2</td></tr>
     </tbody>
   </table>
   <p class="series-note">Parts are numbered by conceptual stage. Part 3 is not currently published.</p>
@@ -151,12 +151,12 @@
 
 <div class="callout prereq">
   <strong>Load the Part 4 CML file</strong>
-  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-l3vpn-ce-solution.yaml</code> into CML.
+  <p style="margin:0.5rem 0 0">Import <code>quisted-srv6-part4-solution.yaml</code> into CML.
   This YAML is the complete Part 4 answer key — all SRv6 underlay, L3VPN, and CE configurations
   are pre-loaded. Boot the lab and follow Steps 1&ndash;6 to verify and understand what is running.</p>
   <p style="margin:0.5rem 0 0">Parts 1 and 2 are the conceptual prerequisites.
   Part 3 is not currently published &mdash; the series goes Part&nbsp;1 &rarr; Part&nbsp;2 &rarr; Part&nbsp;4.
-  Familiarity with <a href="srv6-usid-l3vpn-lab.html">Part 2 (L3VPN)</a> is assumed &mdash; in particular,
+  Familiarity with <a href="srv6-usid-part2-l3vpn-lab.html">Part 2 (L3VPN)</a> is assumed &mdash; in particular,
   how End.DT4 SID allocation and BGP VPNv4 with SRv6 transport work.</p>
 </div>
 
@@ -216,7 +216,7 @@ SRv6 uSID backbone: fcbb:bb00::/32, IS-IS 100 (P1-P4, PE5-PE8). Unchanged.
 
 <h2 id="address-plan">Address Plan</h2>
 
-<p style="font-size:0.9rem;color:var(--muted);">Address pattern refresher: <a href="srv6-usid-isis-lab.html#addr-cheatsheet">Part 1 quick reference</a> &mdash; fc00/fcbb patterns, locators, uN SIDs, VRF prefixes.</p>
+<p style="font-size:0.9rem;color:var(--muted);">Address pattern refresher: <a href="srv6-usid-part1-isis-lab.html#addr-cheatsheet">Part 1 quick reference</a> &mdash; fc00/fcbb patterns, locators, uN SIDs, VRF prefixes.</p>
 
 <h3>CE routers</h3>
 <table class="ce-table">
@@ -574,7 +574,7 @@ ip route 0.0.0.0 0.0.0.0 10.12.8.2 10
 <p class="footnote">
   Part 4 of the Quisted SRv6 uSID Lab &middot;
   CE routers: IOSv (no SRv6) &middot; PE routers: IOS-XE cat8000v 17.18 &middot;
-  Reference: <code>quisted-srv6-l3vpn-ce-solution.yaml</code> (Part 4 answer key)
+  Reference: <code>quisted-srv6-part4-solution.yaml</code> (Part 4 answer key)
 </p>
 
 </div>

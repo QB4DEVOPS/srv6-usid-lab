@@ -11,13 +11,13 @@ proof arc: neighbour → segment → FIB → easy ping → endpoint-SID ping →
 
 | Part | Topic | Student Guide | YAML to Load | Prerequisite |
 |------|-------|--------------|-------------|-------------|
-| **1** | SRv6 uSID IS-IS underlay | [srv6-usid-isis-lab.html](srv6-usid-isis-lab.html) | `quisted-srv6-baseline.yaml` | None |
-| **2** | SRv6 L3VPN — VRFs, VPNv4, End.DT4 SID | [srv6-usid-l3vpn-lab.html](srv6-usid-l3vpn-lab.html) | `quisted-srv6-l3vpn-solution.yaml` | Part 1 |
-| ~~3~~ | *(not published)* | — | — | — |
-| **4** | CE Routers — dual-homed eBGP vs static non-speaker | [srv6-usid-l3vpn-ce-lab.html](srv6-usid-l3vpn-ce-lab.html) | `quisted-srv6-l3vpn-ce-solution.yaml` | Part 2 |
-| **5** | SRv6 ↔ SR-MPLS Interworking Gateway (IGW) | [srv6-usid-l3vpn-igw-lab.html](srv6-usid-l3vpn-igw-lab.html) | `quisted-srv6-l3vpn-igw-solution.yaml` | Part 2 |
+| **1** | SRv6 uSID IS-IS underlay | [srv6-usid-part1-isis-lab.html](srv6-usid-part1-isis-lab.html) | `quisted-srv6-part1-baseline.yaml` | None |
+| **2** | SRv6 L3VPN — VRFs, VPNv4, End.DT4 SID | [srv6-usid-part2-l3vpn-lab.html](srv6-usid-part2-l3vpn-lab.html) | `quisted-srv6-part2-solution.yaml` | Part 1 |
+| **3** | SR-TE uSID Traffic Engineering *(placeholder)* | [srv6-usid-part3-srte-lab.html](srv6-usid-part3-srte-lab.html) | — | Part 1 |
+| **4** | CE Routers — dual-homed eBGP vs static non-speaker | [srv6-usid-part4-ce-lab.html](srv6-usid-part4-ce-lab.html) | `quisted-srv6-part4-solution.yaml` | Part 2 |
+| **5** | SRv6 ↔ SR-MPLS Interworking Gateway (IGW) | [srv6-usid-part5-igw-lab.html](srv6-usid-part5-igw-lab.html) | `quisted-srv6-part5-solution.yaml` | Part 2 |
 
-Parts are numbered by conceptual stage. Part 3 is reserved and not currently published.
+Parts are numbered by conceptual stage. Part 3 is a placeholder — lab content coming.
 
 ---
 
@@ -34,16 +34,17 @@ Parts are numbered by conceptual stage. Part 3 is reserved and not currently pub
 
 | File | Purpose |
 |------|---------|
-| `quisted-srv6-baseline.yaml` | Part 1 student start — IS-IS pre-configured, no SRv6 |
-| `quisted-srv6-blank-routing.yaml` | Alt Part 1 start — addressing only, build IS-IS from scratch |
-| `quisted-srv6-solution.yaml` | Part 1 answer key — IS-IS + SRv6 uSID complete |
-| `quisted-srv6-l3vpn-solution.yaml` | Part 2 answer key — L3VPN added |
-| `quisted-srv6-l3vpn-ce-solution.yaml` | Part 4 answer key — CE routers added |
-| `quisted-srv6-l3vpn-igw-solution.yaml` | Part 5 answer key — IGW + MPLS domain added |
-| `srv6-usid-isis-lab.html` | Part 1 student guide |
-| `srv6-usid-l3vpn-lab.html` | Part 2 student guide |
-| `srv6-usid-l3vpn-ce-lab.html` | Part 4 student guide |
-| `srv6-usid-l3vpn-igw-lab.html` | Part 5 student guide |
+| `quisted-srv6-part1-baseline.yaml` | Part 1 student start — IS-IS pre-configured, no SRv6 |
+| `quisted-srv6-part1-blank-routing.yaml` | Alt Part 1 start — addressing only, build IS-IS from scratch |
+| `quisted-srv6-part1-solution.yaml` | Part 1 answer key — IS-IS + SRv6 uSID complete |
+| `quisted-srv6-part2-solution.yaml` | Part 2 answer key — L3VPN added |
+| `quisted-srv6-part4-solution.yaml` | Part 4 answer key — CE routers added |
+| `quisted-srv6-part5-solution.yaml` | Part 5 answer key — IGW + MPLS domain added |
+| `srv6-usid-part1-isis-lab.html` | Part 1 student guide |
+| `srv6-usid-part2-l3vpn-lab.html` | Part 2 student guide |
+| `srv6-usid-part3-srte-lab.html` | Part 3 placeholder |
+| `srv6-usid-part4-ce-lab.html` | Part 4 student guide |
+| `srv6-usid-part5-igw-lab.html` | Part 5 student guide |
 
 ---
 
