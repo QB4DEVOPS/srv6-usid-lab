@@ -1365,6 +1365,28 @@ show clock</pre>
   </table>
 </div>
 
+<h4>Expected output &mdash; PE5 blank state (live-validated lab e5fd0d99)</h4>
+<pre class="config">show isis neighbors
+show segment-routing srv6 locator
+show ipv6 interface brief</pre>
+<pre class="cli">PE5# show isis neighbors
+
+(no adjacencies)
+
+PE5# show segment-routing srv6 locator
+
+(no locators configured)
+
+PE5# show ipv6 interface brief
+...
+Loopback0                  [up/up]
+    FC00:0:5::1
+GigabitEthernet1           [up/up]
+    2001:15::5
+GigabitEthernet2           [up/up]
+    2001:25::5</pre>
+<p class="pass-fail pass">&#10003; Pass: addressing up; no IS-IS neighbors; no SRv6 locators yet</p>
+
 <h3 class="section-sub">Step 2 &mdash; IS-IS underlay</h3>
 <p><strong>IPv6-only data plane</strong> &mdash; <code>address-family ipv6 unicast</code> only under <code>router isis</code>; no <code>ip router isis</code> on PE data interfaces. Mgmt VRF IPv4 is OOB only.
 Config snippets: <a href="#lab-configs">IS-IS underlay (P1 / PE5)</a> &mdash; see the <strong>Required vs lab choice</strong> table there.</p>
@@ -1475,7 +1497,7 @@ Config snippets: <a href="#lab-configs">SRv6 uSID locator (P1 / PE5)</a>. Apply 
 </div>
 
 <div class="callout">
-  <strong>Live lab (validated Jul 15&ndash;16):</strong> All nodes use F3216 locator <code>fcbb:bb00:000N::/48</code>
+  <strong>Live lab (validated Jul 23, lab e5fd0d99):</strong> All nodes use F3216 locator <code>fcbb:bb00:000N::/48</code>
   (<code>usid-f3216</code> on IOS-XE). IOS-XR may display <code>fcbb:bb00:N::/48</code> (leading zeros omitted).
 </div>
 
@@ -1495,7 +1517,7 @@ live in separate namespaces (analogous to Quisted loopbacks vs per-router label 
     <tr><td>PE7</td><td><code>FCBB:BB00:7::/48</code></td><td>Up, <code>usid-f3216</code></td><td><code>FCBB:BB00:7::</code></td><td><code>fc00:0:7::1</code></td></tr>
   </tbody>
 </table>
-<p><strong>P1 &mdash; locator + uN SID (Jul 17, lab eeee6ffa):</strong></p>
+<p><strong>P1 &mdash; locator + uN SID (Jul 23, lab e5fd0d99):</strong></p>
 <pre class="cli">RP/0/RP0/CPU0:P1# show segment-routing srv6 locator
 
 Name                  ID       Algo  Prefix                    Status   Flags
@@ -1508,11 +1530,11 @@ RP/0/RP0/CPU0:P1# show segment-routing srv6 sid
 
 SID                         Behavior          Identification                    Owner               State  RW
 fcbb:bb00:1::               uN (PSP/USD)      'default':1                       sidmgr              InUse  Y
-fcbb:bb00:1:e000::          uA (PSP/USD)      [Gi0/0/0/3, Link-Local]:0         isis-100            InUse  Y
-fcbb:bb00:1:e001::          uA (PSP/USD)      [Gi0/0/0/4, Link-Local]:0         isis-100            InUse  Y
-fcbb:bb00:1:e002::          uA (PSP/USD)      [Gi0/0/0/0, Link-Local]:0         isis-100            InUse  Y
-fcbb:bb00:1:e003::          uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0         isis-100            InUse  Y
-fcbb:bb00:1:e004::          uA (PSP/USD)      [Gi0/0/0/1, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e000::          uA (PSP/USD)      [Gi0/0/0/0, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e001::          uA (PSP/USD)      [Gi0/0/0/1, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e002::          uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e003::          uA (PSP/USD)      [Gi0/0/0/3, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e004::          uA (PSP/USD)      [Gi0/0/0/4, Link-Local]:0         isis-100            InUse  Y
 
 RP/0/RP0/CPU0:P1# show ipv6 interface loopback0 brief
 
@@ -1549,21 +1571,21 @@ Name                  ID       Algo  Prefix                    Status   Flags
 --------------------  -------  ----  ------------------------  -------  --------
 MAIN                  1        0     fcbb:bb00:1::/48             Up       U</pre>
 
-<p><strong>P1 SIDs (live):</strong></p>
+<p><strong>P1 SIDs (live, lab e5fd0d99):</strong></p>
 <pre class="cli">RP/0/RP0/CPU0:P1# show segment-routing srv6 sid
 
-Wed Jul 15 07:34:29.898 UTC
+Thu Jul 23 21:21:30.230 UTC
 
 *** Locator: 'MAIN' ***
 
 SID                         Behavior          Identification                    Owner               State  RW
 --------------------------  ----------------  --------------------------------  ------------------  -----  --
 fcbb:bb00:1::                  uN (PSP/USD)      'default':1                       sidmgr              InUse  Y
-fcbb:bb00:1:e005::             uA (PSP/USD)      [Gi0/0/0/0, Link-Local]:0         isis-100            InUse  Y
-fcbb:bb00:1:e006::             uA (PSP/USD)      [Gi0/0/0/3, Link-Local]:0         isis-100            InUse  Y
-fcbb:bb00:1:e007::             uA (PSP/USD)      [Gi0/0/0/4, Link-Local]:0         isis-100            InUse  Y
-fcbb:bb00:1:e008::             uA (PSP/USD)      [Gi0/0/0/1, Link-Local]:0         isis-100            InUse  Y
-fcbb:bb00:1:e009::             uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0         isis-100            InUse  Y</pre>
+fcbb:bb00:1:e000::             uA (PSP/USD)      [Gi0/0/0/0, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e001::             uA (PSP/USD)      [Gi0/0/0/1, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e002::             uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e003::             uA (PSP/USD)      [Gi0/0/0/3, Link-Local]:0         isis-100            InUse  Y
+fcbb:bb00:1:e004::             uA (PSP/USD)      [Gi0/0/0/4, Link-Local]:0         isis-100            InUse  Y</pre>
 <p class="pass-fail pass">&#10003; Pass: uN <code>fcbb:bb00:1::</code> + five uA SIDs on Gi0/0/0/0&ndash;/4</p>
 
 <p><strong>PE5 locator (IOS-XE):</strong></p>
@@ -1572,13 +1594,13 @@ fcbb:bb00:1:e009::             uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0      
 Name            Algo Prefix                                   Format               Status
 MAIN            0    FCBB:BB00:5::/48                         usid-f3216           Up</pre>
 
-<p><strong>PE5 SIDs (live):</strong></p>
+<p><strong>PE5 SIDs (live, lab e5fd0d99):</strong></p>
 <pre class="cli">PE5# show segment-routing srv6 sid
 
 SID                                  Locator         Behavior             Context                                  Owner
 FCBB:BB00:5::                        MAIN            uN (PSP/USD)                                                  SID-MGR
-FCBB:BB00:5:E002::                   MAIN            uA (PSP/USD)         Gi1 FE80:0:1::1                          router isis 100
-FCBB:BB00:5:E003::                   MAIN            uA (PSP/USD)         Gi2 FE80:0:2::1                          router isis 100</pre>
+FCBB:BB00:5:E000::                   MAIN            uA (PSP/USD)         Gi1 FE80:0:1::1                          router isis 100
+FCBB:BB00:5:E001::                   MAIN            uA (PSP/USD)         Gi2 FE80:0:2::1                          router isis 100</pre>
 <p class="pass-fail pass">&#10003; Pass: PE uN in <code>fcbb:bb00</code> block; uA owned by <code>router isis 100</code></p>
 
 <h3 class="section-sub">Step 4 &mdash; Core forwarding (P1)</h3>
@@ -1590,7 +1612,7 @@ This lab: IS-IS IPv6 routes + SRv6 SID table on P1.</p>
   <table>
     <thead><tr><th>Node</th><th>Command</th><th>Look for</th></tr></thead>
     <tbody>
-      <tr><td>P1</td><td><code>show route ipv6 fc00:0:7::1</code></td><td>ECMP via <strong>P3</strong> and <strong>P4</strong> (two next-hops)</td></tr>
+      <tr><td>P1</td><td><code>show isis ipv6 route fc00:0:7::1/128</code></td><td>ECMP via <strong>P3</strong> and <strong>P4</strong> (two next-hops)</td></tr>
     </tbody>
   </table>
 </div>
@@ -1687,9 +1709,9 @@ Success rate is 100 percent (10/10)
 
 Type escape sequence to abort.
 Tracing the route to FCBB:BB00:7::
-  1 2001:15::1 4 msec 3 msec 3 msec
-  2 2001:13::3 5 msec
-    2001:14::4 5 msec 4 msec
+  1 2001:25::2 5 msec 6 msec 4 msec
+  2 2001:24::4 6 msec
+    2001:23::3 5 msec 4 msec
   3 2001:37::7 4 msec 4 msec 4 msec</pre>
 
 <h5>What to look for (PE7)</h5>
@@ -1722,7 +1744,7 @@ Tracing the route to FCBB:BB00:7::
 
 <h4 id="srv6-path-walk">4. Walk the path with SRv6 show commands</h4>
 <p>After step 3, walk the <strong>same path on the control plane</strong>. Traceroute shows where packets go; these commands show why each hop forwards to <code>fcbb:bb00:7::</code>.</p>
-<p><strong>Path:</strong> PE5 &rarr; P1 &rarr; P3 (or P4 ECMP) &rarr; PE7. <strong>Destination:</strong> <code>fcbb:bb00:7::/48</code> (PE7 locator; micro-SID <code>fcbb:bb00:7::</code> is the uN inside that block).</p>
+<p><strong>Path:</strong> PE5 &rarr; P1 or P2 (ECMP) &rarr; P3 (or P4 ECMP) &rarr; PE7. <strong>Destination:</strong> <code>fcbb:bb00:7::/48</code> (PE7 locator; micro-SID <code>fcbb:bb00:7::</code> is the uN inside that block).</p>
 
 <table>
   <thead><tr><th>Hop</th><th>Platform</th><th>Route to PE7 locator</th><th>IS-IS SRv6</th><th>SID table</th></tr></thead>
@@ -1748,8 +1770,8 @@ Routing entry for FCBB:BB00:7::/48
 
 PE5# show segment-routing srv6 sid
 FCBB:BB00:5::          uN (PSP/USD)                              SID-MGR
-FCBB:BB00:5:E002::     uA (PSP/USD)   Gi1 FE80:0:1::1 → P1      router isis 100
-FCBB:BB00:5:E003::     uA (PSP/USD)   Gi2 FE80:0:2::1 → P2      router isis 100</pre>
+FCBB:BB00:5:E000::     uA (PSP/USD)   Gi1 FE80:0:1::1 → P1      router isis 100
+FCBB:BB00:5:E001::     uA (PSP/USD)   Gi2 FE80:0:2::1 → P2      router isis 100</pre>
 <p class="pass-fail pass">&#10003; Pass: IS-IS route to PE7 locator; ECMP next-hops on Gi1/Gi2</p>
 
 <h5>P1 (transit &mdash; ECMP to P3/P4)</h5>
@@ -1766,8 +1788,8 @@ IS-IS 100 SRv6 Locators
 MAIN                  1        0     fcbb:bb00:1::/48             Active
 
 fcbb:bb00:1::                  uN (PSP/USD)      sidmgr              InUse
-fcbb:bb00:1:e008::             uA (PSP/USD)      [Gi0/0/0/1] → P3    isis-100
-fcbb:bb00:1:e009::             uA (PSP/USD)      [Gi0/0/0/2] → P4    isis-100</pre>
+fcbb:bb00:1:e001::             uA (PSP/USD)      [Gi0/0/0/1] → P3    isis-100
+fcbb:bb00:1:e002::             uA (PSP/USD)      [Gi0/0/0/2] → P4    isis-100</pre>
 <p class="pass-fail pass">&#10003; Pass: IS-IS route to PE7 <code>fcbb</code> locator; local P locator stays <code>fcbb:bb00:1::/48</code></p>
 
 <h5>P3 (transit &mdash; direct to PE7)</h5>
@@ -1779,15 +1801,15 @@ L2 fcbb:bb00:7::/48 [10/115]
      via fe80:0:7::1, GigabitEthernet0/0/0/3, PE7, Weight: 0
 
 fcbb:bb00:3::                  uN (PSP/USD)      sidmgr              InUse
-fc00:0:3:e008::             uA (PSP/USD)      [Gi0/0/0/3] → PE7   isis-100</pre>
+fcbb:bb00:3:e003::             uA (PSP/USD)      [Gi0/0/0/3] → PE7   isis-100</pre>
 <p class="pass-fail pass">&#10003; Pass: one hop to PE7 on Gi0/0/0/3 (matches traceroute hop 3)</p>
 
 <h5>PE7 (destination &mdash; uN endpoint)</h5>
 <pre class="config">show segment-routing srv6 sid
 show ipv6 route fcbb:bb00:7::</pre>
 <pre class="cli">FCBB:BB00:7::          uN (PSP/USD)                              SID-MGR
-FCBB:BB00:7:E002::     uA (PSP/USD)   Gi1 FE80:0:3::1 → P3
-FCBB:BB00:7:E003::     uA (PSP/USD)   Gi2 FE80:0:4::1 → P4
+FCBB:BB00:7:E000::     uA (PSP/USD)   Gi1 FE80:0:3::1 → P3
+FCBB:BB00:7:E001::     uA (PSP/USD)   Gi2 FE80:0:4::1 → P4
 
 Routing entry for FCBB:BB00:7::/128
   Known via "connected", type receive
@@ -1955,9 +1977,9 @@ Routing entry for fc00:0:2::1/128
   SRv6 Locator:   MT (IPv6 Unicast) fcbb:bb00:1::/48 ...
     END SID: fcbb:bb00:1:: uN (PSP/USD)
   ...
-    END.X SID: fcbb:bb00:1:e002:: ... uA (PSP/USD)   ! Gi0/0/0/0 toward P2
+    END.X SID: fcbb:bb00:1:e000:: ... uA (PSP/USD)   ! Gi0/0/0/0 toward P2
     END.X SID: fcbb:bb00:1:e001:: ... uA (PSP/USD)   ! Gi0/0/0/1 toward P3
-    END.X SID: fcbb:bb00:1:e000:: ... uA (PSP/USD)   ! Gi0/0/0/2 toward P4</pre>
+    END.X SID: fcbb:bb00:1:e002:: ... uA (PSP/USD)   ! Gi0/0/0/2 toward P4</pre>
 
 <p><strong>Remote P2 LSP</strong> (like prefix-SID index 2 for <code>2.2.2.2</code>):</p>
 <pre class="cli">RP/0/RP0/CPU0:P1# show isis database P2.00-00 detail
@@ -1976,9 +1998,9 @@ Routing entry for fc00:0:2::1/128
 
 SID                         Behavior          Identification                    Owner
 fcbb:bb00:1::                  uN (PSP/USD)      'default':1                       sidmgr
-fcbb:bb00:1:e000::             uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0         isis-100
+fcbb:bb00:1:e000::             uA (PSP/USD)      [Gi0/0/0/0, Link-Local]:0         isis-100
 fcbb:bb00:1:e001::             uA (PSP/USD)      [Gi0/0/0/1, Link-Local]:0         isis-100
-fcbb:bb00:1:e002::             uA (PSP/USD)      [Gi0/0/0/0, Link-Local]:0         isis-100
+fcbb:bb00:1:e002::             uA (PSP/USD)      [Gi0/0/0/2, Link-Local]:0         isis-100
 fcbb:bb00:1:e003::             uA (PSP/USD)      [Gi0/0/0/3, Link-Local]:0         isis-100
 fcbb:bb00:1:e004::             uA (PSP/USD)      [Gi0/0/0/4, Link-Local]:0         isis-100</pre>
 
@@ -2044,7 +2066,7 @@ show segment-routing srv6 locator</pre>
 
 <h3>Platform &amp; CML</h3>
 <ol>
-  <li><strong>XR cold boot</strong> &mdash; P1&ndash;P4 (<code>iosxrv9000</code>) take ~15&ndash;20 min each on cold boot; PE cat8000v boot in ~2 min. Do not verify until <strong>all</strong> XR nodes show <strong>BOOTED</strong> in CML. All nodes boot in parallel (no staging in the YAML).</li>
+  <li><strong>XR cold boot</strong> &mdash; P1&ndash;P4 (<code>iosxrv9000</code>) take ~15&ndash;20 min each on cold boot; PE cat8000v boot in ~2 min. Prefer waiting until all XR nodes show <strong>BOOTED</strong> in CML, but see item 2 if CLI responds sooner. All nodes boot in parallel (no staging in the YAML).</li>
   <li><strong>CML &ldquo;Booting&rdquo; vs CLI</strong> &mdash; IOS-XR may accept SSH and respond to <code>show</code> while CML still displays <strong>Booting</strong>. If the CLI responds, proceed with verification; do not block solely on UI state.</li>
   <li><strong>XR startup config not loaded</strong> &mdash; IOS XRv can reach a prompt with factory hostname <code>ios</code> and no IS-IS. Fix: stop &rarr; wipe &rarr; restart, or confirm startup config in the CML node config editor before boot. Quick check: <code>show running-config hostname</code> must show <code>hostname P1</code>, not <code>ios</code>.</li>
   <li><strong>XR commit</strong> &mdash; pasted config on IOS-XR requires <code>commit</code>. PyATS / MCP push may auto-commit; manual paste from this guide does not.</li>
