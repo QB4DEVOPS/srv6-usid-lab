@@ -505,11 +505,11 @@
   <table>
     <thead><tr><th>Part</th><th>Topic</th><th>YAML to load</th><th>Prerequisite</th></tr></thead>
     <tbody>
-      <tr class="current"><td>Part 1</td><td>SRv6 uSID IS-IS (this guide)</td><td><code>quisted-srv6-baseline.yaml</code></td><td>None</td></tr>
-      <tr><td><a href="srv6-usid-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-l3vpn-solution.yaml</code></td><td>Part 1</td></tr>
-      <tr class="skipped"><td>Part 3</td><td>not published</td><td>&mdash;</td><td>&mdash;</td></tr>
-      <tr><td><a href="srv6-usid-l3vpn-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-l3vpn-ce-solution.yaml</code></td><td>Part 2</td></tr>
-      <tr><td><a href="srv6-usid-l3vpn-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-l3vpn-igw-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr class="current"><td>Part 1</td><td>SRv6 uSID IS-IS (this guide)</td><td><code>quisted-srv6-part1-baseline.yaml</code></td><td>None</td></tr>
+      <tr><td><a href="srv6-usid-part2-l3vpn-lab.html">Part 2</a></td><td>SRv6 L3VPN (VPNv4 + End.DT4)</td><td><code>quisted-srv6-part2-solution.yaml</code></td><td>Part 1</td></tr>
+      <tr class="skipped"><td><a href="srv6-usid-part3-srte-lab.html">Part 3</a></td><td>SR-TE uSID Traffic Engineering (placeholder)</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td><a href="srv6-usid-part4-ce-lab.html">Part 4</a></td><td>CE Routers (eBGP + static non-speaker)</td><td><code>quisted-srv6-part4-solution.yaml</code></td><td>Part 2</td></tr>
+      <tr><td><a href="srv6-usid-part5-igw-lab.html">Part 5</a></td><td>SRv6 &harr; SR-MPLS IGW</td><td><code>quisted-srv6-part5-solution.yaml</code></td><td>Part 2</td></tr>
     </tbody>
   </table>
   <p class="series-note">Parts are numbered by conceptual stage. Part 3 is not currently published.</p>
@@ -738,8 +738,8 @@
     <p class="download-title">Lab download</p>
     <p style="margin:0 0 0.5rem">Import on CML 2.10:</p>
     <ol>
-      <li><strong>Baseline</strong> &mdash; <code>quisted-srv6-baseline.yaml</code> (IS-IS + IPv6; add SRv6 in the lab).</li>
-      <li><strong>Solution</strong> &mdash; <code>quisted-srv6-solution.yaml</code> (full SRv6 uSID configured; answer key).</li>
+      <li><strong>Baseline</strong> &mdash; <code>quisted-srv6-part1-baseline.yaml</code> (IS-IS + IPv6; add SRv6 in the lab).</li>
+      <li><strong>Solution</strong> &mdash; <code>quisted-srv6-part1-solution.yaml</code> (full SRv6 uSID configured; answer key).</li>
     </ol>
   </div>
 </div>
@@ -1132,7 +1132,7 @@ line vty 0 15
 <h3 class="section-sub">Import steps</h3>
 <ol>
   <li>Confirm IOS XRv 9000 and CAT 8000V under <strong>Tools &rarr; Node and Image Definitions</strong>.</li>
-  <li><strong>Import Lab</strong> &rarr; <code>quisted-srv6-baseline.yaml</code>.</li>
+  <li><strong>Import Lab</strong> &rarr; <code>quisted-srv6-part1-baseline.yaml</code>.</li>
   <li><strong>Start</strong> the lab (all 8 routers boot in parallel).</li>
   <li>Wait for all eight routers <strong>BOOTED</strong> (XR cold boot ~15&ndash;20 min each).</li>
   <li>First boot: XR setup wizard, PE license reload, IS-IS converge (~2&ndash;3 min).</li>
@@ -1143,7 +1143,7 @@ line vty 0 15
 <!-- ===== LAB CONFIGS ===== -->
 <h2 id="lab-configs">Lab configs (snippets)</h2>
 
-<p>Configs ship in the CML import (<code>quisted-srv6-baseline.yaml</code>). Full per-node reference configs are in <a href="#appendix-d">Appendix C</a>; the solution YAML is the answer key.</p>
+<p>Configs ship in the CML import (<code>quisted-srv6-part1-baseline.yaml</code>). Full per-node reference configs are in <a href="#appendix-d">Appendix C</a>; the solution YAML is the answer key.</p>
 
 <h3>Per-node variables</h3>
 <table class="device-table">
@@ -1163,7 +1163,7 @@ line vty 0 15
 
 <h3>IS-IS underlay (P router &mdash; P1)</h3>
 <p>Every data interface is <code>point-to-point</code> under IS-IS. Level-2 only, wide metrics, <strong>IPv6 unicast only</strong> on the data plane (no <code>address-family ipv4</code> under <code>router isis</code>).
-<strong>Pre-loaded</strong> in <code>quisted-srv6-baseline.yaml</code> &mdash; verify in Step 2, do not paste.</p>
+<strong>Pre-loaded</strong> in <code>quisted-srv6-part1-baseline.yaml</code> &mdash; verify in Step 2, do not paste.</p>
 
 <pre class="config">router isis 100
  is-type level-2-only
@@ -2024,9 +2024,9 @@ All nodes &mdash; ext-conn, mgmt-sw, P1&ndash;P4, and PE5&ndash;PE8 &mdash; <str
 
 <p>The continuation labs are published. Pick up where this lab leaves off:</p>
 <ul>
-  <li><a href="srv6-usid-l3vpn-lab.html"><strong>Part 2 &mdash; SRv6 L3VPN</strong></a>: VRFs, BGP VPNv4, End.DT4 SID allocation, VPN ping PE5&rarr;PE7</li>
-  <li><a href="srv6-usid-l3vpn-ce-lab.html"><strong>Part 4 &mdash; CE Routers</strong></a>: dual-homed eBGP CE vs static non-speaker CE; both on the same SRv6 backbone</li>
-  <li><a href="srv6-usid-l3vpn-igw-lab.html"><strong>Part 5 &mdash; IGW</strong></a>: SRv6 &harr; SR-MPLS interworking gateway; dual End.DT4 SID + MPLS VPN label allocation</li>
+  <li><a href="srv6-usid-part2-l3vpn-lab.html"><strong>Part 2 &mdash; SRv6 L3VPN</strong></a>: VRFs, BGP VPNv4, End.DT4 SID allocation, VPN ping PE5&rarr;PE7</li>
+  <li><a href="srv6-usid-part4-ce-lab.html"><strong>Part 4 &mdash; CE Routers</strong></a>: dual-homed eBGP CE vs static non-speaker CE; both on the same SRv6 backbone</li>
+  <li><a href="srv6-usid-part5-igw-lab.html"><strong>Part 5 &mdash; IGW</strong></a>: SRv6 &harr; SR-MPLS interworking gateway; dual End.DT4 SID + MPLS VPN label allocation</li>
 </ul>
 <p class="footnote">Note: Part 3 is not currently published. Parts are numbered by conceptual stage, not sequentially.</p>
 
@@ -2036,7 +2036,7 @@ All nodes &mdash; ext-conn, mgmt-sw, P1&ndash;P4, and PE5&ndash;PE8 &mdash; <str
 
 <p><strong>IPv6-only data plane.</strong> IS-IS and SRv6 run on <code>address-family ipv6 unicast</code> only.
 Loopbacks and links use IPv6; mgmt (<code>Mgmt-intf</code> VRF) may use IPv4 DHCP for OOB SSH &mdash; not in IS-IS.</p>
-<p>Reference: <code>quisted-srv6-baseline.yaml</code> (student start) and <code>quisted-srv6-solution.yaml</code> (answer key).
+<p>Reference: <code>quisted-srv6-part1-baseline.yaml</code> (student start) and <code>quisted-srv6-part1-solution.yaml</code> (answer key).
 P2&ndash;P4 and PE6&ndash;PE8 follow the same patterns as P1 and PE5 in the config snippets above.</p>
 
 <h3>P1 &mdash; full config</h3>
@@ -2248,13 +2248,13 @@ end</pre>
 <h3>Remaining nodes</h3>
 <p>P2&ndash;P4 follow the same IS-IS and SRv6 pattern as P1 above (different NET and locator prefix per node).
 PE6&ndash;PE8 follow the same IOS-XE pattern as PE5 (different loopback and locator prefix).
-Full configs for all nodes are in <code>quisted-srv6-solution.yaml</code> &mdash; paste each node&rsquo;s <code>configuration</code> block to see the complete running config.</p>
+Full configs for all nodes are in <code>quisted-srv6-part1-solution.yaml</code> &mdash; paste each node&rsquo;s <code>configuration</code> block to see the complete running config.</p>
 
 <hr>
 
 <p class="footnote">
   Markdown source: <code>srv6-usid-isis-lab.md</code> &middot;
-  Reference: <code>README.md</code>, <code>quisted-srv6-baseline.yaml</code>, <code>quisted-srv6-solution.yaml</code>
+  Reference: <code>README.md</code>, <code>quisted-srv6-part1-baseline.yaml</code>, <code>quisted-srv6-part1-solution.yaml</code>
 </p>
 
 </div>
